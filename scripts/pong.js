@@ -22,13 +22,13 @@ function displayScore() {
 function updatePaddlePong() {
     if (keys['w'] && player1Y > 0) {
         player1Y -= 5;
-    } else if (keys['s'] && player1Y < HEIGHT) {
+    } else if (keys['s'] && player1Y + paddleHeight < HEIGHT) {
         player1Y += 5;
     }
 
     if (keys['5'] && player2Y > 0) {
         player2Y -= 5;
-    } else if (keys['2'] && player2Y < HEIGHT) {
+    } else if (keys['2'] && player2Y + paddleHeight < HEIGHT) {
         player2Y += 5;
     }
 }
@@ -38,8 +38,10 @@ function collisionPong() {
     if (ball1Y + ballRadius > HEIGHT || ball1Y - ballRadius < 0)
         ball1SpeedY = -ball1SpeedY;
     //Paddle
-    else if (ball1X + ballRadius >= WIDTH - paddleWidth && ball1Y >= player1Y && ball1Y <= player1Y + paddleHeight)
-        ball1SpeedY = -ball1SpeedY;
+    else if (ball1X + ballRadius > WIDTH - paddleWidth && ball1Y > player2Y && ball1Y < (player2Y + paddleHeight))
+        ball1SpeedX = -ball1SpeedX;
+    else if (ball1X - ballRadius < 0 + paddleWidth && ball1Y > player1Y && ball1Y < (player1Y + paddleHeight))
+        ball1SpeedX = -ball1SpeedX;
     else if (ball1X + ballRadius > WIDTH )
         scorePlayer1++;
     else if (ball1X - ballRadius < 0)
@@ -86,6 +88,8 @@ function startPong() {
     ball1X = WIDTH / 2;
     ball1Y = HEIGHT / 2;
     ballRadius = 8;
+    scorePlayer1 = 0;
+    scorePlayer2 = 0;
 
     document.addEventListener('keydown', function(event) {  
         if (event.key ==='w')
