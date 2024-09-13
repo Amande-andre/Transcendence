@@ -12,62 +12,76 @@ function drawBall(x, y) {
     ctx.closePath();
 }
 
-function displayScore() {
+function displayPongScore(scorePlayer1, scorePlayer2) {
     ctx.font = '32px Arial';
     ctx.fillStyle = 'white';
     ctx.fillText(scorePlayer1, 100, 50);
     ctx.fillText(scorePlayer2, WIDTH - 140, 50);
 }   
 
-function updatePaddlePong() {
-    if (keys['w'] && player1Y > 0) {
-        player1Y -= 5;
-    } else if (keys['s'] && player1Y + paddleHeight < HEIGHT) {
-        player1Y += 5;
+function updatePaddlePong(player1, player2) {
+    for (let i = 0; i < player1.paddles.length; i++) {
+        player1.paddles[i].update('w', 's', 0, HEIGHT, 'vertical');
     }
-
-    if (keys['5'] && player2Y > 0) {
-        player2Y -= 5;
-    } else if (keys['2'] && player2Y + paddleHeight < HEIGHT) {
-        player2Y += 5;
+    for (let i = 0; i < player2.paddles.length; i++) {
+        player2.paddles[i].update('5', '2', 0, HEIGHT, 'vertical');
     }
 }
 
-function collisionPong() {
-    //Wall
-    if (ball1Y + ballRadius > HEIGHT || ball1Y - ballRadius < 0)
-        ball1SpeedY = -ball1SpeedY;
-    //Paddle
-    else if (ball1X + ballRadius > WIDTH - paddleWidth && ball1Y > player2Y && ball1Y < (player2Y + paddleHeight))
-        ball1SpeedX = -ball1SpeedX;
-    else if (ball1X - ballRadius < 0 + paddleWidth && ball1Y > player1Y && ball1Y < (player1Y + paddleHeight))
-        ball1SpeedX = -ball1SpeedX;
-    else if (ball1X + ballRadius > WIDTH )
-        scorePlayer1++;
-    else if (ball1X - ballRadius < 0)
-        scorePlayer2++;
+function collisionPong(player1, player2) {
+    for (let ball of player1.balls) {
+        if (ball.y + ball.radius > HEIGHT || ball.y - ball.radius < 0) {
+            ball.speedY = -ball.speedY;
+        }
+        if (ball.x - ball.radius < 0) {
+            player1.balls.splice(player1.balls.indexOf(ball), 1);
+            player2.balls.splice(player2.balls.indexOf(ball), 1);
+            newBall = new Ball(player1.spawnBallx, player1.spawnBally, 4, 4, 5)
+            player1.balls.push(newBall);
+            player2.balls.push(newBall);
+            player1.score++;
+        }
+        if (ball.x + ball.radius > HEIGHT) {
+            player1.balls.splice(player1.balls.indexOf(ball), 1);
+            player2.balls.splice(player2.balls.indexOf(ball), 1);
+            newBall = new Ball(player1.spawnBallx, player1.spawnBally, 4, 4, 5)
+            player1.balls.push(newBall);
+            player2.balls.push(newBall);
+            player2.score++;
+        }
+    }
 }
 
-function updatePong() {
+function drawPongArea(player1, player2) {
+    ctx.clearRect(0, 0, WIDTH, HEIGHT);
     ctx.clearRect(0, 0, WIDTH, HEIGHT);
     ctx.strokeStyle = 'white';
     ctx.strokeRect(0, 0, WIDTH, HEIGHT);
-    displayScore();
+    displayPongScore(player1.score, player2.score);
 
-    drawRec(1, player1Y);
-    drawRec(WIDTH - paddleWidth, player2Y);
+    for (let i = 0; i < player1.paddles.length; i++)
+        player1.paddles[i].drawPaddle();
+    for (let i = 0; i < player2.paddles.length; i++)
+        player2.paddles[i].drawPaddle();
+    for (let i = 0; i < player1.balls.length; i++)
+        player1.balls[i].drawBall();
+    for (let i = 0; i < player2.balls.length; i++)
+        player2.balls[i].drawBall();
+}
 
-    drawBall(ball1X, ball1Y);
+function updatePong(player1, player2, bonus) {
 
-    ball1X += ball1SpeedX;
-    ball1Y += ball1SpeedY;
-    collisionPong();
+    drawPongArea(player1, player2);
+    player1.balls[0].x += player1.balls[0].speedX;
+    player1.balls[0].y += player1.balls[0].speedY;
+    collisionPong(player1, player2);
+    updatePaddlePong(player1, player2);
     
-    if (scorePlayer1 === 3 || scorePlayer2 === 3) {
+    if (player1.score === 3 || player2.score === 3) {
         ctx.clearRect(0, 0, WIDTH, HEIGHT);
         ctx.strokeStyle = 'white';
         ctx.strokeRect(0, 0, WIDTH, HEIGHT);
-        if (scorePlayer1 === 3)
+        if (player1.score === 3)
             ctx.fillText('WIN', 100, 50);
         else
             ctx.fillText('WIN', WIDTH - 140, 50);
@@ -76,44 +90,19 @@ function updatePong() {
         }, 1000)
         return;
     }
-    updatePaddlePong();
-    requestAnimationFrame(updatePong);
+    requestAnimationFrame(() => updatePong(player1, player2, bonus));
 }
 
 function startPong() {
-    paddleWidth = 8;
-    paddleHeight = 80;
-    player1Y = HEIGHT / 2 - paddleHeight / 2;;
-    player2Y = HEIGHT / 2 - paddleHeight / 2;;
-    ball1X = WIDTH / 2;
-    ball1Y = HEIGHT / 2;
-    ballRadius = 8;
-    scorePlayer1 = 0;
-    scorePlayer2 = 0;
+    mainBall = new Ball(WIDTH / 2, HEIGHT / 2, 5, 5, 8);
+    let player1 = new Player(new Paddle(0, HEIGHT / 2 - 80, 8, 160), mainBall);
+    let player2 = new Player(new Paddle(WIDTH - 8, HEIGHT / 2 - 80, 8, 160), mainBall);
+    const bonus = [newBall, increasePaddle];
 
-    document.addEventListener('keydown', function(event) {  
-        if (event.key ==='w')
-            keys['w'] = true;
-        else if (event.key === 's')
-            keys['s'] = true;
+    player1.initControls('w', 's');
+    player2.initControls('5', '2');
 
-        if (event.key ==='5')
-            keys['5'] = true
-        else if (event.key === '2')
-            keys['2'] = true
-    });
+    drawPongArea(player1, player2);
 
-    document.addEventListener('keyup', function(event) {  
-        if (event.key ==='w')
-            keys['w'] = false;
-        else if (event.key === 's')
-            keys['s'] = false;
-
-        if (event.key ==='5')
-            keys['5'] = false 
-        else if (event.key === '2')
-            keys['2'] = false 
-    });
-
-    updatePong();
+    updatePong(player1, player2, bonus);
 }

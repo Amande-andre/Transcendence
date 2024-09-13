@@ -3,20 +3,20 @@ function generateNumber() {
   
     if (random < 0.3) { // 10% de chance
       // Choisir aléatoirement entre 2, 3, et 4
-      const randomChoice = Math.floor(Math.random() * 3) + 2; // Génère 2, 3 ou 4
+      const randomChoice = Math.floor(Math.random() * 2); // Génère 2, 3 ou 4
       return randomChoice;
     } else {
       // 90% de chance de retourner 1
-      return 1;
+      return -1;
     }
 }
 
 function updatePaddles(player1, player2) {
     for (let i = 0; i < player1.paddles.length; i++) {
-        player1.paddles[i].update('a', 'd', 0, WIDTH / 2 - 19);
+        player1.paddles[i].update('a', 'd', 0, WIDTH / 2 - 19, 'horizontal');
     }
     for (let i = 0; i < player2.paddles.length; i++) {
-        player2.paddles[i].update('1', '3', WIDTH / 2 + 19, WIDTH);
+        player2.paddles[i].update('1', '3', WIDTH / 2 + 19, WIDTH, 'horizontal');
     }
 }
 
@@ -34,7 +34,17 @@ function fillbrick(bricks, x, y) {
 }
 
 function newBall(player, ball) {
-    player.balls.push(new Ball(ball.x, ball.y, 0, 2, 5));
+    for (let i = 0; i < Math.floor(Math.random() * 2) + 1; i++)
+        player.balls.push(new Ball(ball.x, ball.y, 0, 2, 5));
+}
+
+function increasePaddle(player, ball) {
+    for (let paddle of player.paddles)
+        paddle.width += 30;
+    setTimeout(() => {
+        for (let paddle of player.paddles)
+            paddle.width -= 30;
+    }, 15000);
 }
 
 function Collision(player, lWall, rWall, bonus) {
@@ -101,8 +111,8 @@ function Collision(player, lWall, rWall, bonus) {
                 } else {
                     ball.speedY = -ball.speedY;
                 }
-                if (brick.bonus > 1) 
-                    bonus[0](player, ball);
+                if (brick.bonus !== -1) 
+                    bonus[brick.bonus](player, ball);
                 player.bricks.splice(i, 1);
                 break; // Exit loop after collision
             }
@@ -115,26 +125,26 @@ function Collision(player, lWall, rWall, bonus) {
     }
 }
 
-function drawBreakoutArea() {
+function drawBreakoutBorder() {
     ctx.strokeStyle = 'white';
     ctx.strokeRect(0, 0, WIDTH / 2 - 16, HEIGHT);
     ctx.strokeRect(WIDTH / 2 + 16, 0, WIDTH / 2 - 16, HEIGHT);
 }
 
-function displayScore(scorePlayer1, scorePlayer2) {
+function displayBreakoutScore(scorePlayer1, scorePlayer2) {
     ctx.font = '32px Arial';
     ctx.fillStyle = 'white';
     ctx.fillText(scorePlayer1, 100, 50);
     ctx.fillText(scorePlayer2, WIDTH - 140, 50);
 }   
 
-function drawScreen(player1, player2) {
+function drawBreakoutAera(player1, player2) {
     ctx.clearRect(0, 0, WIDTH, HEIGHT);
-    displayScore(player1.score, player2.score);
+    displayBreakoutScore(player1.score, player2.score);
 
     player1.drawBricks();
     player2.drawBricks();
-    drawBreakoutArea();
+    drawBreakoutBorder();
 
     for (let i = 0; i < player1.paddles.length; i++)
         player1.paddles[i].drawPaddle();
@@ -148,66 +158,40 @@ function drawScreen(player1, player2) {
 
 function updateBreakout(player1, player2, bonus) {
 
-    drawScreen(player1, player2);
+    drawBreakoutAera(player1, player2);
 
     Collision(player1, 0, WIDTH / 2 - 16, bonus);
     Collision(player2, WIDTH / 2 + 16, WIDTH, bonus);
     updatePaddles(player1, player2);
-    //if (bricks1.length === 0 || bricks2.length === 0) {
-    //    ctx.clearRect(0, 0, WIDTH, HEIGHT);
-    //    drawBreakoutArea();
-    //    if (bricks1.length === 0)
-    //        ctx.fillText('WIN', 100, 50);
-    //    else
-    //        ctx.fillText('WIN', WIDTH - 140, 50);
-    //    setTimeout(() => {
-    //        ctx.clearRect(0, 0, WIDTH, HEIGHT);
-    //    }, 1000)
-    //}
-    //else
+    if (player1.bricks.length === 0 || player2.bricks.length === 0) {
+        ctx.clearRect(0, 0, WIDTH, HEIGHT);
+        drawBreakoutBorder();
+        if (player1.bricks.length === 0)
+            ctx.fillText('WIN', 100, 50);
+        else
+            ctx.fillText('WIN', WIDTH - 140, 50);
+        setTimeout(() => {
+            ctx.clearRect(0, 0, WIDTH, HEIGHT);
+        }, 1000)
+    }
+    else
         requestAnimationFrame(() => updateBreakout(player1, player2, bonus));
 }
 
-function initControls() {
-
-    document.addEventListener('keydown', function(event) {  
-        if (event.key ==='a')
-            keys['a'] = true;
-        else if (event.key === 'd')
-            keys['d'] = true;
-
-        if (event.key ==='1')
-            keys['1'] = true
-        else if (event.key === '3')
-            keys['3'] = true
-    });
-
-    document.addEventListener('keyup', function(event) {  
-        if (event.key ==='a')
-            keys['a'] = false;
-        else if (event.key === 'd')
-            keys['d'] = false;
-
-        if (event.key ==='1')
-            keys['1'] = false 
-        else if (event.key === '3')
-            keys['3'] = false 
-    });
-}
 
 function startBreakout() {
-    let player1 = new Player(new Paddle(WIDTH / 4 - 80 / 2, HEIGHT - 8, 80, 8),
+    let player1 = new Player(new Paddle(WIDTH / 2 - 80 / 2, HEIGHT - 8, 80, 8),
                         new Ball(WIDTH / 4, 3 * HEIGHT / 4, 0, 4, 5));
     let player2 = new Player(new Paddle(3 * WIDTH / 4 - 80 / 2, HEIGHT - 8, 80, 8),
                     new Ball(3 * WIDTH / 4, 3 * HEIGHT / 4, 0, 4, 5));
-    const bonus = [newBall];
+    const bonus = [newBall, increasePaddle];
     fillbrick(player1.bricks, 0, 5);
     fillbrick(player2.bricks, 13, 5);
 
-    initControls()
+    player1.initControls('a', 'd');
+    player2.initControls('1', '3');
 
-    drawScreen(player1, player2);
-
+    drawBreakoutAera(player1, player2);
 
     updateBreakout(player1, player2, bonus);
 }

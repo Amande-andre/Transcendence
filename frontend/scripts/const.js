@@ -16,10 +16,28 @@ class Player {
         this.spawnBally = ball.y;
     }
 
+    initControls(key1, key2) {
+
+        document.addEventListener('keydown', function(event) {  
+            if (event.key === key1)
+                keys[key1] = true;
+            else if (event.key === key2)
+                keys[key2] = true;
+        });
+        document.addEventListener('keyup', function(event) {  
+            if (event.key === key1)
+                keys[key1] = false;
+            else if (event.key === key2)
+                keys[key2] = false;
+        });
+    }
     drawBricks() {
         for (let i = 0; i < this.bricks.length; i++) {
             const brick = this.bricks[i];
-            ctx.fillStyle = 'white';
+            if (brick.bonus !== -1)
+                ctx.fillStyle = 'grey';
+            else
+                ctx.fillStyle = 'white';
             ctx.strokeStyle = 'black';
             
             ctx.fillRect(brick.x, brick.y, 32, 16);
@@ -35,6 +53,7 @@ class Ball {
         this.speedX = speedX;
         this.speedY = speedY;
         this.radius = radius;
+        this.type;
     }
 
     drawBall() {
@@ -58,10 +77,21 @@ class Paddle {
         ctx.fillStyle = 'white';
         ctx.fillRect(this.x, this.y, this.width, this.height);
     }
-    update(left, right, limitL, limitR) {
-        if (keys[left] && this.x > limitL)
-            this.x -= 5;
-        else if (keys[right] && this.x + this.width < limitR )
-            this.x += 5;
+    update(key1, key2, limitL, limitR, orientation) {
+
+        let direction = orientation === 'horizontal' ? this.x : this.y;
+        let paddleDirection = orientation ==='horizontal' ? this.width : this.height;
+        if (keys[key1] && direction > limitL) {
+            if (orientation === 'horizontal')
+                this.x -= 5;
+            else
+                this.y -= 5;
+        }
+        else if (keys[key2] && direction + paddleDirection < limitR ){
+            if (orientation === 'horizontal') 
+                this.x += 5;
+            else
+                this.y += 5;
+        }
     }
 }
