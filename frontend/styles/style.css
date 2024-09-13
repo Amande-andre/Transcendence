@@ -61,29 +61,43 @@ h2 {
     color: #f5f5f5;
 }
 
-button::after {
-    -webkit-transition: all 0.3s;
-    -moz-transition: all 0.3s;
-    -o-transition: all 0.3s;
-    transition: all 0.3s;
+.container {
+    position: absolute;
+    top: 10%;
   }
-
-button::before,
-button::after {
-background: #fff;
-content: "";
-position: absolute;
-z-index: -1;
-}
-button:hover {
-color: #29f2e4;
-}
-.button1::after {
-height: 0;
-left: 0;
-top: 0;
-width: 100%;
-}
-.button1:hover:after {
-height: 100%;
-}
+  .button {
+    border: none;
+    display: block;
+    text-align: center;
+    cursor: pointer;
+    text-transform: uppercase;
+    outline: none;
+    overflow: hidden;
+    position: relative;
+    color: #eeeeee;
+    font-weight: 600;
+    font-size: 15px;
+    padding: 15px 50px;
+    margin: 0 auto;
+  }
+  .button span {
+    position: relative;
+    z-index: 1;
+  }
+  .button:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 470%;
+    width: 140%;
+    /* background: #52b71f; */
+    -webkit-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+    -webkit-transform: translateX(-100%) translateY(-25%) rotate(45deg);
+    transform: translateX(-100%) translateY(-25%) rotate(45deg);
+  }
+  .button:hover:after {
+    -webkit-transform: translateX(-9%) translateY(-25%) rotate(45deg);
+    transform: translateX(-9%) translateY(-25%) rotate(45deg);
+  }
