@@ -2,8 +2,8 @@ const canvas = document.getElementById('GameCanvas');
 const ctx = canvas.getContext('2d');
 const WIDTH = canvas.width = 800;
 const HEIGHT = canvas.height = 600;
+// const button = document.querySelector('button');
 let keys = {};
-const buton = document.getElementById('buton');
 
 class Player {
     constructor(paddle, ball) {
