@@ -47,7 +47,7 @@ main {
     display: flex;
     justify-content: space-between;
     height: 100%;
-}
+}button
 
 h1 {
     font-size: 2.5em;
@@ -61,13 +61,13 @@ h2 {
     color: #f5f5f5;
 }
 
-.container {
-    position: absolute;
+.Container {
     top: 10%;
   }
-  .button {
+.button {
     border: none;
     display: block;
+    width: 25vh;
     text-align: center;
     cursor: pointer;
     text-transform: uppercase;
@@ -77,27 +77,33 @@ h2 {
     color: #eeeeee;
     font-weight: 600;
     font-size: 15px;
+    background-color: #153f00;
     padding: 15px 50px;
     margin: 0 auto;
   }
-  .button span {
+.button span {
     position: relative;
     z-index: 1;
   }
-  .button:after {
+.button:after {
     content: "";
     position: absolute;
     left: 0;
     top: 0;
     height: 470%;
     width: 140%;
-    /* background: #52b71f; */
+    background: #8CB174;
     -webkit-transition: all 0.5s ease-in-out;
     transition: all 0.5s ease-in-out;
-    -webkit-transform: translateX(-100%) translateY(-25%) rotate(45deg);
-    transform: translateX(-100%) translateY(-25%) rotate(45deg);
+    -webkit-transform: translateX(-130%) translateY(-25%) rotate(45deg);
+    transform: translateX(-130%) translateY(-25%) rotate(45deg);
   }
-  .button:hover:after {
+.button:hover:after {
     -webkit-transform: translateX(-9%) translateY(-25%) rotate(45deg);
     transform: translateX(-9%) translateY(-25%) rotate(45deg);
   }
+
+/* 
+    Enlever le btn et changer les codes couleurs selon la page
+    Changer le background de la page d'accueil quand on appui sur le bouton
+*/
