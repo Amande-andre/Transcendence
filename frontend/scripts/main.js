@@ -1,32 +1,36 @@
-function buttonHome(){
-    // button.classList.add('theme-home');
-   let button = document.querySelectorAll('button');
-   button.forEach(button => {
-        button.classList.add('button');
-    });
-}
+
+// function startGame() {
+    
+// }
+
+// function endGame() {
+    
+// }
 
 function main () {
+    //logbutton tant que pas log pas de jeu
+    
     let pongButton = document.getElementById('PongButton');
     let breakoutButton = document.getElementById('BreakoutButton');
     let body = document.querySelector('body');
+    let home = document.getElementById('HomeButton');
+    let bouton = document.querySelectorAll('button');
+    bouton.forEach(bouton => {
+        bouton.classList.add('button');
+    });
     console.error();
     canvas.classList.add('hidden');
     body.classList.remove('theme-game');
     body.classList.add('theme-home');
-    buttonHome();
-   pongButton.addEventListener('click', () => {
-        canvas.classList.remove('hidden');
-        body.classList.remove('theme-home');
-        body.classList.add('theme-game');
-        startPong();
-    });
-    breakoutButton.addEventListener('click', () => {
-        canvas.classList.remove('hidden');
-        body.classList.remove('theme-home');
-        body.classList.add('theme-game');
-        startBreakout();
+    listenClick(body, canvas, pongButton);
+    listenClick(body, canvas, breakoutButton);
+    
+    home.addEventListener('click', () => {
+
+        buttonHome(body, canvas);
     });
 }
+
+
 
 main();
