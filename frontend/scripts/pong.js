@@ -30,28 +30,77 @@ function updatePaddlePong(player1, player2) {
 
 function collisionPong(player1, player2) {
     for (let ball of player1.balls) {
+        for (let paddle of player1.paddles) {
+            if (ball.x + ball.radius > paddle.x &&
+                ball.x - ball.radius < paddle.x + paddle.width &&
+                ball.y > paddle.y &&
+                ball.y < paddle.y + paddle.height) {
+                
+                // Reverse the horizontal direction
+                ball.speedX = -ball.speedX;
+                
+                // Calculate new vertical speed based on where the ball hit the paddle
+                let hitPos = (ball.y - paddle.y) / paddle.height;
+                
+                // Adjust the multiplier to control the maximum vertical speed
+                let maxSpeedY = 8;  // Maximum vertical speed
+                
+                // Use a sine function to create a more balanced curve
+                ball.speedY = Math.sin((hitPos - 0.5) * Math.PI) * maxSpeedY;
+                
+                // Ensure a minimum vertical speed to prevent straight horizontal bounces
+                let minSpeedY = 2;
+                if (Math.abs(ball.speedY) < minSpeedY) {
+                    ball.speedY = ball.speedY > 0 ? minSpeedY : -minSpeedY;
+                }
+            }
+        }
+        for (let paddle of player2.paddles) {
+            if (ball.x + ball.radius > paddle.x &&
+                ball.x - ball.radius < paddle.x + paddle.width &&
+                ball.y > paddle.y &&
+                ball.y < paddle.y + paddle.height) {
+                
+                // Reverse the horizontal direction
+                ball.speedX = -ball.speedX;
+                
+                // Calculate new vertical speed based on where the ball hit the paddle
+                let hitPos = (ball.y - paddle.y) / paddle.height;
+                
+                // Adjust the multiplier to control the maximum vertical speed
+                let maxSpeedY = 8;  // Maximum vertical speed
+                
+                // Use a sine function to create a more balanced curve
+                ball.speedY = Math.sin((hitPos - 0.5) * Math.PI) * maxSpeedY;
+                
+                // Ensure a minimum vertical speed to prevent straight horizontal bounces
+                let minSpeedY = 2;
+                if (Math.abs(ball.speedY) < minSpeedY) {
+                    ball.speedY = ball.speedY > 0 ? minSpeedY : -minSpeedY;
+                }
+            }
+        }
         if (ball.y + ball.radius > HEIGHT || ball.y - ball.radius < 0) {
             ball.speedY = -ball.speedY;
         }
         if (ball.x - ball.radius < 0) {
             player1.balls.splice(player1.balls.indexOf(ball), 1);
             player2.balls.splice(player2.balls.indexOf(ball), 1);
-            newBall = new Ball(player1.spawnBallx, player1.spawnBally, 4, 4, 5)
+            newBall = new Ball(player1.spawnBallx, player1.spawnBally, 5, 5, 8)
             player1.balls.push(newBall);
             player2.balls.push(newBall);
             player1.score++;
         }
-        if (ball.x + ball.radius > HEIGHT) {
+        if (ball.x + ball.radius > WIDTH) {
             player1.balls.splice(player1.balls.indexOf(ball), 1);
             player2.balls.splice(player2.balls.indexOf(ball), 1);
-            newBall = new Ball(player1.spawnBallx, player1.spawnBally, 4, 4, 5)
+            newBall = new Ball(player1.spawnBallx, player1.spawnBally, 5, 5, 8)
             player1.balls.push(newBall);
             player2.balls.push(newBall);
             player2.score++;
         }
     }
 }
-
 function drawPongArea(player1, player2) {
     ctx.clearRect(0, 0, WIDTH, HEIGHT);
     ctx.clearRect(0, 0, WIDTH, HEIGHT);

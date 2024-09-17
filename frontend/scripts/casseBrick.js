@@ -1,7 +1,7 @@
 function generateNumber() {
     const random = Math.random(); // Génère un nombre aléatoire entre 0 et 1
   
-    if (random < 0.3) { // 10% de chance
+    if (random < 0.2) { // 10% de chance
       // Choisir aléatoirement entre 2, 3, et 4
       const randomChoice = Math.floor(Math.random() * 2); // Génère 2, 3 ou 4
       return randomChoice;
@@ -26,7 +26,7 @@ function fillbrick(bricks, x, y) {
             bricks.push({
                 x: (x + col) * 32, // Position X de la brique
                 y: (y + row) * 16, // Position Y de la brique
-                bonus: generateNumber()  // 10% de chance d'avoir un bonus
+                bonus: generateNumber()  // 20% de chance d'avoir un bonus
             });
         }
     }
@@ -40,20 +40,24 @@ function newBall(player, ball) {
 
 function increasePaddle(player, ball) {
     for (let paddle of player.paddles)
-        paddle.width += 30;
+        if (paddle.width < WIDTH / 2 - 16)
+            paddle.width += 30;
     setTimeout(() => {
-        for (let paddle of player.paddles)
             paddle.width -= 30;
     }, 15000);
 }
 
 function Collision(player, lWall, rWall, bonus) {
     // Ball-Wall Collision
+    let topWall = 0;
+    let bottomWall = HEIGHT;
     for (let ball of player.balls) {
         if (ball.x + ball.radius > rWall || ball.x - ball.radius < lWall) {
+            ball.x = Math.max(lWall + ball.radius, Math.min(rWall - ball.radius, ball.x));
             ball.speedX = -ball.speedX;
         }
         if (ball.y - ball.radius < 0) {
+            ball.y = Math.max(topWall + ball.radius, Math.min(bottomWall - ball.radius, ball.y));
             ball.speedY = -ball.speedY;
         }
         // Ball out of bounds (bottom)
@@ -180,7 +184,7 @@ function updateBreakout(player1, player2, bonus) {
 
 
 function startBreakout() {
-    let player1 = new Player(new Paddle(WIDTH / 2 - 80 / 2, HEIGHT - 8, 80, 8),
+    let player1 = new Player(new Paddle(WIDTH / 4 - 80 / 2, HEIGHT - 8, 80, 8),
                         new Ball(WIDTH / 4, 3 * HEIGHT / 4, 0, 4, 5));
     let player2 = new Player(new Paddle(3 * WIDTH / 4 - 80 / 2, HEIGHT - 8, 80, 8),
                     new Ball(3 * WIDTH / 4, 3 * HEIGHT / 4, 0, 4, 5));
