@@ -5,6 +5,7 @@ function main () {
     canvas.classList.add('hidden');
     body.classList.remove('theme-game');
     body.classList.add('theme-home');
+    let loginButton = document.getElementById('LoginButton');
    pongButton.addEventListener('click', () => {
         canvas.classList.remove('hidden');
         body.classList.remove('theme-home');
@@ -17,6 +18,19 @@ function main () {
         body.classList.add('theme-game');
         startBreakout();
     });
+    loginButton.addEventListener('click', () => {
+        fetch('http://localhost:8080/api/pong/get/', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+        })
+    });
+
 }
 
 main();
