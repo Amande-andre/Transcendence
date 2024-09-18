@@ -19,11 +19,25 @@ function main () {
         startBreakout();
     });
     loginButton.addEventListener('click', () => {
-        fetch('http://localhost:8080/api/pong/get/', {
-            method: 'GET',
+        // fetch('http://localhost:8080/api/pong/get/', {
+        //     method: 'GET',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        // })
+        // .then(response => response.json())
+        // .then(data => {
+        //     console.log(data);
+        // })
+        fetch('http://localhost:8080/api/pong/post/', {
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
+            body: JSON.stringify({
+                name: 'Sami',
+                score: 1000
+            })
         })
         .then(response => response.json())
         .then(data => {
