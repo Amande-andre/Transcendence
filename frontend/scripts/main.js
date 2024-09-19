@@ -15,7 +15,7 @@ function main () {
     let body = document.querySelector('body');
     let home = document.getElementById('HomeButton');
     let register = document.getElementById('RegisterButton');
-    register.classList.add('hidden');
+    // register.classList.add('hidden');
     let bouton = document.querySelectorAll('button');
     bouton.forEach(bouton => {
         bouton.classList.add('button');

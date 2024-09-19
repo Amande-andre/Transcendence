@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (isLogin) {
             console.log('Tentative de connexion:', { username, password });
             // Ajoutez ici la logique de connexion
-            
+
         } else {
             console.log('Tentative d\'inscription:', { username, password });
             // Ajoutez ici la logique d'inscription
@@ -36,3 +36,28 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+document.addEventListener('DOMContentLoaded', function() {
+    const pongButton = document.getElementById('PongButton');
+    const breakoutButton = document.getElementById('BreakoutButton');
+    const Container = document.getElementById('setGameContainer');
+    const userGame = document.getElementById('userGame');
+    const setGame = document.getElementById('setGame');
+    let   registerName = false;
+    //const username = document.getElementById('username').value;
+    
+    // const setGame = document.getElementById('setGame');
+    pongButton.addEventListener('click', function() {
+        Container.classList.remove('d-none');
+    });
+    setGame.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const   nbPlayer = document.getElementById('userGame').value;
+        console.log({nbPlayer});
+        Container.classList.add('d-none');
+    });
+
+    // breakoutButton.addEventListener('click', function() {
+    //     Container.classList.remove('d-none');
+    // });
+
+});
