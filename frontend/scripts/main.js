@@ -1,7 +1,7 @@
 
-// function startGame() {
-    
-// }
+function startGame() {
+    console.log("startGame");
+}
 
 // function endGame() {
     
