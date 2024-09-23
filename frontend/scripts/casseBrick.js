@@ -1,9 +1,9 @@
 function generateNumber() {
     const random = Math.random(); // Génère un nombre aléatoire entre 0 et 1
   
-    if (random < 0.2) { // 10% de chance
+    if (random < 0.1) { // 10% de chance
       // Choisir aléatoirement entre 2, 3, et 4
-      const randomChoice = Math.floor(Math.random() * 2); // Génère 2, 3 ou 4
+      const randomChoice = Math.floor(Math.random() * 2); // Génère 2, 3 ou 4 before *10
       return randomChoice;
     } else {
       // 90% de chance de retourner 1
@@ -26,7 +26,7 @@ function fillbrick(bricks, x, y) {
             bricks.push({
                 x: (x + col) * 32, // Position X de la brique
                 y: (y + row) * 16, // Position Y de la brique
-                bonus: generateNumber()  // 20% de chance d'avoir un bonus
+                bonus: generateNumber()  // 10% de chance d'avoir un bonus
             });
         }
     }
@@ -39,12 +39,16 @@ function newBall(player, ball) {
 }
 
 function increasePaddle(player, ball) {
-    for (let paddle of player.paddles)
-        if (paddle.width < WIDTH / 2 - 16)
+    for (let paddle of player.paddles){
+
+        if (paddle.width < WIDTH / 2 - 16){
             paddle.width += 30;
-    setTimeout(() => {
+        }
+        setTimeout(() => {
             paddle.width -= 30;
-    }, 15000);
+            console.log('paddle width', paddle.width);
+        }, 2000);
+    }
 }
 
 function Collision(player, lWall, rWall, bonus) {
@@ -115,8 +119,10 @@ function Collision(player, lWall, rWall, bonus) {
                 } else {
                     ball.speedY = -ball.speedY;
                 }
-                if (brick.bonus !== -1) 
+                if (brick.bonus !== -1) {
                     bonus[brick.bonus](player, ball);
+                    console.log(brick.bonus);
+                }
                 player.bricks.splice(i, 1);
                 break; // Exit loop after collision
             }
