@@ -20,8 +20,33 @@ document.addEventListener('DOMContentLoaded', function() {
         const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
         
-        if (isLogin) {
-            console.log('Tentative de connexion:', { username, password });
+        if (isLogin){
+            // fetch('http://localhost:8080/api/pong/get/', {
+            //     method: 'GET',
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //     },
+            // })
+            // .then(response => response.json())
+            // .then(data => {
+            //     console.log(data);
+            // })
+            fetch('http://localhost:8080/api/pong/post/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    name: username,
+                    password: password
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+            })
+
+            //console.log('Tentative de connexion:', { username, password });
             // Ajoutez ici la logique de connexion
         } else {
             console.log('Tentative d\'inscription:', { username, password });
