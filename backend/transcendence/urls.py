@@ -21,5 +21,5 @@ from pong import views
 urlpatterns = [
     path('admin/', admin.site.urls),
 	path('pong/get/', views.json_get, name='json_get'),
-	path('pong/post/', views.json_post, name='json_post'),
+	path('pong/register/', views.json_register, name='json_post'),
 ]

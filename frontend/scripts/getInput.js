@@ -31,13 +31,13 @@ document.addEventListener('DOMContentLoaded', function() {
             // .then(data => {
             //     console.log(data);
             // })
-            fetch('http://localhost:8080/api/pong/post/', {
+            fetch('http://localhost:8080/api/pong/register/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    name: username,
+                    username: username,
                     password: password
                 })
             })
