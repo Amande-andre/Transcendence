@@ -20,6 +20,7 @@ from pong import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-	path('pong/get/', views.json_get, name='json_get'),
-	path('pong/register/', views.json_register, name='json_post'),
+	path('pong/login/', views.json_login, name='json_login'),
+	path('pong/register/', views.json_register, name='json_register'),
+	
 ]

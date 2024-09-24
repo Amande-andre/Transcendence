@@ -21,35 +21,12 @@ document.addEventListener('DOMContentLoaded', function() {
         const password = document.getElementById('password').value;
         
         if (isLogin){
-            // fetch('http://localhost:8080/api/pong/get/', {
-            //     method: 'GET',
-            //     headers: {
-            //         'Content-Type': 'application/json',
-            //     },
-            // })
-            // .then(response => response.json())
-            // .then(data => {
-            //     console.log(data);
-            // })
-            fetch('http://localhost:8080/api/pong/register/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    username: username,
-                    password: password
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-            })
-
+			loginRequest(username, password);
             //console.log('Tentative de connexion:', { username, password });
             // Ajoutez ici la logique de connexion
         } else {
-            console.log('Tentative d\'inscription:', { username, password });
+			loginRequest(username, password);
+            // console.log('Tentative d\'inscription:', { username, password });
             // Ajoutez ici la logique d'inscription
         }
     });
