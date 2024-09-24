@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', function() {
     let isLogin = true;
     authButton.addEventListener('click', function() {
         authContainer.classList.toggle('d-none');
-		updateAuthUI();
     });
 
     toggleAuth.addEventListener('click', function(e) {
@@ -55,9 +54,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-	function updateAuthUI() {
-        // Ne modifie que le texte à l'intérieur du <span>
-        authSubmit.querySelector('span').textContent = isLogin ? 'Se connecter' : 'S\'inscrire';
+    function updateAuthUI() {
+        authSubmit.textContent = isLogin ? 'Se connecter' : 'S\'inscrire';
         toggleAuth.textContent = isLogin ? 'S\'inscrire' : 'Se connecter';
     }
 });
