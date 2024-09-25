@@ -40,16 +40,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const pongButton = document.getElementById('PongButton');
     const breakoutButton = document.getElementById('BreakoutButton');
     const Container = document.getElementById('setGameContainer');
-    const userGame = document.getElementById('userGame');
-    const setGame = document.getElementById('setGame');
-    let   registerName = false;
-    //const username = document.getElementById('username').value;
-    
-    // const setGame = document.getElementById('setGame');
+    const setPlayer = document.getElementById('setPlayer');
+    let nbPlayer = document.getElementById('setPlayer');
+    let namePlayer = document.getElementById('namePlayer');
+    let colorPlayer = document.getElementById('colorPlayer');
     pongButton.addEventListener('click', function() {
         Container.classList.remove('d-none');
     });
-    setGame.addEventListener('submit', function(e) {
+    setPlayer.addEventListener('submit', function(e) {
         e.preventDefault();
         const   nbPlayer = document.getElementById('userGame').value;
         console.log({nbPlayer});
