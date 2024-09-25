@@ -39,13 +39,13 @@ document.addEventListener('DOMContentLoaded', function() {
 document.addEventListener('DOMContentLoaded', function() {
     const pongButton = document.getElementById('PongButton');
     const breakoutButton = document.getElementById('BreakoutButton');
-    const Container = document.getElementById('setGameContainer');
+    const setGameContainer = document.getElementById('setGameContainer');
     const setPlayer = document.getElementById('setPlayer');
     let nbPlayer = document.getElementById('setPlayer');
     let namePlayer = document.getElementById('namePlayer');
     let colorPlayer = document.getElementById('colorPlayer');
     pongButton.addEventListener('click', function() {
-        Container.classList.remove('d-none');
+        setGameContainer.classList.remove('d-none');
     });
     setPlayer.addEventListener('submit', function(e) {
         e.preventDefault();
