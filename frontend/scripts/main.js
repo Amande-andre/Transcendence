@@ -20,7 +20,7 @@ function main () {
     bouton.forEach(bouton => {
         bouton.classList.add('button');
     });
-    console.error();
+    //console.error();
     //canvas.classList.add('hidden');
     body.classList.remove('theme-game');
     body.classList.add('theme-home');

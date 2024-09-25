@@ -47,7 +47,7 @@ main {
     display: flex;
     justify-content: space-between;
     height: 100%;
-}button
+}
 
 h1 {
     font-size: 2.5em;
@@ -83,7 +83,7 @@ h2 {
   }
 .button span {
     position: relative;
-    z-index: 1;
+    z-index: 2;
   }
 .button:after {
     content: "";
@@ -93,6 +93,7 @@ h2 {
     height: 470%;
     width: 140%;
     background: #8CB174;
+	z-index: 1;
     -webkit-transition: all 0.5s ease-in-out;
     transition: all 0.5s ease-in-out;
     -webkit-transform: translateX(-130%) translateY(-25%) rotate(45deg);

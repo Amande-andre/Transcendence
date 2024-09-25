@@ -19,6 +19,7 @@
     <script src="scripts/pong.js" defer></script>
     <script src="scripts/casseBrick.js" defer></script>
     <script src="scripts/style.js" defer></script>
+	<script src="scripts/request.js" defer></script>
     <script src="scripts/getInput.js" defer></script>
     <script src="scripts/main.js" defer></script>
 </head>
@@ -27,10 +28,10 @@
         <div><a>42</a></div>
         <div class="Container">
             <canvas id="GameCanvas"></canvas>
-            <button class="btn btn-primary" id="PongButton">Pong</button>
-            <button class="btn btn-primary" id="BreakoutButton">Casse brique</button>
-            <button class="btn btn-primary" id="HomeButton">Home</button>
-            <button class="btn btn-primary" id="AuthButton">Authentification</button>
+            <button class="btn btn-primary" id="PongButton"><span>Pong</span></button>
+            <button class="btn btn-primary" id="BreakoutButton"><span>Casse brique</span></button>
+            <button class="btn btn-primary" id="HomeButton"><span>Home</span></button>
+            <button class="btn btn-primary" id="AuthButton"><span>Authentification</span></button>
         </div>
     </header>
 
@@ -45,10 +46,10 @@
                 <label for="password" class="form-label">Mot de passe</label>
                 <input type="password" class="form-control" id="password" name="password" required>
             </div>
-            <button type="submit" class="btn btn-primary" id="authSubmit">Se connecter</button>
+            <button type="submit" class="btn btn-primary" id="authSubmit"><span>Se connecter</span></button>
         </form>
         <div class="mt-2">
-            <a href="#" id="toggleAuth">S'inscrire</a>
+            <a href="#" id="toggleAuth"><span>S'inscrire</span></a>
         </div>
     </div>
     // <!-- Composant pour set game -->

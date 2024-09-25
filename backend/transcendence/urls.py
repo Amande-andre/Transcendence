@@ -16,7 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from pong import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+	path('pong/login/', views.json_login, name='json_login'),
+	path('pong/register/', views.json_register, name='json_register'),
+	
 ]

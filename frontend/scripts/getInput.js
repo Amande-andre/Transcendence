@@ -19,13 +19,15 @@ document.addEventListener('DOMContentLoaded', function() {
         e.preventDefault();
         const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
-        // ici les donne sont recuperees
-        if (isLogin) {
-            console.log('Tentative de connexion:', { username, password });
+        
+        if (isLogin){
+			loginRequest(username, password);
+            //console.log('Tentative de connexion:', { username, password });
             // Ajoutez ici la logique de connexion
 
         } else {
-            console.log('Tentative d\'inscription:', { username, password });
+			loginRequest(username, password);
+            // console.log('Tentative d\'inscription:', { username, password });
             // Ajoutez ici la logique d'inscription
         }
     });
