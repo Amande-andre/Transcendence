@@ -9,7 +9,9 @@ let keys = {};
 
 
 class Player {
-    constructor(paddle, ball) {
+    constructor(paddle, ball, keyL, key) {
+
+        this.isIa = 1;
         this.score = 0;
         this.paddles = []; 
         this.balls = [];
@@ -18,6 +20,8 @@ class Player {
         this.balls.push(ball);
         this.spawnBallx = ball.x;
         this.spawnBally = ball.y;
+        this.keyL;
+        this.keyR;
     }
 
     initControls(key1, key2) {
@@ -75,6 +79,7 @@ class Paddle {
         this.y = y;
         this.width = width;
         this.height = height;
+        this.midl = this.width / 2;
     }
 
     drawPaddle() {

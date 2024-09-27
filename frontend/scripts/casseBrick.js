@@ -166,12 +166,39 @@ function drawBreakoutAera(player1, player2) {
         player2.balls[i].drawBall();
 }
 
+// function IaChoice(player) {
+//     IaAction(player, 'a', 10);
+//     console.log('IA');
+// }
+
+function IaAction() {
+   let event = new KeyboardEvent('keydown', {
+        key: 'a', //iachoice()
+        keyCode: 65,
+        code: 'KeyA',
+        which: 65,
+        shiftKey: false,
+        ctrlKey: false,
+        metaKey: false
+    });
+    document.dispatchEvent(event);
+    console.log('IA');
+}
+
+// function updateIa(player1, player2) {
+//     if (player1.isIa)
+//         IaChoice(player1)
+//     if (player2.isIa)
+//         IaChoice(player2)
+// } 
+
 function updateBreakout(player1, player2, bonus) {
 
     drawBreakoutAera(player1, player2);
-
+    IaAction();
     Collision(player1, 0, WIDTH / 2 - 16, bonus);
     Collision(player2, WIDTH / 2 + 16, WIDTH, bonus);
+    //updateIa(player1, player2);
     updatePaddles(player1, player2);
     if (player1.bricks.length === 0 || player2.bricks.length === 0) {
         ctx.clearRect(0, 0, WIDTH, HEIGHT);
@@ -191,15 +218,15 @@ function updateBreakout(player1, player2, bonus) {
 
 function startBreakout() {
     let player1 = new Player(new Paddle(WIDTH / 4 - 80 / 2, HEIGHT - 8, 80, 8),
-                        new Ball(WIDTH / 4, 3 * HEIGHT / 4, 0, 4, 5));
+                        new Ball(WIDTH / 4, 3 * HEIGHT / 4, 0, 4, 5), 'a', 'd');
     let player2 = new Player(new Paddle(3 * WIDTH / 4 - 80 / 2, HEIGHT - 8, 80, 8),
-                    new Ball(3 * WIDTH / 4, 3 * HEIGHT / 4, 0, 4, 5));
+                    new Ball(3 * WIDTH / 4, 3 * HEIGHT / 4, 0, 4, 5), '1', '3');
     const bonus = [newBall, increasePaddle];
     fillbrick(player1.bricks, 0, 5);
     fillbrick(player2.bricks, 13, 5);
 
-    player1.initControls('a', 'd');
-    player2.initControls('1', '3');
+    player1.initControls(player1.keyL, player1.keyR);
+    player2.initControls(player2.keyL, player2.keyR);
 
     drawBreakoutAera(player1, player2);
 
