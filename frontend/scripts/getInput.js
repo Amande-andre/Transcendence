@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Ajoutez ici la logique de connexion
 
         } else {
-			loginRequest(username, password);
+			registerRequest(username, password);
             // console.log('Tentative d\'inscription:', { username, password });
             // Ajoutez ici la logique d'inscription
         }

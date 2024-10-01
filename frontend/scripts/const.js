@@ -5,7 +5,24 @@ const HEIGHT = canvas.height = 600;
 
 // const button = document.querySelector('button');
 let keys = {};
+// Function to get a cookie value by name
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
 
+// Get the CSRF token from cookies
+const csrftoken = getCookie('csrftoken');  // Make sure this runs before using it
 
 
 class Player {

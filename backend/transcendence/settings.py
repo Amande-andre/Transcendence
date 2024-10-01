@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-&-6mz8(p$a^y%n(265xy=tq3hq_h#w8kvwfr&+u+v8u6z)zj(5
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-CORS_ORIGIN_ALLOW_ALL = True
+
 
 # Application definition
 
@@ -52,6 +52,15 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8080",
+    "http://127.0.0.1:8080",
+]
+
+CORS_ALLOW_CREDENTIALS = True
+SESSION_COOKIE_SAMESITE = 'None'  # Permet les cookies cross-origin
+SESSION_COOKIE_SECURE = True      # Requiert HTTPS
 ROOT_URLCONF = 'transcendence.urls'
 
 TEMPLATES = [
@@ -128,3 +137,16 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# settings.py
+
+# Supposons que votre application s'appelle 'pong'
+AUTH_USER_MODEL = 'pong.User'
+
+# Ajoutez ces paramètres pour la gestion des mots de passe
+PASSWORD_HASHERS = [
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+    'django.contrib.auth.hashers.Argon2PasswordHasher',
+    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+]
