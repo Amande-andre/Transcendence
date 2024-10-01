@@ -9,9 +9,8 @@ let keys = {};
 
 
 class Player {
-    constructor(paddle, ball, keyL, key) {
-
-        this.isIa = 1;
+    constructor(paddle, ball) {
+        
         this.score = 0;
         this.paddles = []; 
         this.balls = [];
@@ -20,11 +19,15 @@ class Player {
         this.balls.push(ball);
         this.spawnBallx = ball.x;
         this.spawnBally = ball.y;
-        this.keyL;
-        this.keyR;
+        this.isIa = true;
+        this.time = new Date();
+        this.second = this.time.getSeconds();
+        this.input = null;
+        this.second = 0;
+        this.past = -1;
     }
-
     initControls(key1, key2) {
+            const time = new Date();
 
         document.addEventListener('keydown', function(event) {  
             if (event.key === key1)
@@ -79,7 +82,8 @@ class Paddle {
         this.y = y;
         this.width = width;
         this.height = height;
-        this.midl = this.width / 2;
+        this.midl = x + (width / 2);
+        this.midlPong = y + (height / 2);
     }
 
     drawPaddle() {
@@ -102,6 +106,8 @@ class Paddle {
             else
                 this.y += 5;
         }
+        this.midl = this.x + (this.width / 2);
+        this.midlPong = this.y + (this.height / 2);
     }
 }
 

@@ -118,9 +118,86 @@ function drawPongArea(player1, player2) {
         player2.balls[i].drawBall();
 }
 
+function choiceIaPong(player, nb)  {
+        
+    //faire les calcule de diff avant et toujours comparer entre un scope ex si >40 et <400 par exemple
+    if (nb === 0) {
+        if (player.balls[0].x < WIDTH / 4){
+            if (player.paddles[0].midlPong <= HEIGHT / 2 + player.paddles[0].height / 2){
+                this.input = 's';
+                console.log('pos ball 1 == ', player.balls[0].y, 'pos paddle == ', player.paddles[0].midlPong, ' move chose = ' , this.input);
+
+                return 's';
+            }
+            else if (player.paddles[0].midlPong >= HEIGHT / 2 + player.paddles[0].height / 2){
+                this.input = 'w';
+                console.log('pos ball 2 == ', player.balls[0].y, 'pos paddle == ', player.paddles[0].midlPong, ' move chose = ' , this.input);
+
+                return 'w';
+            }
+            else 
+                return null;
+        } //dessous c est pour choisir quna la balle est cote iA
+        if (player.balls[0].y - player.paddles[0].midlPong  > 40){
+            this.input = 's';
+            console.log('ball 3 == ', player.balls[0].y, 'paddle == ', player.paddles[0].midlPong);
+            console.log('diff 3 == ', player.balls[0].y - player.paddles[0].midlPong, ' move chose = ', this.input);
+
+            return 's';
+        }
+        else if (player.balls[0].y - player.paddles[0].midlPong  < 40){
+            this.input = 'w';
+            console.log('ball 4 == ', player.balls[0].y, 'paddle == ', player.paddles[0].midlPong);
+            console.log('diff 4 == ', player.balls[0].y - player.paddles[0].midlPong, ' move chose = ', this.input);
+
+            return 'w';
+        }
+        else {
+            console.log('pos ball 5 == ', player.balls[0].y, 'pos paddle == ', player.paddles[0].midlPong, ' move chose = ' , this.input);
+
+            return null;
+        }
+    }
+}
+
+function IaControlePong(player, nb) {
+    
+    if (!player.isIa)
+        return;
+    player.second = new Date().getSeconds();
+    if (player.second <= player.past && (player.second !== 0 && player !== 59)){ 
+        return;
+    }       
+    console.log('player.second == ', player.second);
+    player.past = player.second;
+    //player.past = player.second ;
+    let eventTab = choiceIaPong(player, nb);
+    otherevent = eventTab === 'w' ? 's' : 'w';
+    // if (player.input === eventTab){
+    //     return;
+    // }
+    if (eventTab === null)
+        return;
+    let eventdown = new KeyboardEvent('keyup', {
+        key: otherevent,
+    });
+    let eventup = new KeyboardEvent('keydown', {
+        key: eventTab,
+    });
+    document.dispatchEvent(eventup);
+    //document.dispatchEvent(eventup);
+    document.dispatchEvent(eventdown);
+    // setTimeout(() => {
+    //     document.dispatchEvent(eventup);
+    // }, 500);
+    //console.log('after seconde is  == ', new Date().getSeconds());
+}
+
 function updatePong(player1, player2, bonus) {
 
     drawPongArea(player1, player2);
+    player2.isIa = false;
+    IaControlePong(player1, 0);
     player1.balls[0].x += player1.balls[0].speedX;
     player1.balls[0].y += player1.balls[0].speedY;
     collisionPong(player1, player2);
