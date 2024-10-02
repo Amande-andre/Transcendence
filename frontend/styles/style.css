@@ -1,103 +1,32 @@
-.theme-home {
-    background: 
-        radial-gradient(
-            circle at bottom left, /* Premier dégradé centré en bas à gauche */
-            #04154d 0%, 
-            rgba(10, 32, 106, 0.661) 20%,  
-            #051650ee 60%
-        ),
-        radial-gradient(
-            circle at top right, /* Deuxième dégradé centré en haut à droite */
-            #01113fc7 0%, 
-            rgba(2, 22, 87, 0.814) 20%,  
-            #05164c 70%
-        );
-    /* Ajustements pour remplir toute la fenêtre */
-    /*background-color: #030e32; /* Couleur de fond par défaut si les dégradés ne couvrent pas toute la surface */
+.custom-background {
+    background: linear-gradient(-156deg, black, rgb(0,12,122) 70%, rgb(0,5,53) 86%, black 100%);
 }
 
-.theme-game {
-    background: 
-        radial-gradient(
-            circle at bottom left, /* Premier dégradé centré en bas à gauche */
-            #8CB174 0%, /* Vert Game Boy */
-            rgba(140, 177, 116, 0.661) 10%,  /* Vert Game Boy transparent */
-            #036a27a3 60%
-        ),
-        radial-gradient(
-            circle at top right, /* Deuxième dégradé centré en haut à droite */
-            #8CB174 0%, /* Vert Game Boy */
-            rgba(140, 177, 116, 0.814) 30%,  /* Vert Game Boy transparent */
-            #054c26e3 70%
-        );
-        background-repeat: repeat-x;
-}
 
-.hidden {
-    display: none;
-}
-
-header {
-    display: flex;
-    justify-content: space-between;
-    /*de gauche a droite*/ ;
-}
-
-main {
-    display: flex;
-    justify-content: space-between;
-    height: 100%;
-}
-
-h1 {
-    font-size: 2.5em;
-    margin: 0;
-    color: #f5f5f5;
-}
-
-h2 {
-    font-size: 1.5em;
-    margin-left: 1em;
-    color: #f5f5f5;
-}
-
-.container {
+.custom-container {
+    background: transparent;
+    width: 315px;
     position: absolute;
-    top: 10%;
-  }
-  .button {
-    border: none;
-    display: block;
-    text-align: center;
-    cursor: pointer;
-    text-transform: uppercase;
-    outline: none;
-    overflow: hidden;
-    position: relative;
-    color: #eeeeee;
-    font-weight: 600;
-    font-size: 15px;
-    padding: 15px 50px;
-    margin: 0 auto;
-  }
-  .button span {
-    position: relative;
-    z-index: 1;
-  }
-  .button:after {
-    content: "";
+    margin-top: 540px;
+    height: 82px;
+}
+
+
+.custom-h2 {
+    font-size: 20px;
+    color: var(--bs-body-bg);
+    font-family: 'Quicksand', sans-serif;
+    text-align: left;
     position: absolute;
-    left: 0;
-    top: 0;
-    height: 470%;
-    width: 140%;
-    /* background: #52b71f; */
-    -webkit-transition: all 0.5s ease-in-out;
-    transition: all 0.5s ease-in-out;
-    -webkit-transform: translateX(-100%) translateY(-25%) rotate(45deg);
-    transform: translateX(-100%) translateY(-25%) rotate(45deg);
-  }
-  .button:hover:after {
-    -webkit-transform: translateX(-9%) translateY(-25%) rotate(45deg);
-    transform: translateX(-9%) translateY(-25%) rotate(45deg);
-  }
+    margin-left: 6px;
+}
+
+
+.custom-h1 {
+    font-family: 'Quicksand', sans-serif;
+    color: var(--bs-body-bg);
+    text-align: left;
+    height: 63px;
+    position: absolute;
+    margin-top: 25px;
+}

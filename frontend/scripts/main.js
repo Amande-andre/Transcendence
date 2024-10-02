@@ -44,6 +44,34 @@ function main () {
             console.log(data);
         })
     });
+    loginForm.addEventListener('submit', function(event) {
+        event.preventDefault(); // Empêche l'envoi du formulaire traditionnel
+
+        // Récupère les valeurs des champs
+        let username = document.getElementById('username').value;
+        let password = document.getElementById('password').value;
+
+        // Envoi des données avec fetch
+        fetch('http://localhost:8080/api/login/', { 
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                username: username,
+                password: password
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            // Ajouter toute autre logique de gestion de la réponse ici
+        })
+        .catch(error => {
+            console.error('Erreur:', error);
+        });
+    });
+
 
 }
 

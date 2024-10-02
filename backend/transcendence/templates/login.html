@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Login</title>
+    <!-- Ajoutez la balise link pour importer la police -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Actor&amp;display=swap">  <!-- Ajoutez la police pour les placeholder-->
+
+    <link rel="stylesheet" href="styles/bootstrap.min.css">
+    <link rel="stylesheet" href="styles/login-form---Ambrodu-register.css">
+    <link rel="stylesheet" href="styles/login-form---Ambrodu.css">
+</head>
+
+<body>
+    <div class="body" style="padding-top: 150px;">
+        <div class="border rounded shadow login-center" style="width: 80%;margin: 5vh auto;padding: 20px;max-width: 600px;height: 60%;min-height: 300px;background: var(--bs-secondary-text-emphasis);">
+            <div class="text-center form-group mb-3"><img class="img-fluid" style="width: 100px;" src="images/Login.png"></div>
+            <form method="post" style="padding-top: 32px;">
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="d-flex justify-content-center form-group mb-3">
+                        {{ field }}
+                    </div>
+                {% endfor %}
+                <div class="d-flex justify-content-center form-group mb-3">
+                    <button class="btn btn-dark" style="width: 200px;" button="submit">Login</button>
+                </div>
+            </form>
+            
+            <!-- <div class="d-flex justify-content-center form-group mb-3"><input class="form-control" type="password" style="width: 200px;" placeholder="Password"></div> -->
+            
+            
+        </div>
+    </div>
+    <script src="scripts/bootstrap.min.js"></script>
+</body>
+
+</html>

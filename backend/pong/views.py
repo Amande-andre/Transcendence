@@ -19,4 +19,14 @@ def json_post(request):
 		return JsonResponse(response)
 	else:
 		return JsonResponse({'status': 'error', 'message': 'invalid method'})
+	
+@csrf_exempt
+def create_user(request):
+	if request.method == 'POST':
+		data = json.loads(request.body)
+		username = data['username']
+		password = data['password']
+		return JsonResponse({'status': 'success', 'message': 'user created)'})
+	else:
+		return JsonResponse({'status': 'error', 'message': 'invalid method'})
 # Create your views here.
