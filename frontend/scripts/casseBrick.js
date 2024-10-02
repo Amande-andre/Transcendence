@@ -46,7 +46,6 @@ function increasePaddle(player, ball) {
         }
         setTimeout(() => {
             paddle.width -= 30;
-            console.log('paddle width', paddle.width);
         }, 2000);
     }
 }
@@ -121,7 +120,6 @@ function Collision(player, lWall, rWall, bonus) {
                 }
                 if (brick.bonus !== -1) {
                     bonus[brick.bonus](player, ball);
-                    console.log(brick.bonus);
                 }
                 player.bricks.splice(i, 1);
                 break; // Exit loop after collision
@@ -166,10 +164,65 @@ function drawBreakoutAera(player1, player2) {
         player2.balls[i].drawBall();
 }
 
+function choiceIa(player, nb)  {
+        
+    if (nb === 0) {
+        if (player.balls[0].x < player.paddles[0].midl){
+            this.input = 'a';
+            return 'a';
+        }
+        else if (player.balls[0].x > player.paddles[0].midl){
+            this.input = 'd';
+            return 'd';
+        }
+    }
+    else {
+        if (player.balls[0].x < player.paddles[0].midl){
+
+            return '1';
+        }
+        else if (player.balls[0].x > player.paddles[0].midl){
+
+            return '3';
+        }
+    }
+}
+
+function IaControle(player, nb) {
+    
+    if (!player.isIa)
+        return;
+    player.second = new Date().getSeconds();
+    if (player.second <= player.past && (player.second !== 0 && player !== 59)){ 
+        return;
+    }       
+    console.log('player.second == ', player.second);
+    player.past = player.second;
+    //player.past = player.second ;
+    let eventTab = choiceIa(player, nb);
+    otherevent = eventTab === 'a' ? 'd' : 'a';
+    // if (player.input === eventTab){
+    //     return;
+    // }
+    let eventdown = new KeyboardEvent('keyup', {
+        key: otherevent,
+    });
+    let eventup = new KeyboardEvent('keydown', {
+        key: eventTab,
+    });
+    setTimeout(() => {
+        document.dispatchEvent(eventup);
+    }, 500);
+    //document.dispatchEvent(eventup);
+    document.dispatchEvent(eventdown);
+    //console.log('after seconde is  == ', new Date().getSeconds());
+}
+
 function updateBreakout(player1, player2, bonus) {
 
     drawBreakoutAera(player1, player2);
-
+    player2.isIa = false;
+    IaControle(player1, 0);
     Collision(player1, 0, WIDTH / 2 - 16, bonus);
     Collision(player2, WIDTH / 2 + 16, WIDTH, bonus);
     updatePaddles(player1, player2);
@@ -190,6 +243,7 @@ function updateBreakout(player1, player2, bonus) {
 
 
 function startBreakout() {
+
     let player1 = new Player(new Paddle(WIDTH / 4 - 80 / 2, HEIGHT - 8, 80, 8),
                         new Ball(WIDTH / 4, 3 * HEIGHT / 4, 0, 4, 5));
     let player2 = new Player(new Paddle(3 * WIDTH / 4 - 80 / 2, HEIGHT - 8, 80, 8),
