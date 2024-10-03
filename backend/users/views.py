@@ -38,10 +38,10 @@ class LoginForm(FormView):
 class Logout(View):
 	pass
 
-def Register(request):
-   form = RegisterForm()
-   return render(request, 'register.html', {'form': form})
+# def RegisterRender(request):
+#    form = CustomCreationForm()
+#    return render(request, 'register.html', {'form': form})
 
-def Login(request):
-   form = CustomAuthenticationForm()
-   return render(request, 'login.html', {'form': form})
+# def LoginRender(request):
+#    form = CustomAuthenticationForm()
+#    return render(request, 'login.html', {'form': form})

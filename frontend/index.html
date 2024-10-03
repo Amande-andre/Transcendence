@@ -25,10 +25,8 @@
             <div class="collapse navbar-collapse" id="navcol-1" style="right: 3vw;top: 0;padding: 0;z-index: 1000;position: fixed;">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="#" onclick="navigate('home')" style="color: var(--bs-body-bg);font-size: 20px;">Home</a></li>
-                    <!-- <li class="nav-item"><a class="nav-link" href="#" onclick="navigate('login')" style="color: var(--bs-body-bg);font-size: 20px;">Login</a></li> -->
-                    <li class="nav-item"><a class="nav-link" href="#" hx-get="http://localhost:8080/api/users/loginForm/" hx-target="body" hx-push-url="/login/" style="color: var(--bs-body-bg);font-size: 20px;">Login</a></li>
-                    <!-- <li class="nav-item"><a class="nav-link" href="#" onclick="navigate('register')" style="color: var(--bs-body-bg);font-size: 20px;">Register</a></li> -->
-                    <li class="nav-item"><a class="nav-link" href="#" hx-get="http://localhost:8080/api/users/registerForm/" hx-target="body" hx-push-url="/register/" style="color: var(--bs-body-bg);font-size: 20px;">Register</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" hx-get="http://127.0.0.1:8080/api/users/login/" hx-target="body" hx-push-url="api/users/login/" style="color: var(--bs-body-bg);font-size: 20px;">Login</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" hx-get="http://127.0.0.1:8080/api/users/register/" hx-target="body" hx-push-url="api/users/register/" style="color: var(--bs-body-bg);font-size: 20px;">Register</a></li>
                 </ul>
             </div>
         </div>
