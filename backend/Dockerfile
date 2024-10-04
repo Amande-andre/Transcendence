@@ -14,6 +14,7 @@ RUN pip install --upgrade pip && \
 	pip install psycopg2-binary
 
 COPY . /app
+COPY static/ /app/static/
 
 RUN pip install -r requirements.txt
 RUN chmod +x ./entrypoint.sh

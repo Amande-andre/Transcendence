@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html data-bs-theme="light" lang="en">
 
@@ -8,9 +9,9 @@
     <!-- Ajoutez la balise link pour importer la police -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Actor&amp;display=swap">  <!-- Ajoutez la police pour les placeholder-->
 
-    <link rel="stylesheet" href="styles/bootstrap.min.css">
-    <link rel="stylesheet" href="styles/login-form---Ambrodu-register.css">
-    <link rel="stylesheet" href="styles/login-form---Ambrodu.css">
+    <link rel="stylesheet" href="{% static 'styles/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/login-form---Ambrodu-register.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/login-form---Ambrodu.css' %}">
 </head>
 
 <body>
@@ -34,7 +35,7 @@
             
         </div>
     </div>
-    <script src="scripts/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
 </body>
 
 </html>
