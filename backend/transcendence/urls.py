@@ -22,7 +22,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 	# path('pong/get/', views.json_get, name='json_get'),
 	# path('pong/post/', views.json_post, name='json_post'),
-	
-    path('users/', include('users.urls')),
+    path('users/', include('users.urls'))
 
 ]
