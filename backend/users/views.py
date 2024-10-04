@@ -4,6 +4,8 @@ from .form import CustomCreationForm
 from .models import User
 from django.contrib.auth import login
 from .form import CustomAuthenticationForm
+from django.http import JsonResponse
+from django.template.loader import render_to_string
 
 
 # Create your views here.
@@ -20,6 +22,8 @@ class RegisterForm(CreateView):
 		print("Form is valid")
 		form.save()
 		login(self.request, form.instance)
+		if self.request.htmx:
+			return JsonResponse({'success': True, 'redirect': self.get_success_url()})
 		return super().form_valid(form)
 
 
