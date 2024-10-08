@@ -1,15 +1,13 @@
-from django.shortcuts import render
 from django.views.generic import CreateView, View, FormView
 from .form import CustomCreationForm
 from .models import User
 from django.contrib.auth import login
 from .form import CustomAuthenticationForm
 from django.http import JsonResponse
-from django.template.loader import render_to_string
+from django.shortcuts import render
 
 
 # Create your views here.
-
 class RegisterForm(CreateView):
 
 	model = User
@@ -26,7 +24,6 @@ class RegisterForm(CreateView):
 			return JsonResponse({'success': True, 'redirect': self.get_success_url()})
 		return super().form_valid(form)
 
-
 class LoginForm(FormView):
     template_name = 'login.html'
     form_class = CustomAuthenticationForm
@@ -38,10 +35,11 @@ class LoginForm(FormView):
         login(self.request, user)
         return super().form_valid(form)
 
-
 class Logout(View):
 	pass
 
+def Home(request):
+	return render(request, 'home.html')
 # def RegisterRender(request):
 #    form = CustomCreationForm()
 #    return render(request, 'register.html', {'form': form})

@@ -16,13 +16,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from pong import views
+from users import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+	path('', views.Home, name='home'),
+    path('', include('users.urls')),
+	# path("login/", LoginRender, name="login"),
 	# path('pong/get/', views.json_get, name='json_get'),
 	# path('pong/post/', views.json_post, name='json_post'),
-	
-    path('users/', include('users.urls')),
 
 ]

@@ -9,15 +9,15 @@
     <!-- Ajoutez la balise link pour importer la police -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Actor&amp;display=swap">  <!-- Ajoutez la police pour les placeholder-->
 
-    <link rel="stylesheet" href="{% static 'users/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'users/login-form---Ambrodu-register.css' %}">
-    <link rel="stylesheet" href="{% static 'users/login-form---Ambrodu.css' %}">
+    <link rel="stylesheet" href="{% static 'users/styles/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'users/styles/login-form---Ambrodu-register.css' %}">
+    <link rel="stylesheet" href="{% static 'users/styles/login-form---Ambrodu.css' %}">
 </head>
 
 <body>
     <div class="body" style="padding-top: 150px;">
         <div class="border rounded shadow login-center" style="width: 80%;margin: 5vh auto;padding: 20px;max-width: 600px;height: 60%;min-height: 300px;background: var(--bs-secondary-text-emphasis);">
-            <div class="text-center form-group mb-3"><img class="img-fluid" style="width: 100px;" src="{% static 'users/Login.png' %}"></div>
+            <div class="text-center form-group mb-3"><img class="img-fluid" style="width: 100px;" src="{% static 'users/images/Login.png' %}"></div>
             <form method="post" style="padding-top: 32px;">
                 {% csrf_token %}
                 {% for field in form %}
@@ -35,7 +35,7 @@
             
         </div>
     </div>
-    <script src="{% static 'users/bootstrap.min.js' %}"></script>
+    <script src="{% static 'users/scripts/bootstrap.min.js' %}"></script>
 </body>
 
 </html>
