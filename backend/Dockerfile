@@ -11,7 +11,8 @@ RUN apk update && \
     apk add --no-cache bash sudo && \
     ls /bin
 RUN pip install --upgrade pip && \
-	pip install psycopg2-binary
+	pip install psycopg2-binary && \
+	pip install django-cors-headers
 
 COPY . /app
 

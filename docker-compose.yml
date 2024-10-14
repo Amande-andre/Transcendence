@@ -2,11 +2,14 @@ services:
   web:
     build: ./backend
     container_name: backend
+    env_file:
+      - .env
     volumes:
       - ./backend:/app
     depends_on:
       - db
-
+    extra_hosts:
+      - "localhost:127.0.0.1"
 
   db:
     image: postgres:16.2-alpine3.19
@@ -15,6 +18,8 @@ services:
       - .env
     volumes:
       - pgdb:/var/lib/postgresql/data/
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
 
   frontend:
     image: nginx:1.27.1-alpine

@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<<<<<<< HEAD
 <html lang="fr" style="height: 100vh;">
 <head>
     <meta charset="UTF-8">
@@ -86,4 +87,56 @@
         <h1>Transcendence</h1>
     </div>
 </body>
+=======
+<html data-bs-theme="light" lang="en">
+
+<head>
+     <script src="https://unpkg.com/htmx.org@1.8.4"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Transcendence</title>
+    <link rel="icon" type="image/png" sizes="512x512" href="assets/img/42_Logo.svg.png">
+    <link rel="stylesheet" href="styles/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Quicksand&amp;display=swap">
+    <link rel="stylesheet" href="styles/Fixed-navbar-starting-with-transparency-styles.css">
+    <link rel="stylesheet" href="styles/untitled.css">
+
+</head>
+
+<body style="height: 100vh;"><img src="images/Border-Glow-Light-Effect-PNG-Clipart.svg" style="width: 100%;height: 100%;">
+    <div class="container" style="background: transparent;/*width: 30vh;*/position: absolute;/*margin-top: 540px;*//*height: 82px;*/bottom: 20px;left: 20px;">
+        <h2 style="font-size: 30px;color: var(--bs-body-bg);font-family: Quicksand, sans-serif;text-align: left;position: absolute;/*margin-right: 0px;*/margin-left: 0.6vw;margin-bottom: 0.5rem;">Time to play</h2>
+        <h2 style="font-family: Quicksand, sans-serif;color: var(--bs-body-bg);/*text-align: left;*//*height: 63px;*//*position: fixed;*/margin-top: 25px;font-size: 55px;left: 2%;bottom: 2%;z-index: 1000;">Transcendence</h2>
+    </div>
+    <nav class="navbar navbar-expand-md fixed-top navbar-transparency navbar-light">
+        <div class="container">
+            <div style="position: fixed;top: 0;left: 0;margin: 1vh;padding: 0;z-index: 1000;"><a class="navbar-brand" href="#" style="color: var(--bs-body-bg);"><img src="images/42_Logo.svg.png"></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button></div>
+            <div class="collapse navbar-collapse" id="navcol-1" style="right: 3vw;top: 0;padding: 0;z-index: 1000;position: fixed;">
+                <ul class="navbar-nav ms-auto">
+					<li class="nav-item"><a class="nav-link" href="{% url 'home' %}" id="home-link" hx-get="/" hx-target="body" hx-push-url="/" style="color: var(--bs-body-bg);font-size: 20px;">Home</a></li>
+					<li class="nav-item"><a class="nav-link" href="#" hx-get="http://127.0.0.1:8080/api/users/login/" hx-target="body" hx-push-url="api/users/login/" style="color: var(--bs-body-bg);font-size: 20px;">Login</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" hx-get="http://127.0.0.1:8080/api/users/register/" hx-target="body" hx-push-url="api/users/register/" style="color: var(--bs-body-bg);font-size: 20px;">Register</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main id="app"></main>
+
+    <footer></footer>
+
+	<script>
+		document.getElementById('home-link').addEventListener('click', function(event) {
+			// Vérifie si l'utilisateur est déjà sur la page home
+			if (window.location.pathname === "{% url 'home' %}") {
+				event.preventDefault(); // Empêche le rechargement de la page
+			}
+		});
+	</script>
+    <script src="scripts/jQuery.js"></script>
+    <script src="scripts/bootstrap.min.js"></script>
+    <script src="scripts/Fixed-navbar-starting-with-transparency-script.js"></script>
+</body>
+
+>>>>>>> origin/franck
 </html>

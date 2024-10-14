@@ -1,38 +1,9 @@
-.theme-home {
-    background: 
-        radial-gradient(
-            circle at bottom left, /* Premier dégradé centré en bas à gauche */
-            #04154d 0%, 
-            rgba(10, 32, 106, 0.661) 20%,  
-            #051650ee 60%
-        ),
-        radial-gradient(
-            circle at top right, /* Deuxième dégradé centré en haut à droite */
-            #01113fc7 0%, 
-            rgba(2, 22, 87, 0.814) 20%,  
-            #05164c 70%
-        );
-    /* Ajustements pour remplir toute la fenêtre */
-    /*background-color: #030e32; /* Couleur de fond par défaut si les dégradés ne couvrent pas toute la surface */
+.custom-background {
+    background: linear-gradient(-156deg, black, rgb(0,12,122) 70%, rgb(0,5,53) 86%, black 100%);
 }
 
-.theme-game {
-    background: 
-        radial-gradient(
-            circle at bottom left, /* Premier dégradé centré en bas à gauche */
-            #8CB174 0%, /* Vert Game Boy */
-            rgba(140, 177, 116, 0.661) 10%,  /* Vert Game Boy transparent */
-            #036a27a3 60%
-        ),
-        radial-gradient(
-            circle at top right, /* Deuxième dégradé centré en haut à droite */
-            #8CB174 0%, /* Vert Game Boy */
-            rgba(140, 177, 116, 0.814) 30%,  /* Vert Game Boy transparent */
-            #054c26e3 70%
-        );
-        background-repeat: repeat-x;
-}
 
+<<<<<<< HEAD
 .hidden {
     display: none;
 }
@@ -145,3 +116,32 @@ h2 {
     Enlever le btn et changer les codes couleurs selon la page
     Changer le background de la page d'accueil quand on appui sur le bouton
 */
+=======
+.custom-container {
+    background: transparent;
+    width: 315px;
+    position: absolute;
+    margin-top: 540px;
+    height: 82px;
+}
+
+
+.custom-h2 {
+    font-size: 20px;
+    color: var(--bs-body-bg);
+    font-family: 'Quicksand', sans-serif;
+    text-align: left;
+    position: absolute;
+    margin-left: 6px;
+}
+
+
+.custom-h1 {
+    font-family: 'Quicksand', sans-serif;
+    color: var(--bs-body-bg);
+    text-align: left;
+    height: 63px;
+    position: absolute;
+    margin-top: 25px;
+}
+>>>>>>> origin/franck
