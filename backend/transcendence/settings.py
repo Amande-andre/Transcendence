@@ -25,18 +25,10 @@ SECRET_KEY = 'django-insecure-&-6mz8(p$a^y%n(265xy=tq3hq_h#w8kvwfr&+u+v8u6z)zj(5
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-<<<<<<< HEAD
-CORS_ORIGIN_ALLOW_ALL = True
-=======
->>>>>>> origin/franck
 
 # Application definition
 
 INSTALLED_APPS = [
-<<<<<<< HEAD
-    'pong',
-=======
->>>>>>> origin/franck
     'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -50,21 +42,29 @@ INSTALLED_APPS = [
 
 
 MIDDLEWARE = [
-<<<<<<< HEAD
     'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-=======
 	'corsheaders.middleware.CorsMiddleware',
->>>>>>> origin/franck
-    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:8080',
+    'http://127.0.0.1:8080'
+]
+
+CORS_ORIGIN_ALLOW_ALL = True
+
+CORS_ALLOW_CREDENTIALS = True
 
 ROOT_URLCONF = 'transcendence.urls'
 
@@ -171,6 +171,8 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 #STATICFILES_DIRS = [
 #    BASE_DIR / "static",
 #]
+STATIC_URL = '/static/'
+STATIC_ROOT = '/app/static/' 
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

@@ -15,23 +15,29 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-<<<<<<< HEAD
 from django.urls import path
-=======
+
 from django.urls import path, include
->>>>>>> origin/franck
 from pong import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-<<<<<<< HEAD
 	path('pong/login/', views.json_login, name='json_login'),
 	path('pong/register/', views.json_register, name='json_register'),
 	
-=======
+
 	# path('pong/get/', views.json_get, name='json_get'),
 	# path('pong/post/', views.json_post, name='json_post'),
     path('users/', include('users.urls'))
 
->>>>>>> origin/franck
+from users import views
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+	path('', views.Home, name='home'),
+    path('', include('users.urls')),
+	# path("login/", LoginRender, name="login"),
+	# path('pong/get/', views.json_get, name='json_get'),
+	# path('pong/post/', views.json_post, name='json_post'),
+
 ]
