@@ -24,9 +24,9 @@
             <div style="position: fixed;top: 0;left: 0;margin: 1vh;padding: 0;z-index: 1000;"><a class="navbar-brand" href="#" style="color: var(--bs-body-bg);"><img src="images/42_Logo.svg.png"></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button></div>
             <div class="collapse navbar-collapse" id="navcol-1" style="right: 3vw;top: 0;padding: 0;z-index: 1000;position: fixed;">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="#" onclick="navigate('home')" style="color: var(--bs-body-bg);font-size: 20px;">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#" hx-get="http://127.0.0.1:8080/users/login/" hx-target="body" hx-push-url="users/login/" style="color: var(--bs-body-bg);font-size: 20px;">Login</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#" hx-get="http://127.0.0.1:8080/users/register/" hx-target="body" hx-push-url="users/register/" style="color: var(--bs-body-bg);font-size: 20px;">Register</a></li>
+                    <li class="nav-item"><a class="nav-link" onclick="navigate('home')" style="color: var(--bs-body-bg);font-size: 20px;">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" hx-get="http://127.0.0.1:8080/login/" hx-target="body" hx-push-url="login/" style="color: var(--bs-body-bg);font-size: 20px;">Login</a></li>
+                    <li class="nav-item"><a class="nav-link" hx-get="http://127.0.0.1:8080/register/" hx-target="body" hx-push-url="register/" style="color: var(--bs-body-bg);font-size: 20px;">Register</a></li>
                 </ul>
             </div>
         </div>
