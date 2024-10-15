@@ -6,6 +6,12 @@ from .form import CustomAuthenticationForm
 from django.http import JsonResponse
 from django.shortcuts import render
 
+# OAUTH2 login
+from django.shortcuts import redirect
+from django.conf import settings
+# import requests
+# ##
+
 
 # Create your views here.
 class RegisterForm(CreateView):
@@ -47,3 +53,37 @@ def Home(request):
 # def LoginRender(request):
 #    form = CustomAuthenticationForm()
 #    return render(request, 'login.html', {'form': form})
+
+#####################################################################
+
+# OAUTH2 login
+def oauth2_login(request):
+    client_id = settings.OA_UID
+    redirect_uri = 'https://www.google.fr/'
+    response_type = 'code'
+    scope = 'public'
+    authorization_url = f"https://api.intra.42.fr/oauth/authorize?client_id={client_id}&redirect_uri={redirect_uri}&response_type={response_type}&scope={scope}"
+    return redirect(authorization_url)
+
+def oauth2_callback(request):
+    code = request.GET.get('code')
+    client_id = settings.OA_UID
+    client_secret = settings.OA_SECRET
+    redirect_uri = 'https://www.google.fr/'
+    token_url = 'https://api.intra.42.fr/oauth/token'
+    
+    data = {
+        'grant_type': 'authorization_code',
+        'code': code,
+        'redirect_uri': redirect_uri,
+        'client_id': client_id,
+        'client_secret': client_secret,
+    }
+    
+    response = requests.post(token_url, data=data)
+    token_data = response.json()
+    
+    # Handle the token data (e.g., save it to the session, create a user, etc.)
+    
+    return redirect('https://www.google.fr/')
+# ##
