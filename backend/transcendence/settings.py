@@ -15,7 +15,6 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
@@ -27,11 +26,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-
 # Application definition
 
 INSTALLED_APPS = [
-    'pong',
     'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -39,34 +36,45 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'users',
 ]
 
+
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
+	'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.security.SecurityMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8080",
-    "http://127.0.0.1:8080",
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:8080',
 ]
 
+CORS_ORIGIN_ALLOW_ALL = True
+
 CORS_ALLOW_CREDENTIALS = True
-SESSION_COOKIE_SAMESITE = 'None'  # Permet les cookies cross-origin
-SESSION_COOKIE_SECURE = True      # Requiert HTTPS
+
 ROOT_URLCONF = 'transcendence.urls'
+
+import os
+print([os.path.join(BASE_DIR, 'transcendence', 'templates')])
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+			"transcendence/templates/", 
+			os.path.join(BASE_DIR, 'transcendence/', 'templates'),
+			os.path.join(BASE_DIR, 'users/', 'templates'),
+			
+			],
+		
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -85,16 +93,35 @@ WSGI_APPLICATION = 'transcendence.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+
+DB_HOST = os.environ.get("DB_HOST")
+DB_PORT = os.environ.get("DB_PORT")
+DB_NAME = os.environ.get("DB_NAME2")
+DB_USER = os.environ.get("DB_USER")
+DB_PASSWORD = os.environ.get("DB_PASSWORD")
+
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "postgres",
-        "USER": "postgres",
-        "PASSWORD": "password",
-        "HOST": "db",
-        "PORT": "5432",
+        "NAME": DB_NAME,
+        "USER": DB_USER,
+        "PASSWORD": DB_PASSWORD,
+        "HOST": DB_HOST,
+        "PORT": DB_PORT,
     }
 }
+
+
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": "postgres",
+#         "USER": "postgres",
+#         "PASSWORD": "password",
+#         "HOST": "db",
+#         "PORT": "5432",
+#     }
+# }
 
 
 # Password validation
@@ -131,7 +158,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = '/app/static/' 
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -141,7 +169,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # settings.py
 
 # Supposons que votre application s'appelle 'pong'
-AUTH_USER_MODEL = 'pong.User'
+AUTH_USER_MODEL = 'users.User'
 
 # Ajoutez ces paramètres pour la gestion des mots de passe
 PASSWORD_HASHERS = [

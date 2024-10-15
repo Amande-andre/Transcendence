@@ -24,6 +24,9 @@ python manage.py makemigrations
 echo "Running migrations..."
 python manage.py migrate
 
+# collecter les fichiers statiques
+python manage.py collectstatic --no-input
+
 # Démarrer Gunicorn
 echo "Starting Gunicorn..."
 gunicorn --bind 0.0.0.0:8000 --workers 3 transcendence.wsgi:application
