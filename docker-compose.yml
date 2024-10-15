@@ -31,6 +31,8 @@ services:
       - static_volume:/app/static  # Changé le point de montage
     depends_on:
       - web
+    environment:
+      - CORS_ALLOWED_ORIGIN=http://localhost:8080
     ports:
       - "8080:80"
 

@@ -37,12 +37,6 @@
 }
 
 @media (max-width:767px) {
-  .navbar {
-    position: relative !important;
-  }
-}
-
-@media (max-width:767px) {
   .navbar, .navbar.navchange, .navbar a.navbar-brand.navbar-link, .navbar.navchange a.navbar-brand.navbar-link {
     min-height: 60px;
     line-height: 60px;

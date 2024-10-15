@@ -22,8 +22,4 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 	path('', views.Home, name='home'),
     path('', include('users.urls')),
-	# path("login/", LoginRender, name="login"),
-	# path('pong/get/', views.json_get, name='json_get'),
-	# path('pong/post/', views.json_post, name='json_post'),
-
 ]

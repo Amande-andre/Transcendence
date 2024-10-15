@@ -36,7 +36,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'pong',
     'users',
 ]
 
@@ -55,7 +54,6 @@ MIDDLEWARE = [
 
 CSRF_TRUSTED_ORIGINS = [
     'http://localhost:8080',
-    'http://127.0.0.1:8080'
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
@@ -73,7 +71,6 @@ TEMPLATES = [
         'DIRS': [
 			"transcendence/templates/", 
 			os.path.join(BASE_DIR, 'transcendence/', 'templates'),
-			os.path.join(BASE_DIR, 'pong/', 'templates'),
 			os.path.join(BASE_DIR, 'users/', 'templates'),
 			
 			],
