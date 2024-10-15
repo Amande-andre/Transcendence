@@ -1,52 +1,38 @@
 <!DOCTYPE html>
-<html data-bs-theme="light" lang="en">
-
+<html style="height: 100vh;">
 <head>
-     <script src="https://unpkg.com/htmx.org@1.8.4"></script>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Transcendence</title>
-    <link rel="icon" type="image/png" sizes="512x512" href="assets/img/42_Logo.svg.png">
-    <link rel="stylesheet" href="styles/bootstrap.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Quicksand&amp;display=swap">
-    <link rel="stylesheet" href="styles/Fixed-navbar-starting-with-transparency-styles.css">
-    <link rel="stylesheet" href="styles/untitled.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!-- Lien CSS de Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Votre style CSS personnalisé -->
+    <link rel="stylesheet" type="text/css" href="styles/style.css">
+
+    <!-- JavaScript de Bootstrap (bundle contenant Popper) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" defer></script>
+
+    <!-- Vos scripts JavaScript personnalisés -->
+    <script src="scripts/const.js" defer></script>
+    <script src="scripts/pong.js" defer></script>
+    <script src="scripts/casseBrick.js" defer></script>
+    <script src="scripts/main.js" defer></script>
 </head>
-
-<body style="height: 100vh; padding-top: 0px;"><img src="images/Border-Glow-Light-Effect-PNG-Clipart.svg" style="width: 100%;height: 100%;">
-	<div class="container" style="background: transparent; position: absolute; bottom: 20px; left: 20px; width: auto; max-width: 90%; padding: 10px; overflow-wrap: break-word;">
-		<h1 style="font-size: clamp(20px, 4vw, 30px); color: var(--bs-body-bg); font-family: Quicksand, sans-serif; text-align: left; margin-left: 0.6vw; margin-bottom: 0.5rem;">Time to play</h1>
-		<h2 style="font-family: Quicksand, sans-serif; color: var(--bs-body-bg); margin-top: 25px; font-size: clamp(35px, 6vw, 55px); left: 2%; bottom: 2%; z-index: 1000;">Transcendence</h2>
-	</div>
-    <nav class="navbar navbar-expand-md fixed-top navbar-transparency navbar-light">
-        <div class="container">
-            <div style="position: fixed;top: 0;left: 0;margin: 1vh;padding: 0;z-index: 1000;"><a class="navbar-brand" href="#" style="color: var(--bs-body-bg);"><img src="images/42_Logo.svg.png"></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button></div>
-            <div class="collapse navbar-collapse" id="navcol-1" style="right: 3vw;top: 0;padding: 0;z-index: 1000;position: fixed;">
-                <ul class="navbar-nav ms-auto">
-					<li class="nav-item"><a class="nav-link" href="{% url 'home' %}" id="home-link" hx-get="/" hx-target="body" hx-push-url="/" style="color: var(--bs-body-bg);font-size: 20px;">Home</a></li>
-					<li class="nav-item"><a class="nav-link" href="#" hx-get="http://127.0.0.1:8080/users/login/" hx-target="body" hx-push-url="users/login/" style="color: var(--bs-body-bg);font-size: 20px;">Login</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#" hx-get="http://127.0.0.1:8080/users/register/" hx-target="body" hx-push-url="users/register/" style="color: var(--bs-body-bg);font-size: 20px;">Register</a></li>
-                </ul>
+    <body>
+        <header>
+            <div><a>42</a></div>
+            <div class="Container">
+                <canvas id="GameCanvas"></canvas>
+                <button class="btn btn-primary" id="PongButton">Pong</button>
+                <button id="BreakoutButton">Casse brique</button>
+                <button id="HomeButton">Home</button>
+                <button id="LoginButton">Login</button>
             </div>
-        </div>
-    </nav>
-
-    <main id="app"></main>
-
-    <footer></footer>
-	
-	<script>
-		document.getElementById('home-link').addEventListener('click', function(event) {
-			// Vérifie si l'utilisateur est déjà sur la page home
-			if (window.location.pathname === "{% url 'home' %}") {
-				event.preventDefault(); // Empêche le rechargement de la page
-			}
-		});
-	</script>
-    <script src="scripts/jQuery.js"></script>
-    <script src="scripts/bootstrap.min.js"></script>
-    <script src="scripts/Fixed-navbar-starting-with-transparency-script.js"></script>
-</body>
-
+        </header>
+        <div id="Prez" class="position-absolute bottom-0 start-0 mb-3 ms-3">
+            <h2>Time to Play</h2>
+            <h1>Transcendence</h1>
+        </div>            
+    </body>
 </html>

@@ -17,6 +17,7 @@ RUN pip install --upgrade pip && \
 COPY . /app
 
 RUN pip install -r requirements.txt
+RUN pip install django-cors-headers
 RUN chmod +x ./entrypoint.sh
 
 ENTRYPOINT ["./entrypoint.sh"]
