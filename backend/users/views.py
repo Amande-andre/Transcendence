@@ -9,7 +9,8 @@ from django.shortcuts import render
 # OAUTH2 login
 from django.shortcuts import redirect
 from django.conf import settings
-# import requests
+import requests
+import logging
 # ##
 
 
@@ -57,9 +58,11 @@ def Home(request):
 #####################################################################
 
 # OAUTH2 login
+logger = logging.getLogger(__name__)
+
 def oauth2_login(request):
     client_id = settings.OA_UID
-    redirect_uri = 'https://www.google.fr/'
+    redirect_uri = settings.OA_REDIR
     response_type = 'code'
     scope = 'public'
     authorization_url = f"https://api.intra.42.fr/oauth/authorize?client_id={client_id}&redirect_uri={redirect_uri}&response_type={response_type}&scope={scope}"
@@ -67,9 +70,14 @@ def oauth2_login(request):
 
 def oauth2_callback(request):
     code = request.GET.get('code')
+
+    if code:
+#    if not code:
+        return render(request, 'error.html', {'error': 'No code provided'})
+
     client_id = settings.OA_UID
     client_secret = settings.OA_SECRET
-    redirect_uri = 'https://www.google.fr/'
+    redirect_uri = settings.OA_REDIR
     token_url = 'https://api.intra.42.fr/oauth/token'
     
     data = {
@@ -82,8 +90,11 @@ def oauth2_callback(request):
     
     response = requests.post(token_url, data=data)
     token_data = response.json()
-    
+
+    logger.debug("Status Code: %s", response.status_code)
+    logger.debug("Response Content: %s", response.content)
+
     # Handle the token data (e.g., save it to the session, create a user, etc.)
     
-    return redirect('https://www.google.fr/')
+    return redirect(settings.OA_REDIR)
 # ##
