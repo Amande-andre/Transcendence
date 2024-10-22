@@ -6,7 +6,8 @@
             <ul class="navbar-nav ms-auto">
                 {% if user.is_authenticated %}
 				    <li class="nav-item"><a class="nav-link" href="{% url 'home' %}" id="home-link" style="color: var(--bs-body-bg);font-size: 20px;">Home</a></li>
-                {% else %}
+					<li class="nav-item"><a class="nav-link" href="#" id="pong-button" style="color: var(--bs-body-bg);font-size: 20px;">Pong</a></li>
+				{% else %}
 				    <li class="nav-item"><a class="nav-link" href="{% url 'login' %}" style="color: var(--bs-body-bg);font-size: 20px;">Login</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'register' %}" style="color: var(--bs-body-bg);font-size: 20px;">Register</a></li>
                 {% endif %}
