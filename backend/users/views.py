@@ -6,6 +6,7 @@ from .form import CustomAuthenticationForm
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
+from game import views
 
 
 # Create your views here.
