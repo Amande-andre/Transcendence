@@ -69,10 +69,6 @@ def oauth2_login(request):
 def oauth2_callback(request):
     code = request.GET.get('code')
 
-    if code:
-#    if not code:
-        return render(request, 'error.html', {'error': 'No code provided'})
-
     client_id = settings.OA_UID
     client_secret = settings.OA_SECRET
     redirect_uri = settings.OA_REDIR
@@ -91,8 +87,15 @@ def oauth2_callback(request):
 
     logger.debug("Status Code: %s", response.status_code)
     logger.debug("Response Content: %s", response.content)
+    logger.debug("TOKEN DATA: %s", token_data)
 
-    # Handle the token data (e.g., save it to the session, create a user, etc.)
-    
-    return redirect(settings.OA_REDIR)
+    if response.status_code == 200 and 'access_token' in token_data:
+        # Authentication was successful
+        access_token = token_data['access_token']
+        # Handle the token data (e.g., save it to the session, create a user, etc.)
+        return redirect('home')
+    else:
+        # Authentication failed
+        logger.error("Authentication failed: %s", token_data)
+        return redirect('login')
 # ##
