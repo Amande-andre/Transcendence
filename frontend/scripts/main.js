@@ -1,8 +1,27 @@
+
+function startGame() {
+    console.log("startGame");
+}
+
+// function endGame() {
+    
+// }
+
 function main () {
+    //logbutton tant que pas log pas de jeu
+    
     let pongButton = document.getElementById('PongButton');
     let breakoutButton = document.getElementById('BreakoutButton');
     let body = document.querySelector('body');
-    canvas.classList.add('hidden');
+    let home = document.getElementById('HomeButton');
+    let register = document.getElementById('RegisterButton');
+    //register.classList.add('hidden');
+    let bouton = document.querySelectorAll('button');
+    bouton.forEach(bouton => {
+        bouton.classList.add('button');
+    });
+    //console.error();
+    //canvas.classList.add('hidden');
     body.classList.remove('theme-game');
     body.classList.add('theme-home');
     let loginButton = document.getElementById('LoginButton');
@@ -74,5 +93,7 @@ function main () {
 
 
 }
+
+
 
 main();

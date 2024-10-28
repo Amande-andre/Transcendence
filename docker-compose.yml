@@ -9,6 +9,8 @@ services:
       - static_volume:/app/static
     depends_on:
       - db
+    extra_hosts:
+      - "localhost:127.0.0.1"
 
   db:
     image: postgres:16.2-alpine3.19
@@ -29,6 +31,8 @@ services:
       - static_volume:/app/static  # Changé le point de montage
     depends_on:
       - web
+    environment:
+      - CORS_ALLOWED_ORIGIN=http://localhost:8080
     ports:
       - "8080:80"
 

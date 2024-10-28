@@ -2,11 +2,32 @@ const canvas = document.getElementById('GameCanvas');
 const ctx = canvas.getContext('2d');
 const WIDTH = canvas.width = 800;
 const HEIGHT = canvas.height = 600;
+
+// const button = document.querySelector('button');
 let keys = {};
-const buton = document.getElementById('buton');
+// Function to get a cookie value by name
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+// Get the CSRF token from cookies
+const csrftoken = getCookie('csrftoken');  // Make sure this runs before using it
+
 
 class Player {
     constructor(paddle, ball) {
+        
         this.score = 0;
         this.paddles = []; 
         this.balls = [];
@@ -15,9 +36,15 @@ class Player {
         this.balls.push(ball);
         this.spawnBallx = ball.x;
         this.spawnBally = ball.y;
+        this.isIa = true;
+        this.time = new Date();
+        this.second = this.time.getSeconds();
+        this.input = null;
+        this.second = 0;
+        this.past = -1;
     }
-
     initControls(key1, key2) {
+            const time = new Date();
 
         document.addEventListener('keydown', function(event) {  
             if (event.key === key1)
@@ -72,6 +99,8 @@ class Paddle {
         this.y = y;
         this.width = width;
         this.height = height;
+        this.midl = x + (width / 2);
+        this.midlPong = y + (height / 2);
     }
 
     drawPaddle() {
@@ -94,5 +123,17 @@ class Paddle {
             else
                 this.y += 5;
         }
+        this.midl = this.x + (this.width / 2);
+        this.midlPong = this.y + (this.height / 2);
     }
 }
+
+class GameInfo{
+    constructor() {
+        let nbPlaye = 0;
+        let playerName = [];
+        let color = null;
+
+    }
+}
+let gameInfo = new GameInfo();
