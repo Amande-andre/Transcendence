@@ -32,7 +32,6 @@
 }
 
 #GameCanvas {
-	display: none;
 	margin: 0 auto;
 	position: absolute;
 	top: 50%;       

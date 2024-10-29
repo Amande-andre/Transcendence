@@ -1,152 +1,3 @@
-// document.getElementById('pong-button').addEventListener('click', function () {
-//     const canvas = document.getElementById('pongCanvas');
-//     if (canvas.style.display === 'none') {
-//         canvas.style.display = 'block';  // Affiche le canvas au centre de la page
-//         canvas.style.margin = '0 auto';  // Centrer horizontalement
-//         startPong();  // Lancer le jeu Pong
-//     }
-// });
-window.onload = function () {
-	const canvas = document.getElementById('GameCanvas');
-	const ctx = canvas.getContext('2d');
-	const WIDTH = canvas.width = 800;
-	const HEIGHT = canvas.height = 600;
-	
-	// const button = document.querySelector('button');
-	let keys = {};
-	// Function to get a cookie value by name
-	// function getCookie(name) {
-	//     let cookieValue = null;
-	//     if (document.cookie && document.cookie !== '') {
-	//         const cookies = document.cookie.split(';');
-	//         for (let i = 0; i < cookies.length; i++) {
-	//             const cookie = cookies[i].trim();
-	//             if (cookie.substring(0, name.length + 1) === (name + '=')) {
-	//                 cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-	//                 break;
-	//             }
-	//         }
-	//     }
-	//     return cookieValue;
-	// }
-	
-	// // Get the CSRF token from cookies
-	// const csrftoken = getCookie('csrftoken');  // Make sure this runs before using it
-	
-	
-	class Player {
-		constructor(paddle, ball) {
-			
-			this.score = 0;
-			this.paddles = []; 
-			this.balls = [];
-			this.bricks = [];
-			this.paddles.push(paddle);
-			this.balls.push(ball);
-			this.spawnBallx = ball.x;
-			this.spawnBally = ball.y;
-			this.isIa = true;
-			this.time = new Date();
-			this.second = this.time.getSeconds();
-			this.input = null;
-			this.second = 0;
-			this.past = -1;
-		}
-		initControls(key1, key2) {
-				const time = new Date();
-	
-			document.addEventListener('keydown', function(event) {  
-				if (event.key === key1)
-					keys[key1] = true;
-				else if (event.key === key2)
-					keys[key2] = true;
-			});
-			document.addEventListener('keyup', function(event) {  
-				if (event.key === key1)
-					keys[key1] = false;
-				else if (event.key === key2)
-					keys[key2] = false;
-			});
-		}
-		drawBricks() {
-			for (let i = 0; i < this.bricks.length; i++) {
-				const brick = this.bricks[i];
-				if (brick.bonus !== -1)
-					ctx.fillStyle = 'grey';
-				else
-					ctx.fillStyle = 'white';
-				ctx.strokeStyle = 'black';
-				
-				ctx.fillRect(brick.x, brick.y, 32, 16);
-				ctx.strokeRect(brick.x, brick.y, 32, 16);
-			}
-		}
-	}
-	
-	class Ball {
-		constructor(x, y, speedX, speedY, radius) {
-			this.x = x;
-			this.y = y;
-			this.speedX = speedX;
-			this.speedY = speedY;
-			this.radius = radius;
-			this.type;
-		}
-	
-		drawBall() {
-			ctx.beginPath();
-			ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-			ctx.fillStyle = 'white';
-			ctx.fill();
-			ctx.closePath();
-		}
-	}
-	
-	class Paddle {
-		constructor(x, y, width, height) {
-			this.x = x;
-			this.y = y;
-			this.width = width;
-			this.height = height;
-			this.midl = x + (width / 2);
-			this.midlPong = y + (height / 2);
-		}
-	
-		drawPaddle() {
-			ctx.fillStyle = 'white';
-			ctx.fillRect(this.x, this.y, this.width, this.height);
-		}
-		update(key1, key2, limitL, limitR, orientation) {
-	
-			let direction = orientation === 'horizontal' ? this.x : this.y;
-			let paddleDirection = orientation ==='horizontal' ? this.width : this.height;
-			if (keys[key1] && direction > limitL) {
-				if (orientation === 'horizontal')
-					this.x -= 5;
-				else
-					this.y -= 5;
-			}
-			else if (keys[key2] && direction + paddleDirection < limitR ){
-				if (orientation === 'horizontal') 
-					this.x += 5;
-				else
-					this.y += 5;
-			}
-			this.midl = this.x + (this.width / 2);
-			this.midlPong = this.y + (this.height / 2);
-		}
-	}
-	
-	class GameInfo{
-		constructor() {
-			let nbPlaye = 0;
-			let playerName = [];
-			let color = null;
-	
-		}
-	}
-	let gameInfo = new GameInfo();
-
 function drawRec(x, y) {
     ctx.fillStyle = 'white';
     ctx.fillRect(x, y, paddleWidth, paddleHeight);
@@ -347,7 +198,7 @@ function IaControlePong(player, nb) {
     //console.log('after seconde is  == ', new Date().getSeconds());
 }
 
-function updatePong(player1, player2, bonus) {
+function updatePong(player1, player2) {
 
     drawPongArea(player1, player2);
     player2.isIa = false;
@@ -370,21 +221,20 @@ function updatePong(player1, player2, bonus) {
         }, 1000)
         return;
     }
-    requestAnimationFrame(() => updatePong(player1, player2, bonus));
+    requestAnimationFrame(() => updatePong(player1, player2, ));
 }
 
 function startPong() {
     mainBall = new Ball(WIDTH / 2, HEIGHT / 2, 5, 5, 8);
     let player1 = new Player(new Paddle(0, HEIGHT / 2 - 80, 8, 160), mainBall);
     let player2 = new Player(new Paddle(WIDTH - 8, HEIGHT / 2 - 80, 8, 160), mainBall);
-    const bonus = [newBall, increasePaddle];
+    // const bonus = [newBall, increasePaddle];
 
     player1.initControls('w', 's');
     player2.initControls('5', '2');
 
     drawPongArea(player1, player2);
-    updatePong(player1, player2, bonus);
+    updatePong(player1, player2, );
 }
 
 startPong();
-};

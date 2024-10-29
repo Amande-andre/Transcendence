@@ -1,9 +1,3 @@
 {% load static %}
 
-{% comment %} <script src="{% static 'game/scripts/const.js' %}" defer></script> {% endcomment %}
-{% if game == "pong" %}
-<script src="{% static 'game/scripts/pong.js' %}" defer></script>
-{% else %}
-<script src="{% static 'game/scripts/breakout.js' %}" defer></script>
-{% endif %}
 <canvas id="GameCanvas" width="800" height="600"></canvas>

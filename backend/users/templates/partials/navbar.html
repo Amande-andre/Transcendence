@@ -7,7 +7,7 @@
                 {% if user.is_authenticated %}
 					<li class="nav-item"><a class="nav-link" href="{% url 'home' %}" id="home-link" style="color: var(--bs-body-bg);font-size: 20px;">Home</a></li>
 					{% else %}
-					<li class="nav-item"><a class="nav-link" id="pong-button" hx-get="{% url 'game:pong' %}" hx-target="#app" style="color: var(--bs-body-bg);font-size: 20px;">Pong</a></li> 
+					<li class="nav-item"><a class="nav-link" id="pong-button" hx-get="{% url 'game:pong' %}" hx-target="#foot" hx-swap="beforebegin" style="color: var(--bs-body-bg);font-size: 20px;">Pong</a></li> 
 				    <li class="nav-item"><a class="nav-link" href="{% url 'users:login' %}" style="color: var(--bs-body-bg);font-size: 20px;">Login</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'users:register' %}" style="color: var(--bs-body-bg);font-size: 20px;">Register</a></li>
                 {% endif %}
