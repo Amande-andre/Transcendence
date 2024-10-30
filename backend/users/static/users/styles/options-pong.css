@@ -1,0 +1,116 @@
+
+body {
+    overflow-x: auto;
+    overflow-y: auto;
+    white-space: nowrap;
+}
+
+.card {
+	border: 3px solid #ff4500;
+	border-color: #ff4500;
+    box-shadow: 0 0 50px #ff4500;
+	background-color: transparent;
+	flex: 1 1 300px;
+    min-width: 100px;
+}
+
+.mb-4 {
+	color: white;
+	font-family: 'Press Start 2P', cursive;
+}
+
+.mb-4-title {
+	font-family: 'Press Start 2P', cursive;
+    text-align: center;
+    color: #fff;
+    font-size: 4vw; 
+    margin-bottom: 20px;
+    text-shadow: 2px 20px 5px rgba(0, 0, 0, 0.7);
+    margin-top: 35px;
+    margin-right: 50px;
+    margin-left: 50px;
+
+}
+
+/* ----------barre player--------- */
+.input-group-text {
+    background-color: #ff4500;
+    color: white;
+	font-size: 1.5vw;
+	border: 2px solid #ff4500;
+	width: 12vw;
+    height: 5vh;
+    
+}
+
+input[type="text"] {
+    border-radius: 5px;
+    padding: 5px;
+	font-size: 1.3vw;
+    height: 5vh;
+}
+
+input[type="color"] {
+    border: none;
+    width: 12vw;
+    height: 5vh;
+    padding: 5px;
+}
+/* ------------------------ */
+
+
+/* ajouter/retirer */
+.btn-group .btn {
+    margin-right: 10px;
+}
+/* commencer */
+.btn-success {
+    font-family: 'Press Start 2P', cursive;
+	width: 100%;
+    padding: 15px;
+    font-size: 3vw;
+    text-shadow: 2px 20px 5px rgba(0, 0, 0, 0.7);
+	background-color: transparent;
+	border: 0px;
+	text-align: center;
+
+}
+
+.btn-success:hover {
+    background-color: transparent !important;
+    color: #ffffff !important; 
+	border: 3px solid #ff4500;
+    box-shadow: 0 0 50px #ff4500;
+
+}
+
+/* boutton bonus */
+.form-check-input:checked {
+    background-color: #ff4500;
+}
+
+
+/* activer les bonus */
+.form-check-label {
+    font-size: 2vw;
+    color: white;
+}
+
+.btn-primary {
+	flex-wrap: flex;
+}
+
+.btn-group button {
+    font-size: 1vw;
+    padding: 1vw 2vw;
+}
+.card-title {
+    font-size: 2vw;
+}
+.form-control, .input-group-text {
+    font-size: 1.2vw;
+}
+.btn-lg {
+    font-size: 2vw;
+    padding: 1.5vw 3vw;
+}

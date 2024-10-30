@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choix des jeux</title>
+    <link rel="stylesheet" href="style/gameChoice.css">
+    <link rel="stylesheet" href="style/background.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style/Fixed-navbar-starting-with-transparency-styles.css">
+    <link rel="stylesheet" href="style/bootstrap.min.css">
+
+</head>
+<body>
+    <container>
+    <div class="animated-bg"></div>
+    <canvas id="star-canvas"></canvas>
+    <div class="content">
+        <h1 class="game-title">Time to play!</h1>
+            <nav class="navbar navbar-expand-md fixed-top navbar-transparency navbar-light">
+                <div style="position: fixed;top: 0;left: 0;margin: 1vh;padding: 0;z-index: 1000;"><a class="navbar-brand" href="#" style="color: var(--bs-body-bg);"><img src="images/42_Logo.svg.png"></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button></div>
+                <div class="collapse navbar-collapse" id="navcol-1" style="right: 3vw;top: 0;padding: 0;z-index: 1000;position: fixed;">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="#" onclick="navigate('home')" style="color: var(--bs-body-bg);font-size: 20px;">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#" hx-get="http://127.0.0.1:8080/api/users/login/" hx-target="body" hx-push-url="api/users/login/" style="color: var(--bs-body-bg);font-size: 20px;">Logout</a></li>
+                    </ul>
+                </div>
+            </nav>
+            <div class="boxes-container">
+                <div class="box box1">
+                    <img src="images/pong2.jpg">
+                    <!-- rajouter onclick ici -->
+                </div>
+                <div class="box box2">
+                    <img src="images/casseBrick2.jpg">
+                    <!-- rajouter onclick ici -->
+                </div>
+            </div>
+        </div>
+        <script src="{% static 'users/scripts/optionsGmaes.js' %}" defer></script>
+        <script src="{% static 'users/scripts/jQuery.js' %}" defer></script>
+        <script src="{% static 'users/scripts/DrawStars.js' %}" defer></script>
+        <script src="{% static 'users/scripts/bootstrap.min.js' %}" defer></script>
+        <script src="{% static 'users/scripts/Fixed-navbar-starting-with-transparency-script.js' %}" defer></script>
+    </container>
+</body>
+</html>
