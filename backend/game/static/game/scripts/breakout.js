@@ -146,7 +146,7 @@ function displayBreakoutScore(scorePlayer1, scorePlayer2) {
     ctx.fillText(scorePlayer2, WIDTH - 140, 50);
 }   
 
-function drawBreakoutAera(player1, player2) {
+function drawBreakoutAera(player1, player2, ctx) {
     ctx.clearRect(0, 0, WIDTH, HEIGHT);
     displayBreakoutScore(player1.score, player2.score);
 
@@ -242,7 +242,7 @@ function updateBreakout(player1, player2, bonus) {
 }
 
 
-function startBreakout() {
+function startBreakout(ctx) {
 
     let player1 = new Player(new Paddle(WIDTH / 4 - 80 / 2, HEIGHT - 8, 80, 8),
                         new Ball(WIDTH / 4, 3 * HEIGHT / 4, 0, 4, 5));
@@ -255,9 +255,7 @@ function startBreakout() {
     player1.initControls('a', 'd');
     player2.initControls('1', '3');
 
-    drawBreakoutAera(player1, player2);
+    drawBreakoutAera(player1, player2, ctx);
 
-    updateBreakout(player1, player2, bonus);
+    // updateBreakout(player1, player2, bonus);
 }
-
-startBreakout();

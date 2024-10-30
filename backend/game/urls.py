@@ -4,6 +4,8 @@ from . import views
 app_name = 'game'
 
 urlpatterns = [
-    path('breakout/', views.breakout, name='breakout'),
-    path('pong/', views.pong, name='pong'),
+    path('gameCanvas/', views.gameCanvas, name='gameCanvas'),
+    path('gameChoice/', views.gameChoice, name='gameChoice'),
+    path('optionsPong/', views.optionsPong, name='optionsPong'),
+    path('optionsBreakout/', views.optionsBreakout, name='optionsBreakout'),
 ]

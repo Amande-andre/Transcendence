@@ -1,19 +1,19 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personnalisation Brick</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="style/background.css" rel="stylesheet">
-    <link href="style/bootstrap.min.css" rel="stylesheet">
-    <link href="style/Fixed-navbar-starting-with-transparency-styles.css" rel="stylesheet">
-    <link href="style/options-brick.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-
-</head>
-<body class="bg-light">
+<!-- <!DOCTYPE html> -->
+<!-- <html lang="fr"> -->
+<!-- <head> -->
+    <!-- <meta charset="UTF-8"> -->
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <!-- <title>Personnalisation Pong</title> -->
+    <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet"> -->
+    <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"> -->
+    <!-- <link href="style/background.css" rel="stylesheet"> -->
+    <!-- <link href="style/bootstrap.min.css" rel="stylesheet"> -->
+    <!-- <link href="style/Fixed-navbar-starting-with-transparency-styles.css" rel="stylesheet"> -->
+    <!-- <link href="style/options-pong.css" rel="stylesheet"> -->
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"> -->
+<!--  -->
+<!-- </head> -->
+<!-- <body class="bg-light"> -->
     <container>
     <div class="animated-bg"></div>
     <canvas id="star-canvas"></canvas>
@@ -70,18 +70,21 @@
             </div>
         </div>
         
-        <button class="btn btn-success btn-lg">Start</button>
+        <button class="btn btn-success btn-lg" hx-get="{% url 'game:gameCanvas' %}" hx-target="#nav" hx-swap="afterend" hx-vals='{"game": "pong"}'>Start</button>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-    <script src="scripts/optionsGames.js"></script>
-    <script src="scripts/jQuery.js"></script>
-    <script src="scripts/stars.js"></script>
-    <script src="scripts/Fixed-navbar-starting-with-transparency-script.js"></script>
-    <script src="scripts/bootstrap.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script> -->
+    <!-- <script src="scripts/optionsGames.js"></script> -->
+    <!-- <script src="scripts/jQuery.js"></script> -->
+    <!-- <script src="scripts/stars.js"></script> -->
+    <!-- <script src="scripts/Fixed-navbar-starting-with-transparency-script.js"></script> -->
+    <!-- <script src="scripts/bootstrap.min.js"></script> -->
     </container>
-</body>
-</html>
-
+<!-- </body> -->
+<!-- </html> -->
+<!--  -->
 <!-- navbar prblm quand retreci
- bouton switch de con -->
+ bouton switch de con 
+ navbar ne bouge pas si on descend (prblm?)-->
+
+
