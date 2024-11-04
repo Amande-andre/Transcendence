@@ -1,5 +1,6 @@
 const WIDTH = 800;
 const HEIGHT = 600;
+keys = {};
 
 class Player {
     constructor(paddle, ball) {

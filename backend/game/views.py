@@ -2,10 +2,11 @@ from django.shortcuts import render
 
 # Create your views here.
 
-def gameCanvas(request):
-	print(request.GET)
-	game = request.GET.get('game')
-	return render(request, 'partials/game.html', {'game': game})
+def pongCanvas(request):
+	return render(request, 'partials/pongCanvas.html')
+
+def breakoutCanvas(request):
+	return render(request, 'partials/breakoutCanvas.html')
 
 def gameChoice(request):
 	return render(request, 'partials/gameChoice.html')

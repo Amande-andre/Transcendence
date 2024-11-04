@@ -236,5 +236,3 @@ function startPong() {
     drawPongArea(player1, player2);
     updatePong(player1, player2, );
 }
-
-startPong();
