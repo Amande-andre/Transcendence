@@ -31,3 +31,4 @@ function removePlayer() {
 //     var scaleValue = window.innerWidth / 1000;  // Ajuste ce facteur comme tu le souhaites
 //     switchElement.style.transform = 'scale(' + scaleValue + ')';
 // });
+
