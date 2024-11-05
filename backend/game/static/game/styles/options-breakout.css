@@ -114,3 +114,14 @@ input[type="color"] {
     font-size: 2vw;
     padding: 1.5vw 3vw;
 }
+
+#breakoutCanvas {
+    display: block;
+    margin: 0 auto; /* Centre horizontalement */
+    position: absolute;
+    top: 50%; /* Centre verticalement */
+    left: 50%;
+    transform: translate(-50%, -50%); /* Ajuste le point de référence */
+	border: 10px solid rgb(0, 0, 0.5);
+	border-radius: 10px;
+}
