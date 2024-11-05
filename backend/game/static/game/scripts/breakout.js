@@ -1,7 +1,7 @@
 function generateNumber() {
     const random = Math.random(); // Génère un nombre aléatoire entre 0 et 1
   
-    if (random < 0.1) { // 10% de chance
+    if (random < 0.8) { // 10% de chance
       // Choisir aléatoirement entre 2, 3, et 4
       const randomChoice = Math.floor(Math.random() * 2); // Génère 2, 3 ou 4 before *10
       return randomChoice;
@@ -42,11 +42,8 @@ function increasePaddle(player, ball) {
     for (let paddle of player.paddles){
 
         if (paddle.width < WIDTH / 2 - 16){
-            paddle.width += 30;
+            paddle.width += 10;
         }
-        setTimeout(() => {
-            paddle.width -= 30;
-        }, 2000);
     }
 }
 
@@ -119,6 +116,7 @@ function Collision(player, lWall, rWall, bonus) {
                     ball.speedY = -ball.speedY;
                 }
                 if (brick.bonus !== -1) {
+                    console.log('brick.bonus == ', brick.bonus);
                     bonus[brick.bonus](player, ball);
                 }
                 player.bricks.splice(i, 1);
@@ -226,6 +224,8 @@ function updateBreakout(player1, player2, bonus) {
     Collision(player1, 0, WIDTH / 2 - 16, bonus);
     Collision(player2, WIDTH / 2 + 16, WIDTH, bonus);
     updatePaddles(player1, player2);
+    if (game === false)
+        return
     if (player1.bricks.length === 0 || player2.bricks.length === 0) {
         ctx.clearRect(0, 0, WIDTH, HEIGHT);
         drawBreakoutBorder();
