@@ -221,10 +221,11 @@ function updatePong(player1, player2) {
         }, 1000)
         return;
     }
-    requestAnimationFrame(() => updatePong(player1, player2, ));
+    requestAnimationFrame(() => updatePong(player1, player2));
 }
 
 function startPong() {
+    game = true;
     mainBall = new Ball(WIDTH / 2, HEIGHT / 2, 5, 5, 8);
     let player1 = new Player(new Paddle(0, HEIGHT / 2 - 80, 8, 160), mainBall);
     let player2 = new Player(new Paddle(WIDTH - 8, HEIGHT / 2 - 80, 8, 160), mainBall);
