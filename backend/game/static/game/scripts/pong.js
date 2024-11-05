@@ -208,6 +208,8 @@ function updatePong(player1, player2) {
     collisionPong(player1, player2);
     updatePaddlePong(player1, player2);
     
+    if (game === false)
+        return;
     if (player1.score === 3 || player2.score === 3) {
         ctx.clearRect(0, 0, WIDTH, HEIGHT);
         ctx.strokeStyle = 'white';
@@ -221,7 +223,7 @@ function updatePong(player1, player2) {
         }, 1000)
         return;
     }
-    requestAnimationFrame(() => updatePong(player1, player2));
+    requestAnimationFrame(() => updatePong(player1, player2, ));
 }
 
 function startPong() {
