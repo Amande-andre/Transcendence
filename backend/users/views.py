@@ -39,10 +39,3 @@ class Logout(View):
 
 def Home(request):
 	return render(request, 'home.html')
-# def RegisterRender(request):
-#    form = CustomCreationForm()
-#    return render(request, 'register.html', {'form': form})
-
-# def LoginRender(request):
-#    form = CustomAuthenticationForm()
-#    return render(request, 'login.html', {'form': form})

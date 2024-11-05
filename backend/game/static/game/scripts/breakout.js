@@ -243,6 +243,7 @@ function updateBreakout(player1, player2, bonus) {
 
 
 function startBreakout() {
+    game = true;
 
     let player1 = new Player(new Paddle(WIDTH / 4 - 80 / 2, HEIGHT - 8, 80, 8),
                         new Ball(WIDTH / 4, 3 * HEIGHT / 4, 0, 4, 5));
