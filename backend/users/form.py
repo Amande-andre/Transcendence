@@ -11,7 +11,10 @@ class CustomCreationForm(UserCreationForm):
         widget=forms.TextInput(attrs={
             'placeholder': 'Username', 
             'class': 'register-input form-control mb-3',
-            'style': 'width: 50%; Actor, sans-serif";'
+            'style': 'width: 50%; Actor, sans-serif";',
+            'hx-post': '/checkUsername/',
+            'hx-target': '#username-check',
+            'hx-trigger': 'keyup changed delay:500ms'
         })
     )
     password1 = forms.CharField(

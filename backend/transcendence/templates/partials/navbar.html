@@ -30,15 +30,15 @@
                 {% else %}
                     <li class="nav-item">
                         <button class="nav-link" id="pong-button" hx-get="{% url 'game:gameChoice' %}" hx-target="#nav" hx-swap="afterend" 
-                                style="color: var(--bs-body-bg); font-size: 20px; background: none; border: none; padding: 0; cursor: pointer;">Games</button>
+                                style="color: var(--bs-body-bg); font-size: 20px; cursor: pointer;">Games</button>
                     </li>
                     <li class="nav-item">
                         <button class="nav-link" id="login-button" hx-get="{% url 'users:login' %}" hx-target="#nav" hx-swap="afterend" 
-                                style="color: var(--bs-body-bg); font-size: 20px; background: none; border: none; padding: 0; cursor: pointer;">Login</button>
+                                style="color: var(--bs-body-bg); font-size: 20px; cursor: pointer;">Login</button>
                     </li>
                     <li class="nav-item">
                         <button class="nav-link" id="register-button" hx-get="{% url 'users:register' %}" hx-target="#nav" hx-swap="afterend" 
-                                style="color: var(--bs-body-bg); font-size: 20px; background: none; border: none; padding: 0; cursor: pointer;">Register</button>
+                                style="color: var(--bs-body-bg); font-size: 20px; cursor: pointer;">Register</button>
                     </li>
                 {% endif %}
             </ul>
