@@ -20,6 +20,7 @@ class Player {
         this.input = null;
         this.second = 0;
         this.past = -1;
+        this.distance = 0;
     }
     initControls(key1, key2) {
             const time = new Date();
