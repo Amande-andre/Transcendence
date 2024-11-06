@@ -6,6 +6,8 @@ from .form import CustomAuthenticationForm
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
+from game import views
+from django.contrib.auth import logout
 
 # OAUTH2 login
 from django.shortcuts import redirect
@@ -40,18 +42,12 @@ class LoginForm(FormView):
         login(self.request, user)
         return redirect('home')
 
-class Logout(View):
-	pass
+def logout_view(request):
+    logout(request)
+    return redirect('home') 
 
 def Home(request):
 	return render(request, 'home.html')
-# def RegisterRender(request):
-#    form = CustomCreationForm()
-#    return render(request, 'register.html', {'form': form})
-
-# def LoginRender(request):
-#    form = CustomAuthenticationForm()
-#    return render(request, 'login.html', {'form': form})
 
 #####################################################################
 
