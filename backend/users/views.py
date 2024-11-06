@@ -7,6 +7,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
 from game import views
+from django.contrib.auth import logout
 
 
 # Create your views here.
@@ -31,8 +32,9 @@ class LoginForm(FormView):
         login(self.request, user)
         return render(self.request, 'home.html')
 
-class Logout(View):
-	pass
+def logout_view(request):
+    logout(request)
+    return redirect('home') 
 
 def Home(request):
 	return render(request, 'home.html')
