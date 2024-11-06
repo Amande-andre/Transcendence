@@ -81,15 +81,34 @@ def oauth2_callback(request):
     response = requests.post(token_url, data=data)
     token_data = response.json()
 
-    logger.debug("Status Code: %s", response.status_code)
-    logger.debug("Response Content: %s", response.content)
-    logger.debug("TOKEN DATA: %s", token_data)
+    # logger.debug("Status Code: %s", response.status_code)
+    # logger.debug("Response Content: %s", response.content)
+    # logger.debug("TOKEN DATA: %s", token_data)
 
     if response.status_code == 200 and 'access_token' in token_data:
-        # Authentication was successful
         access_token = token_data['access_token']
-        # Handle the token data (e.g., save it to the session, create a user, etc.)
-        return redirect('home')
+        
+        # Fetch user info from OAuth2 provider
+        user_info_url = 'https://api.intra.42.fr/v2/me'
+        headers = {'Authorization': f'Bearer {access_token}'}
+        user_info_response = requests.get(user_info_url, headers=headers)
+        user_info = user_info_response.json()
+
+        # Check if user exists
+        username = user_info['login']
+        email = user_info['email']
+        try:
+            user = User.objects.get(username=username)
+        except User.DoesNotExist:
+            # Create new user
+            user = User.objects.create_user(username=username, email=email)
+            user.save()
+
+        # Log the user in
+        login(request, user)
+
+        # Redirect to profile or home page
+        return redirect('home')  # Change 'profile' to your desired URL name
     else:
         # Authentication failed
         logger.error("Authentication failed: %s", token_data)
