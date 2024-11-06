@@ -145,6 +145,7 @@ function calculePositions(player) {
     }
     return y;
 }
+
 function choiceIaPong(player, nb)  {
         
     //faire les calcule de diff avant et toujours comparer entre un scope ex si >40 et <400 par exemple
@@ -155,23 +156,36 @@ function choiceIaPong(player, nb)  {
     let ball = player.balls[0].x;
     //regarde si la balle est a droite si oui il se place au milieu
     let pos = calculePositions(player);
-    console.log('pos == ', pos);
-    console.log('bot == ', bot);
-    console.log('top == ', top);
-    if (ball > WIDTH / 4){
+    if (player.balls[0].speedX < 0){
+        console.log('pos == ', pos);
+        console.log('bot == ', bot);
+        console.log('top == ', top);        
         if (pos > bot){
             player.distance = pos - bot;
-            console.log('distance == ', player.distance);
+            player.lastInput = 's';
             console.log('s');
             return 's';
         }
         else if (pos < top){
             player.distance = top - pos;
-            console.log('distance == ', player.distance);
+            player.lastInput = 'w';
             console.log('w');
             return 'w';
         }
     }
+    // else if (player.balls[0].speedX > 0 && player.balls[0].x < WIDTH / 2){
+    //     if (mid + 100 > HEIGHT / 2){
+    //         player.distance = 100;
+    //         return 'w';
+    //     }
+    //     else if (mid - 100 < HEIGHT / 2) {
+    //         player.distance = 100;
+    //         return 's';
+    //     }
+    // }
+    player.distance = 0;
+
+    return null;
 }
 
 function IaControlePong(player, nb) {
@@ -179,28 +193,38 @@ function IaControlePong(player, nb) {
     if (!player.isIa)
         return;
     player.second = new Date().getSeconds();
-    if (player.second <= player.past && (player.second !== 0 && player !== 59)){ 
+    if (player.second === player.past){ 
         return;
-    }       
-    // console.log('player.second == ', player.second);
-    player.past = player.second;
-    let eventTab = choiceIaPong(player, nb);
-    otherevent = eventTab === 'w' ? 's' : 'w';
-    if (eventTab === null)
-        return;
-    let eventdown = new KeyboardEvent('keyup', {
-        key: otherevent,
-    });
-    let eventup = new KeyboardEvent('keydown', {
-        key: eventTab,
+    }
+    console.log('player.second == ', player.second);
+    let eventup = new KeyboardEvent('keyup', {
+        key: player.lastInput,
     });
     document.dispatchEvent(eventup);
+    // 
+    player.past = player.second;
+    let eventTab = choiceIaPong(player, nb);
+    console.log('====================');
+    if (eventTab === null){
+        
+        return;
+    }
+    otherevent = eventTab === 'w' ? 's' : 'w';
+    // document.dispatchEvent(player.lastInput);
+    let eventdown = new KeyboardEvent('keydown', {
+        key: eventTab,
+    });
     //document.dispatchEvent(eventup);
     document.dispatchEvent(eventdown);
-    if (player.distance < 500){
+    if (player.distance > 20 && player.distance < 300){
         setTimeout(() => {
+            if (player.distance < 50)
+                player.distance = 150;
+            console.log('player.distance == ', player.distance + 100);
+            //0.3 j avance de 160
             document.dispatchEvent(eventup);
-        }, 500 - player.distance);
+        }, player.distance);
+        
     }
     //console.log('after seconde is  == ', new Date().getSeconds());
 }
