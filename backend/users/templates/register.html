@@ -1,20 +1,4 @@
 {% load static %}
-<!DOCTYPE html>
-<html data-bs-theme="light" lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>{{ page_title }}</title>
-    <!-- Ajoutez la balise link pour importer la police -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Actor&amp;display=swap">  <!-- Ajoutez la police pour les placeholder-->
-
-    <link rel="stylesheet" href="{% static 'users/styles/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'users/styles/login-form---Ambrodu-register.css' %}">
-    <link rel="stylesheet" href="{% static 'users/styles/login-form---Ambrodu.css' %}">
-</head>
-
-<body>
     <div class="body" style="padding-top: 150px;">
         <div class="border rounded shadow login-center" style="width: 80%;margin: 5vh auto;padding: 20px;max-width: 600px;height: 60%;min-height: 300px;background: var(--bs-secondary-text-emphasis);">
             <div class="text-center form-group mb-3"><img class="img-fluid" style="width: 100px;" src="{% static 'users/images/Login.png' %}"></div>
@@ -26,28 +10,8 @@
                     </div>
                 {% endfor %}
                 <div class="d-flex justify-content-center form-group mb-3">
-                    <button class="btn btn-dark" style="width: 200px;" button="submit">{{ page_title }}</button>
+                    <button class="btn btn-dark" style="width: 200px;" button="submit">Register</button>
                 </div>
-                {% if messages %}
-                    {% for message in messages %}
-                        <div class="alert alert-{{ message.tags }}" style="color: crimson;">{{ message }}</div>
-                    {% endfor %}
-                {% endif %}
             </form>
         </div>
     </div>
-    <script src="{% static 'users/scripts/bootstrap.min.js' %}"></script>
-    <script>
-        document.body.addEventListener("htmx:afterRequest", function(event) { // Ajoute un écouteur d'événements pour les requêtes HTMX
-        if (event.detail.xhr.status === 200) { // Vérifie si la requête est réussie
-            const response = JSON.parse(event.detail.xhr.response);
-            if (response.redirect) {
-                console.log("Redirecting to:", response.url); // Log the redirect URL
-                window.location.href = response.url; // Redirige vers l'URL donnée
-            }
-        }
-        });
-    </script>
-</body>
-
-</html>

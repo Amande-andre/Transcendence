@@ -13,26 +13,23 @@ from game import views
 class RegisterForm(CreateView):
 
 	template_name = 'register.html'
-	success_url = reverse_lazy('home')
 	form_class = CustomCreationForm
 
 	def form_valid(self, form):
 		form.save()
 		user = form.instance
 		login(self.request, user)
-		print(f"User {user.username} is authenticated: {user.is_authenticated}")
-		return redirect('home')
+		return render(self.request, 'home.html')
 
 class LoginForm(FormView):
     template_name = 'login.html'
     form_class = CustomAuthenticationForm
-    success_url = reverse_lazy('home')
 
     def form_valid(self, form):
         # Authentifie l'utilisateur au lieu de le créer
         user = form.get_user()
         login(self.request, user)
-        return redirect('home')
+        return render(self.request, 'home.html')
 
 class Logout(View):
 	pass
