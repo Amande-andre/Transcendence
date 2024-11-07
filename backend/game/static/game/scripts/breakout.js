@@ -33,12 +33,12 @@ function fillbrick(bricks, x, y) {
     bricks.sort((a, b) => b.y - a.y);
 }
 
-function newBall(player, ball) {
+function ft_newBall(player, ball) {
     for (let i = 0; i < Math.floor(Math.random() * 2) + 1; i++)
         player.balls.push(new Ball(ball.x, ball.y, 0, 2, 5));
 }
 
-function increasePaddle(player, ball) {
+function ft_increasePaddle(player, ball) {
     for (let paddle of player.paddles){
 
         if (paddle.width < WIDTH / 2 - 16){
@@ -281,7 +281,7 @@ function startBreakout() {
                         new Ball(WIDTH / 4, 3 * HEIGHT / 4, 0, 4, 5));
     let player2 = new Player(new Paddle(3 * WIDTH / 4 - 80 / 2, HEIGHT - 8, 80, 8),
                     new Ball(3 * WIDTH / 4, 3 * HEIGHT / 4, 0, 4, 5));
-    const bonus = [newBall, increasePaddle];
+    const bonus = [ft_newBall, ft_increasePaddle];
     fillbrick(player1.bricks, 0, 5);
     fillbrick(player2.bricks, 13, 5);
 
