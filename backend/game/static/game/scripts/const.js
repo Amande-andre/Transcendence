@@ -1,6 +1,7 @@
 const WIDTH = 800;
 const HEIGHT = 600;
 let game = true
+let listPlayer;
 keys = {};
 
 class Player {

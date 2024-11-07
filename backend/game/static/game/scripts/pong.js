@@ -199,7 +199,6 @@ function IaControlePong(player, nb) {
 }
 
 function updatePong(player1, player2) {
-
     drawPongArea(player1, player2);
     player2.isIa = false;
     IaControlePong(player1, 0);
@@ -207,10 +206,10 @@ function updatePong(player1, player2) {
     player1.balls[0].y += player1.balls[0].speedY;
     collisionPong(player1, player2);
     updatePaddlePong(player1, player2);
-    
+
     if (game === false)
         return;
-    if (player1.score === 3 || player2.score === 3) {
+    else if (player1.score === 3 || player2.score === 3) {
         ctx.clearRect(0, 0, WIDTH, HEIGHT);
         ctx.strokeStyle = 'white';
         ctx.strokeRect(0, 0, WIDTH, HEIGHT);
@@ -223,19 +222,30 @@ function updatePong(player1, player2) {
         }, 1000)
         return;
     }
-    requestAnimationFrame(() => updatePong(player1, player2, ));
+    else
+        requestAnimationFrame(() => updatePong(player1, player2));
 }
 
 function startPong() {
-    game = true;
-    mainBall = new Ball(WIDTH / 2, HEIGHT / 2, 5, 5, 8);
-    let player1 = new Player(new Paddle(0, HEIGHT / 2 - 80, 8, 160), mainBall);
-    let player2 = new Player(new Paddle(WIDTH - 8, HEIGHT / 2 - 80, 8, 160), mainBall);
-    // const bonus = [newBall, increasePaddle];
+    return new Promise((resolve) => {
+        game = true;
+        mainBall = new Ball(WIDTH / 2, HEIGHT / 2, 5, 5, 8);
+        let player1 = new Player(new Paddle(0, HEIGHT / 2 - 80, 8, 160), mainBall);
+        let player2 = new Player(new Paddle(WIDTH - 8, HEIGHT / 2 - 80, 8, 160), mainBall);
 
-    player1.initControls('w', 's');
-    player2.initControls('5', '2');
+        player1.initControls('w', 's');
+        player2.initControls('5', '2');
 
-    drawPongArea(player1, player2);
-    updatePong(player1, player2, );
+        drawPongArea(player1, player2);
+        updatePong(player1, player2);
+
+        const checkGameEnd = () => {
+            if (player1.score === 3 || player2.score === 3) {
+                resolve();
+            } else {
+                requestAnimationFrame(checkGameEnd);
+            }
+        };
+        checkGameEnd();
+    });
 }

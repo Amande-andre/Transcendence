@@ -6,3 +6,4 @@ class User(AbstractUser):
 	
 	class Meta:
 		pass
+
