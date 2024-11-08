@@ -4,14 +4,13 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 
 class CustomCreationForm(UserCreationForm):
-
     username = forms.CharField(
         max_length=30, 
         required=True, 
         widget=forms.TextInput(attrs={
             'placeholder': 'Username', 
-            'class': 'register-input form-control mb-3',
-            'style': 'width: 50%; Actor, sans-serif";',
+            'class': 'register-input form-control mb-3',  # Classe Bootstrap uniforme
+            'style': 'width: 100%; font-size: 1rem;',  # Taille de police standardisée
             'hx-post': '/checkUsername/',
             'hx-target': '#username-check',
             'hx-trigger': 'keyup changed delay:500ms'
@@ -23,7 +22,7 @@ class CustomCreationForm(UserCreationForm):
         widget=forms.PasswordInput(attrs={
             'placeholder': 'Password', 
             'class': 'register-input form-control mb-3',
-            'style': 'width: 50%; Actor, sans-serif";'
+            'style': 'width: 100%; font-size: 1rem;',  # Taille de police standardisée
         })
     )
     password2 = forms.CharField(
@@ -32,13 +31,14 @@ class CustomCreationForm(UserCreationForm):
         widget=forms.PasswordInput(attrs={
             'placeholder': 'Confirm Password', 
             'class': 'register-input form-control mb-3',
-            'style': 'width: 50%; Actor, sans-serif";'
+            'style': 'width: 100%; font-size: 1rem;',  # Taille de police standardisée
         })
     )
 
     class Meta:
         model = User
         fields = ["username", "password1", "password2"]
+
 
 class CustomAuthenticationForm(AuthenticationForm):
     username = forms.CharField(
@@ -47,7 +47,7 @@ class CustomAuthenticationForm(AuthenticationForm):
         widget=forms.TextInput(attrs={
             'placeholder': 'Username', 
             'class': 'register-input form-control mb-3',
-            'style': 'width: 50%; Actor, sans-serif";'
+            'style': 'width: 100%; Actor, sans-serif; font-size: 1rem;";'
         })
     )
     password = forms.CharField(
@@ -56,6 +56,6 @@ class CustomAuthenticationForm(AuthenticationForm):
         widget=forms.PasswordInput(attrs={
             'placeholder': 'Password', 
             'class': 'register-input form-control mb-3',
-            'style': 'width: 50%; Actor, sans-serif";'
+            'style': 'width: 100%; Actor, sans-serif; font-size: 1rem;";'
         })
     )
