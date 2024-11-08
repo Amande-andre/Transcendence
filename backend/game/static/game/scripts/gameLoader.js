@@ -1,4 +1,3 @@
-let ctx;
 
 document.addEventListener('htmx:afterSwap', function(evt) {
     if (evt.target.id === 'nav') {
