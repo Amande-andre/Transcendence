@@ -16,3 +16,5 @@ def optionsPong(request):
 
 def optionsBreakout(request):
 	return render(request, 'partials/options-breakout.html')
+def bracket(request):
+	return render(request, 'partials/bracket.html')

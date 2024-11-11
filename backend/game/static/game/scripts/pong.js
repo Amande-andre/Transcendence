@@ -8,8 +8,9 @@ function drawBall(x, y) {
     console.log(x, y);  
     ctx.beginPath();
     ctx.arc(x, y, ballRadius, 0, Math.PI * 2, false);
-    ctx.fill();
+    ctx.lineTo(0, 400);
     ctx.closePath();
+
 }
 
 function displayPongScore(scorePlayer1, scorePlayer2) {
@@ -118,49 +119,81 @@ function drawPongArea(player1, player2) {
         player2.balls[i].drawBall();
 }
 
+function calculePositions(player) {
+    let mid = player.paddles[0].midlPong;
+    let ball = player.balls[0].x;
+    let x = player.balls[0].x;
+    let y = player.balls[0].y;
+    let speedX = player.balls[0].speedX;
+    let speedY = player.balls[0].speedY;
+
+    if (speedX < 0){
+        for (i = x; x > 0; i-=5){
+            x += speedX;
+            y += speedY;
+            if (y >= HEIGHT || y <= 0){
+                speedY = speedY * -1;
+            }
+        }
+        //draw a pixel at the coordonate x, y
+    }
+    else {
+        for (i = x; x < WIDTH; i++){
+            x += speedX;
+            y += speedY;
+            if (y >= HEIGHT || y <= 0){
+                speedY = speedY * -1;
+            }
+        }
+    }
+    return y;
+}
+
 function choiceIaPong(player, nb)  {
         
     //faire les calcule de diff avant et toujours comparer entre un scope ex si >40 et <400 par exemple
     let halfP = player.paddles[0].height / 2;
-    let mid = player.paddles[0].midlPong;
-    let ball = player.balls[0].x;
+    let top = player.paddles[0].y;
+    let bot = player.paddles[0].y + player.paddles[0].height;
     //regarde si la balle est a droite si oui il se place au milieu
-    if (nb === 0) {
-        if (player.balls[0].x < WIDTH / 3){
-            if (mid > HEIGHT / 2 + halfP){
-                this.input = 's';
-                console.log('pos ball 1 == ', ball, 'pos paddle == ', mid, ' move chose = ' , this.input);
-                return 's';
-            }
-            else if (mid < HEIGHT / 2 - halfP){
-                this.input = 'w';
-                console.log('pos ball 2 == ', ball, 'pos paddle == ', mid, ' move chose = ' , this.input);
-
-                return 'w';
-            }
-            else 
-                return null;
-        } //dessous c est pour choisir quand la balle est cote iA
-        if (ball - mid  > 20){
-            this.input = 's';
-            console.log('ball 3 == ', ball, 'paddle == ', mid);
-            console.log('diff 3 == ', ball - mid, ' move chose = ', this.input);
-
-            return 's';
+    let pos = calculePositions(player);
+    if (player.balls[0].speedX < 0){
+        console.log('pos == ', pos);
+        console.log('bot == ', bot);
+        console.log('top == ', top);        
+        if (pos > bot){
+            player.distance = pos - bot;
+            player.lastInput = 's';
         }
-        else if (ball - mid < -20){
-            this.input = 'w';
-            console.log('ball 4 == ', ball, 'paddle == ', mid);
-            console.log('diff 4 == ', ball - mid, ' move chose = ', this.input);
-
-            return 'w';
+        else if (pos < top){
+            player.distance = top - pos;
+            player.lastInput = 'w';
         }
         else {
-            console.log('pos ball 5 == ', player.balls[0].y, 'pos paddle == ', mid, ' move chose = ' , this.input);
-
+            player.distance = 0;
             return null;
         }
+
+        console.log('player.distance == ', player.distance);
+
+        player.distance = player.distance / 300 * 1000;
+        console.log('player.distance 1 == ', player.distance);
+        return player.lastInput;
     }
+    
+    // else if (player.balls[0].speedX > 0 && player.balls[0].x < WIDTH / 2){
+    //     if (mid + 100 > HEIGHT / 2){
+    //         player.distance = 100;
+    //         return 'w';
+    //     }
+    //     else if (mid - 100 < HEIGHT / 2) {
+    //         player.distance = 100;
+    //         return 's';
+    //     }
+    // }
+    player.distance = 0;
+
+    return null;
 }
 
 function IaControlePong(player, nb) {
@@ -168,34 +201,35 @@ function IaControlePong(player, nb) {
     if (!player.isIa)
         return;
     player.second = new Date().getSeconds();
-    if (player.second <= player.past && (player.second !== 0 && player !== 59)){ 
+    if (player.second === player.past){ 
         return;
-    }       
+    }
     console.log('player.second == ', player.second);
-    player.past = player.second;
-    //player.past = player.second ;
-    let eventTab = choiceIaPong(player, nb);
-    otherevent = eventTab === 'w' ? 's' : 'w';
-    // if (player.input === eventTab){
-    //     return;
-    // }
-    if (eventTab === null)
-        return;
-    //vv envoyer un touple dont le deuxieme est le temps d attente pour le key up.
-    //temps d attente === 0 quand le paddle arrive a la coordonnee de la balle
-    let eventdown = new KeyboardEvent('keyup', {
-        key: otherevent,
-    });
-    let eventup = new KeyboardEvent('keydown', {
-        key: eventTab,
+    let eventup = new KeyboardEvent('keyup', {
+        key: player.lastInput,
     });
     document.dispatchEvent(eventup);
-    //document.dispatchEvent(eventup);
+    // 
+    player.past = player.second;
+    let eventTab = choiceIaPong(player, nb);
+    console.log('====================');
+    if (eventTab === null){
+        
+        return;
+    }
+    otherevent = eventTab === 'w' ? 's' : 'w';
+    let eventdown = new KeyboardEvent('keydown', {
+        key: eventTab,
+    });
     document.dispatchEvent(eventdown);
-    // setTimeout(() => {
-    //     document.dispatchEvent(eventup);
-    // }, 500);
-    //console.log('after seconde is  == ', new Date().getSeconds());
+    if (player.distance < 500){
+        if (player.distance < 50)
+            player.distance += 50;
+        setTimeout(() => {
+            document.dispatchEvent(eventup);
+            console.log('player.distance 2 == ', player.distance);
+        }, player.distance);
+    }
 }
 
 function updatePong(player1, player2, index) {
