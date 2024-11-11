@@ -1,4 +1,3 @@
-let ctx;
 
 document.addEventListener('htmx:afterSwap', function(evt) {
     if (evt.target.id === 'nav') {
@@ -12,23 +11,25 @@ document.addEventListener('htmx:afterSwap', function(evt) {
         let gameCanvas = document.getElementById('pongCanvas');
         if (gameCanvas) {
             ctx = gameCanvas.getContext('2d');
-			// startPong();
-            fetch('/game/bracket/')
+            tournament(startPong, gameCanvas)
 		}
 		else {
 			gameCanvas = document.getElementById('breakoutCanvas');
 			ctx = gameCanvas.getContext('2d');
-			startBreakout();
+            tournament(startBreakout, gameCanvas)
 		}
     }
 });
 
-document.addEventListener("htmx:beforeSwap", function(event) {
+document.addEventListener("htmx:beforeSwap", function(evt) {
     // Vérifie si le contenu qui est sur le point d'être injecté contient gameOption
-    if (event.detail.target.id === "nav") {
+    if (evt.detail.target.id === 'gameOption') {
+        listPlayer = shufflePlayer();
+    }
+    if (evt.detail.target.id === "nav") {
         // Supprime les éléments existants s'ils sont présents
 		game = false;
-        ["gameOption", "gameChoice", "breakoutCanvas", "pongCanvas"].forEach(id => {
+        ["gameOption", "gameChoice", "breakoutCanvas", "pongCanvas", "auth-form"].forEach(id => {
             const element = document.getElementById(id);
             if (element) {
                 element.remove();
