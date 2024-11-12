@@ -1,22 +1,13 @@
-<!-- <head>
-</head> -->
-{% extends 'base.html' %}
-{% load static %}
-{% block content %}
-<head>
-    <link rel="stylesheet" href="../../../game/static/game/styles/bracket.css">
-    <script src="../../../game/static/game/scripts/bracket.js"></script>
-</head>
-<div class="tournament-bracket">
+<div id="bracket" class="tournament-bracket">
     <!-- Premier tour -->
     <div class="round">
         <div class="match">
             <div class="match-container">
                 <div class="player winner">
-                    Joueur 1 <span class="score">3</span>
+                    {{ listPlayer.0 }} <span class="score">3</span>
                 </div>
                 <div class="player">
-                    Joueur 2 <span class="score">1</span>
+                    {{ listPlayer.1 }} <span class="score">1</span>
                 </div>
             </div>
             <div class="connector"></div>
@@ -95,7 +86,6 @@
             </div>
         </div>
     </div>
+<button hx-get="{% url 'game:pongCanvas' %}" hx-target="#bracket" hx-swap="outerHTML" 
+        style="cursor: pointer; position: relative; z-index: 3;">Continue</button>
 </div>
-
-<!-- <script src="bracket.js"></script> -->
-{% endblock content%}
