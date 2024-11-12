@@ -44,7 +44,7 @@
 	</div>
 	
 	<button class="btn btn-success btn-lg" hx-get="{% url 'game:bracket' %}" hx-target="#gameOption" hx-vals="js:{'players': shufflePlayer()}"
-	 hx-swap="outterHTML">Start</button>
+	 hx-swap="outerHTML">Start</button>
 </div>
 <script>
 	function shufflePlayer() {
@@ -53,7 +53,7 @@
     listPlayer = Array.from(listPlayer).map((input, index) => ({
         name: input.value || 'Player' + (index + 1),
         score: 0,
-        round: 0
+        round: 2
     }));
 
     // Ajouter des IA si nécessaire pour avoir un nombre pair

@@ -31,5 +31,8 @@ def bracket(request):
     # Par exemple: [{"name": "John", "score": 0, "round": 0}, ...]
 	context = {
         'players': player_data,
+		'nb_players': len(player_data),
+		# 'nb_matchs': len(player_data) // 2,
+
     }
 	return render(request, 'partials/bracket.html', context)
