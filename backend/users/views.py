@@ -63,6 +63,7 @@ def oauth2_login(request):
     return redirect(authorization_url)
 
 def oauth2_callback(request):
+    print('callback!!!')
     code = request.GET.get('code')
 
     client_id = settings.OA_UID
@@ -81,10 +82,6 @@ def oauth2_callback(request):
     response = requests.post(token_url, data=data)
     token_data = response.json()
 
-    # logger.debug("Status Code: %s", response.status_code)
-    # logger.debug("Response Content: %s", response.content)
-    # logger.debug("TOKEN DATA: %s", token_data)
-
     if response.status_code == 200 and 'access_token' in token_data:
         access_token = token_data['access_token']
         
@@ -95,8 +92,9 @@ def oauth2_callback(request):
         user_info = user_info_response.json()
 
         # Check if user exists
-        username = user_info['login']
+        username = '42' + user_info['login']
         email = user_info['email']
+
         try:
             user = User.objects.get(username=username)
         except User.DoesNotExist:
@@ -111,6 +109,5 @@ def oauth2_callback(request):
         return redirect('home')  # Change 'profile' to your desired URL name
     else:
         # Authentication failed
-        logger.error("Authentication failed: %s", token_data)
-        return redirect('login')
+        return redirect('users:login')
 # ##
