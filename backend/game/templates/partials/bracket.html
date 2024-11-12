@@ -4,7 +4,7 @@
         <div class="match">
             <div class="match-container">
                 <div class="player winner">
-                    {{ listPlayer.0 }} <span class="score">3</span>
+                    {{ players.0.name }} <span class="score">3</span>
                 </div>
                 <div class="player">
                     {{ listPlayer.1 }} <span class="score">1</span>
@@ -87,5 +87,5 @@
         </div>
     </div>
 <button hx-get="{% url 'game:pongCanvas' %}" hx-target="#bracket" hx-swap="outerHTML" 
-        style="cursor: pointer; position: relative; z-index: 3;">Continue</button>
+hx-vals='{"players": "{{ players|escapejs }}"}' style="cursor: pointer; position: relative; z-index: 3;">Continue</button>
 </div>

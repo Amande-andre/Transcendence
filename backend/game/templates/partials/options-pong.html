@@ -44,7 +44,7 @@
 	</div>
 	
 	<button class="btn btn-success btn-lg" hx-get="{% url 'game:bracket' %}" hx-target="#gameOption" hx-vals="js:{'players': shufflePlayer()}"
-	 hx-swap="outterHTML">Start</button>
+	 hx-swap="outerHTML">Start</button>
 </div>
 <script>
 	function shufflePlayer() {
@@ -52,7 +52,7 @@
     // Convertir les inputs en objets joueurs
     listPlayer = Array.from(listPlayer).map((input, index) => ({
         name: input.value || 'Player' + (index + 1),
-        score: 0,
+        score: [0, 0, 0],
         round: 0
     }));
 
@@ -61,7 +61,7 @@
         for (let i = 0; i < Math.log2(listPlayer.length); i++) {
             listPlayer.push({
                 name: 'IA' + (i + 1),
-                score: 0,
+                score: [0, 0, 0],
                 round: 0
             });
         }
@@ -73,9 +73,8 @@
         [listPlayer[i], listPlayer[j]] = [listPlayer[j], listPlayer[i]];
     }
 
-    console.log('listPlayer = ', listPlayer);
-    //localStorage.setItem('listPlayer', JSON.stringify(listPlayer));
-    return listPlayer;
+    console.log('listPlayer  shuffle = ', JSON.stringify(listPlayer));
+    return JSON.stringify(listPlayer);
 }
 </script>
 </container>

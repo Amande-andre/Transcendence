@@ -232,7 +232,7 @@ function IaControlePong(player, nb) {
     }
 }
 
-function updatePong(player1, player2, index) {
+function updatePong(player1, player2, ) {
     drawPongArea(player1, player2);
     player2.isIa = false;
     IaControlePong(player1, 0);
@@ -247,10 +247,6 @@ function updatePong(player1, player2, index) {
         ctx.clearRect(0, 0, WIDTH, HEIGHT);
         ctx.strokeStyle = 'white';
         ctx.strokeRect(0, 0, WIDTH, HEIGHT);
-        if (player1.score === 3)
-            listPlayer.splice(index, 1);
-        else
-            listPlayer.splice(index + 1, 1);
         setTimeout(() => {
             ctx.clearRect(0, 0, WIDTH, HEIGHT);
         }, 1000)
@@ -260,20 +256,44 @@ function updatePong(player1, player2, index) {
         requestAnimationFrame(() => updatePong(player1, player2));
 }
 
-function startPong(index) {
-    return new Promise((resolve) => {
+function getPlayersData(canvas) {
+    // Récupère l'élément HTML qui contient les données JSON
+    // Lit les données de l'attribut data et les parse en objet JavaScript
+    const playersData = canvas.getAttribute('data-players');
+    players = JSON.parse(playersData);
+    return players;
+}
+
+function getPlayer(players) {
+    let currentPlayer = undefined;
+    for(let i = 0; i < players.length; i++) {
+        if (currentPlayer === undefined)
+            currentPlayer = players[i];
+        else if (players[i].round < currentPlayer.round) {
+            currentPlayer = players[i];
+            console.log('players', players);
+            break;
+        }
+    }
+            players[0].round++;
+}
+async function startPong(canvas) {
+    let players = getPlayersData(canvas);
+    await new Promise((resolve) => {
         game = true;
-        console.log('player1 = ', listPlayer[index])
-        console.log('player2 = ', listPlayer[index + 1])
         mainBall = new Ball(WIDTH / 2, HEIGHT / 2, 5, 5, 8);
+        getPlayer(players);
         let player1 = new Player(new Paddle(0, HEIGHT / 2 - 80, 8, 160), mainBall);
+        console.log('players', players);
+        getPlayer(players);
         let player2 = new Player(new Paddle(WIDTH - 8, HEIGHT / 2 - 80, 8, 160), mainBall);
+        console.log('players', players);
 
         player1.initControls('w', 's');
         player2.initControls('5', '2');
 
         drawPongArea(player1, player2);
-        updatePong(player1, player2, index);
+        updatePong(player1, player2, );
 
         const checkGameEnd = () => {
             if (player1.score === 3 || player2.score === 3) {
@@ -284,4 +304,5 @@ function startPong(index) {
         };
         checkGameEnd();
     });
+    canvas.remove();
 }
