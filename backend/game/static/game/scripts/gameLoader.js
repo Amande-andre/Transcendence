@@ -23,9 +23,6 @@ document.addEventListener('htmx:afterSwap', function(evt) {
 
 document.addEventListener("htmx:beforeSwap", function(evt) {
     // Vérifie si le contenu qui est sur le point d'être injecté contient gameOption
-    if (evt.detail.target.id === 'gameOption') {
-        listPlayer = shufflePlayer();
-    }
     if (evt.detail.target.id === "nav") {
         // Supprime les éléments existants s'ils sont présents
 		game = false;

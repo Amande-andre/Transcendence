@@ -20,11 +20,16 @@ def optionsBreakout(request):
 	return render(request, 'partials/options-breakout.html')
 
 def bracket(request):
-	# get the hx-vals name listPlayer
-	print(request)
-	list_player = json.loads(request.GET.get('listPlayer', '[]'))
-	# return render(request, 'partials/bracket.html', {'listPlayer': list_player})jjist_player = {"player1": {"name": "player1", "score": 0, "round": 0},
-					# "player2": {"name": "player2", "score": 0, "round": 0},
-					# "player3": {"name": "player3", "score": 0, "round": 0},} 
-	print(list_player)
-	return render(request, 'partials/bracket.html', {'listPlayer': list_player})
+    # Récupérer les données des joueurs
+	print(request.GET)
+	players_raw = request.GET.getlist('players')
+	
+	player_data = [json.loads(player) for player in players_raw]
+    # Pour debug/vérification
+	print("Players received:", player_data)
+    # Maintenant players_data est une liste d'objets avec name, score, et round
+    # Par exemple: [{"name": "John", "score": 0, "round": 0}, ...]
+	context = {
+        'players': player_data,
+    }
+	return render(request, 'partials/bracket.html', context)
