@@ -18,6 +18,7 @@ COPY . /app
 
 RUN pip install -r requirements.txt
 RUN pip install django-cors-headers
+RUN pip install django-createsuperuserwithpassword
 RUN chmod +x ./entrypoint.sh
 
 ENTRYPOINT ["./entrypoint.sh"]

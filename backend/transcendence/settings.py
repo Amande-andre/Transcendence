@@ -29,6 +29,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'django_createsuperuserwithpassword',
     'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
