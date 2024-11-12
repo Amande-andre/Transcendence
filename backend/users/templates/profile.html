@@ -1,0 +1,42 @@
+{% load static %}
+<container id="profilePage">
+    <div class="container-fluid d-flex flex-row">
+        <div class="col-35">
+            <div class="search-bar mb-4">
+                <input type="text" class="form-control" placeholder="Rechercher...">
+            </div>
+
+            <!-- Image de profil cliquable pour changer la photo -->
+			<div class="image text-center profile-image-container" onclick="document.getElementById('uploadImage').click()">
+				<img id="profileImage" src="{% static 'users/images/giga4.png' %}" alt="Image de profil">
+			</div>
+			<input type="file" id="uploadImage" accept="image/*" style="display: none;" onchange="previewImage(event)">
+			
+
+            <!-- Champ de téléchargement d'image caché -->
+            <input type="file" id="uploadImage" accept="image/*" style="display: none;" onchange="previewImage(event)">
+
+			<div class="pseudo mt-4">
+				<label for="pseudoInput">Pseudo:</label>
+				<input type="text" id="pseudoInput" class="form-control mb-3" placeholder="Entrez votre pseudo" value="{{ user.username }}">
+				<button class="btn btn-primary" onclick="updatePseudo()">Enregistrer Pseudo</button>
+			</div>
+			
+            <div id="displayPseudo" class="mt-3">
+                <!-- Le pseudo sera affiché ici -->
+            </div>
+            <div class="stats mt-4"> 
+                <div class="Matchs">Matchs : <span id="matchs">0</span></div>
+                <div class="win">Win : <span id="win">0</span></div>
+                <div class="lose">Lose : <span id="lose">0</span></div>
+            </div>
+        </div>
+        <div class="col-65">
+            <div class="title">- Match history -</div>
+
+            <div id="historique">
+                <!-- affichage des parties -->
+            </div>
+        </div>
+    </div>
+</container>

@@ -9,7 +9,8 @@ from django.shortcuts import redirect
 from django.contrib.auth import logout
 from django.http import HttpResponse
 from django.template.response import TemplateResponse
-
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 class RegisterForm(CreateView):
@@ -67,3 +68,6 @@ def logout_view(request):
 
 def Home(request):
 	return render(request, 'home.html')
+
+def profile(request):
+    return render(request, 'profile.html')
