@@ -13,24 +13,30 @@ function shufflePlayer() {
         const j = Math.floor(Math.random() * (i + 1));
         [listPlayer[i], listPlayer[j]] = [listPlayer[j], listPlayer[i]];  // Échange des éléments
     }
-    return listPlayer
+    console.log('listPlayer = ', listPlayer);
+    localStorage.setItem('listPlayer', JSON.stringify(listPlayer));
+    return listPlayer;
 }
 
-            function sleep(ms) {
-                console.log('sleep');
-                return new Promise(resolve => setTimeout(resolve, ms));
-            }
+function getListPlayer() {
+  console.log('listPlayer = ', listPlayer);
+  console.log('JSON.stringify(listPlayer) = ', JSON.stringify(listPlayer));
+  return JSON.stringify(listPlayer);
+}
 
 async function tournament(game, canvas) {
+    csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    console.log('listPlayer = ', listPlayer);
     nbPlayer = listPlayer.length;
     let round = nbPlayer / 2;
     let step = Math.log2(nbPlayer);
-    const visualizer = new TournamentVisualizer(nbPlayer);
+    //const visualizer = new TournamentVisualizer(nbPlayer);
     for (let i = 0; i < step; i++) {
         console.log('step', i + 1);
         for (let j = 0; j < round; j++) {
             console.log('Round = ', i + 1);
             console.log('listPlayer = ', listPlayer);
+            //fetch sur lurl /bracket/
             await game(j);
             //faut faire un truc du genre
             // await new Promise((resolve) => {
@@ -49,5 +55,5 @@ async function tournament(game, canvas) {
     }
     console.log('jeu fini');
     console.log('canvas = ', canvas);
-    canvas.remove();
+    //canvas.remove();
 }

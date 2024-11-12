@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from django.http import HttpResponse
+import json
 
 # Create your views here.
 
@@ -16,5 +18,13 @@ def optionsPong(request):
 
 def optionsBreakout(request):
 	return render(request, 'partials/options-breakout.html')
+
 def bracket(request):
-	return render(request, 'partials/bracket.html')
+	# get the hx-vals name listPlayer
+	print(request)
+	list_player = json.loads(request.GET.get('listPlayer', '[]'))
+	# return render(request, 'partials/bracket.html', {'listPlayer': list_player})jjist_player = {"player1": {"name": "player1", "score": 0, "round": 0},
+					# "player2": {"name": "player2", "score": 0, "round": 0},
+					# "player3": {"name": "player3", "score": 0, "round": 0},} 
+	print(list_player)
+	return render(request, 'partials/bracket.html', {'listPlayer': list_player})

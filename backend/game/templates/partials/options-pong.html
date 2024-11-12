@@ -10,14 +10,14 @@
 				<div class="player-input mb-3">
 					<div class="input-group">
 						<span class="input-group-text">Player 1</span>
-						<input type="text" class="player" class="form-control" placeholder="Player name">
+						<input type="text"  class="form-control player" placeholder="Player name">
 						<input type="color" class="form-control form-control-color" value="#ff0000" title="Choisir la couleur">
 					</div>
 				</div>
 				<div class="player-input mb-3">
 					<div class="input-group">
 						<span class="input-group-text">Player 2</span>
-						<input type="text" class="player" class="form-control" placeholder="Player name">
+						<input type="text"  class="form-control player" placeholder="Player name">
 						<input type="color" class="form-control form-control-color" value="#0000ff" title="Choisir la couleur">
 					</div>
 				</div>
@@ -43,7 +43,8 @@
 		</div>
 	</div>
 	
-	<button class="btn btn-success btn-lg" hx-get="{% url 'game:pongCanvas' %}" hx-target="#gameOption" hx-swap="morph">Start</button>
+	<button class="btn btn-success btn-lg" hx-get="{% url 'game:bracket' %}" hx-target="#gameOption" hx-vals='js:{"listPlayer": localStorage.getItem("listPlayer")}'
+	 hx-swap="outterHTML">Start</button>
 </div>
 </container>
 
