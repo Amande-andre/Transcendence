@@ -7,11 +7,12 @@ document.addEventListener('htmx:afterSwap', function(evt) {
             element.style.display = 'none';
         });
     }
-    if (evt.detail.target.id === 'bracket') {
+    if (evt.detail.target.id === 'tournament') {
         let gameCanvas = document.getElementById('pongCanvas');
         let button = document.getElementById('pongButton');
         if (gameCanvas) {
             ctx = gameCanvas.getContext('2d');
+            console
             startPong(gameCanvas, button);
 		}
 		else {
@@ -21,12 +22,6 @@ document.addEventListener('htmx:afterSwap', function(evt) {
             startBreakout();
 		}
     }
-    if (evt.detail.target.id === 'gameOption') {
-        gameCanvas = document.getElementById('breakoutCanvas');
-        ctx = gameCanvas.getContext('2d');
-        console.log('breakoutCanvas');
-        startBreakout();
-        }
 });
 
 document.addEventListener("htmx:beforeSwap", function(evt) {

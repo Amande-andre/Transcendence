@@ -92,7 +92,7 @@ function collisionPong(player1, player2, players) {
             player1.balls.push(newBall);
             player2.balls.push(newBall);
             player1.score++;
-            players[player1.index].score++
+            players[player1.index].score[players[player1.index].round]++;
         }
         if (ball.x + ball.radius > WIDTH) {
             player1.balls.splice(player1.balls.indexOf(ball), 1);
@@ -247,6 +247,10 @@ function updatePong(player1, player2, players) {
     if (game === false)
         return;
     else if (player1.score === 3 || player2.score === 3) {
+        if (player1.score === 3)
+            players[player1.index].round++;
+        else
+            players[player2.index].round++;
         ctx.clearRect(0, 0, WIDTH, HEIGHT);
         ctx.strokeStyle = 'white';
         ctx.strokeRect(0, 0, WIDTH, HEIGHT);
@@ -275,7 +279,6 @@ function getPlayer(players) {
             break;
         }
     }
-    players[currentPlayer].round++;
     return currentPlayer;
 }
 
@@ -306,6 +309,10 @@ async function startPong(canvas, button) {
         };
         checkGameEnd();
     });
-    console.log('players', players);
+    listplayers = [players];
+    console.log('players', listplayers);
+    console.log('button', button);
+    button.setAttribute('hx-vals', JSON.stringify({'players': JSON.stringify(players)}));
+    console.log('button', button);
     button.style.display = 'block';
 }

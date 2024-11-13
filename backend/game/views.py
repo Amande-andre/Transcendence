@@ -6,7 +6,7 @@ import json
 def pongCanvas(request):
     # Récupérer les données des joueurs
 	players_raw = request.GET.get('players')
-	print("pong Players received:", players_raw)
+	# print("pong Players received:", players_raw)
 	return render(request, 'partials/pongCanvas.html', {'players': players_raw})
 
 def breakoutCanvas(request):
@@ -22,7 +22,8 @@ def optionsBreakout(request):
 	return render(request, 'partials/options-breakout.html')
 
 def bracket(request):
-    # Récupérer les données des joueurs
+    # Récupérer les données des joueursplay
+	print("bracket request.GET:", request.GET)
 	players_raw = json.loads(request.GET.get('players'))
 	print("bracket Players received:", players_raw)
 	print("len players_raw:", len(players_raw))

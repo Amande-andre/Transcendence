@@ -1,4 +1,4 @@
-<div class="tournament-bracket">
+<div id="tournament" class="tournament-bracket">
     <div class="round">
         {% for player in players %}
             {% if forloop.counter0|divisibleby:2 %}
@@ -38,6 +38,6 @@
             {% endif %}    
         {% endfor %}
     </div>
-<button hx-get="{% url 'game:pongCanvas' %}" hx-target="#bracket" hx-swap="outerHTML" 
+<button hx-get="{% url 'game:pongCanvas' %}" hx-target="#tournament" hx-swap="outerHTML" 
 hx-vals='{"players": "{{ players|escapejs }}"}' style="cursor: pointer; position: relative; z-index: 3;"> Continue </button>
 </div>

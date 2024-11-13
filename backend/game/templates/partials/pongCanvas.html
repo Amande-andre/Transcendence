@@ -2,6 +2,6 @@
 
 <div id="containerCanvas">
 <canvas id="pongCanvas" width="800" height="600" data-players="{{ players }}"></canvas>
-<button id="pongButton" hx-get="{% url 'game:bracket' %}" hx-target="#containerCanvas" hx-swap="outerHTML" 
+<button id="pongButton" hx-get="{% url 'game:bracket' %}" hx-target="#containerCanvas" hx-swap="outerHTML" hx-vals=""
         style="cursor: pointer; position: relative; bottom: 10px; left: 50%; transform: translateX(-50%); z-index: 3; display: none">Continue</button>
 </div>
