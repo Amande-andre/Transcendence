@@ -11,7 +11,7 @@ document.addEventListener('htmx:afterSwap', function(evt) {
         let gameCanvas = document.getElementById('pongCanvas');
         if (gameCanvas) {
             ctx = gameCanvas.getContext('2d');
-            tournament(startPong, gameCanvas)
+            startPong(gameCanvas);
 		}
 		else {
 			gameCanvas = document.getElementById('breakoutCanvas');

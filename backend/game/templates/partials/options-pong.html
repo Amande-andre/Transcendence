@@ -52,8 +52,8 @@
     // Convertir les inputs en objets joueurs
     listPlayer = Array.from(listPlayer).map((input, index) => ({
         name: input.value || 'Player' + (index + 1),
-        score: 0,
-        round: 2
+        score: [0, 0, 0],
+        round: 0
     }));
 
     // Ajouter des IA si nécessaire pour avoir un nombre pair
@@ -61,7 +61,7 @@
         for (let i = 0; i < Math.log2(listPlayer.length); i++) {
             listPlayer.push({
                 name: 'IA' + (i + 1),
-                score: 0,
+                score: [0, 0, 0],
                 round: 0
             });
         }
@@ -73,9 +73,8 @@
         [listPlayer[i], listPlayer[j]] = [listPlayer[j], listPlayer[i]];
     }
 
-    console.log('listPlayer = ', listPlayer);
-    //localStorage.setItem('listPlayer', JSON.stringify(listPlayer));
-    return listPlayer;
+    console.log('listPlayer  shuffle = ', JSON.stringify(listPlayer));
+    return JSON.stringify(listPlayer);
 }
 </script>
 </container>

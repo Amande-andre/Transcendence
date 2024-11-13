@@ -3,9 +3,11 @@ from django.http import HttpResponse
 import json
 
 # Create your views here.
-
 def pongCanvas(request):
-	return render(request, 'partials/pongCanvas.html')
+    # Récupérer les données des joueurs
+	players_raw = request.GET.get('players')
+	print("pong Players received:", players_raw)
+	return render(request, 'partials/pongCanvas.html', {'players': players_raw})
 
 def breakoutCanvas(request):
 	return render(request, 'partials/breakoutCanvas.html')
@@ -21,18 +23,6 @@ def optionsBreakout(request):
 
 def bracket(request):
     # Récupérer les données des joueurs
-	print(request.GET)
-	players_raw = request.GET.getlist('players')
-	
-	player_data = [json.loads(player) for player in players_raw]
-    # Pour debug/vérification
-	print("Players received:", player_data)
-    # Maintenant players_data est une liste d'objets avec name, score, et round
-    # Par exemple: [{"name": "John", "score": 0, "round": 0}, ...]
-	context = {
-        'players': player_data,
-		'nb_players': len(player_data),
-		# 'nb_matchs': len(player_data) // 2,
-
-    }
-	return render(request, 'partials/bracket.html', context)
+	players_raw = request.GET.get('players')
+	print("bracket Players received:", players_raw)
+	return render(request, 'partials/bracket.html', {"players": players_raw})
