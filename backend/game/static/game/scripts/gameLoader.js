@@ -17,9 +17,16 @@ document.addEventListener('htmx:afterSwap', function(evt) {
 		else {
 			gameCanvas = document.getElementById('breakoutCanvas');
 			ctx = gameCanvas.getContext('2d');
-            tournament(startBreakout, gameCanvas)
+            console.log('breakoutCanvas');
+            startBreakout();
 		}
     }
+    if (evt.detail.target.id === 'gameOption') {
+        gameCanvas = document.getElementById('breakoutCanvas');
+        ctx = gameCanvas.getContext('2d');
+        console.log('breakoutCanvas');
+        startBreakout();
+        }
 });
 
 document.addEventListener("htmx:beforeSwap", function(evt) {

@@ -283,11 +283,9 @@ function updateBreakout(player1, player2, bonus) {
 }
 
 
-function startBreakout(playerName1, playerName2) {
+function startBreakout() {
     game = true;
 
-    console.log('playerName1 == ', playerName1);
-    console.log('playerName2 == ', playerName2);
     let player1 = new Player(new Paddle(WIDTH / 4 - 80 / 2, HEIGHT - 8, 80, 8),
                         new Ball(WIDTH / 4, 3 * HEIGHT / 4, 0, 4, 5));
     let player2 = new Player(new Paddle(3 * WIDTH / 4 - 80 / 2, HEIGHT - 8, 80, 8),
