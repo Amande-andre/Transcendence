@@ -78,6 +78,8 @@ def updatePseudo(request):
 	if request.method == "POST":
 		new_Username = request.POST.get("pseudo")
 	if new_Username:
+		if not new_Username.isalnum():
+			return HttpResponse('<div class="form-text" style="color:red">Le nom d’utilisateur ne doit contenir que des lettres et des chiffres.</div>')
 		if User.objects.filter(username=new_Username).exists():
 			return HttpResponse('<div id="username-check" class="form-text" style="color:red">this username is already taken</div>')
 		if 5 <= len(new_Username) <= 20:
