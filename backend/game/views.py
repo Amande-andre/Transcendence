@@ -23,6 +23,6 @@ def optionsBreakout(request):
 
 def bracket(request):
     # Récupérer les données des joueurs
-	players_raw = request.GET.get('players')
+	players_raw = json.loads(request.GET.get('players'))
 	print("bracket Players received:", players_raw)
 	return render(request, 'partials/bracket.html', {"players": players_raw})

@@ -29,8 +29,9 @@ function updatePaddlePong(player1, player2) {
     }
 }
 
-function collisionPong(player1, player2) {
+function collisionPong(player1, player2, players) {
     for (let ball of player1.balls) {
+        // Check collision with paddles
         for (let paddle of player1.paddles) {
             if (ball.x + ball.radius > paddle.x &&
                 ball.x - ball.radius < paddle.x + paddle.width &&
@@ -91,6 +92,7 @@ function collisionPong(player1, player2) {
             player1.balls.push(newBall);
             player2.balls.push(newBall);
             player1.score++;
+            players[player1.index].score++
         }
         if (ball.x + ball.radius > WIDTH) {
             player1.balls.splice(player1.balls.indexOf(ball), 1);
@@ -99,6 +101,7 @@ function collisionPong(player1, player2) {
             player1.balls.push(newBall);
             player2.balls.push(newBall);
             player2.score++;
+            players[player2.index].score[players[player2.index].round]++;
         }
     }
 }
@@ -232,13 +235,13 @@ function IaControlePong(player, nb) {
     }
 }
 
-function updatePong(player1, player2, ) {
+function updatePong(player1, player2, players) {
     drawPongArea(player1, player2);
     player2.isIa = false;
     IaControlePong(player1, 0);
     player1.balls[0].x += player1.balls[0].speedX;
     player1.balls[0].y += player1.balls[0].speedY;
-    collisionPong(player1, player2);
+    collisionPong(player1, player2, players);
     updatePaddlePong(player1, player2);
 
     if (game === false)
@@ -247,20 +250,17 @@ function updatePong(player1, player2, ) {
         ctx.clearRect(0, 0, WIDTH, HEIGHT);
         ctx.strokeStyle = 'white';
         ctx.strokeRect(0, 0, WIDTH, HEIGHT);
-        setTimeout(() => {
-            ctx.clearRect(0, 0, WIDTH, HEIGHT);
-        }, 1000)
         return;
     }
     else
-        requestAnimationFrame(() => updatePong(player1, player2));
+        requestAnimationFrame(() => updatePong(player1, player2, players));
 }
 
 function getPlayersData(canvas) {
     // Récupère l'élément HTML qui contient les données JSON
     // Lit les données de l'attribut data et les parse en objet JavaScript
     const playersData = canvas.getAttribute('data-players');
-    players = JSON.parse(playersData);
+    players = JSON.parse(playersData.replace(/'/g, '"'));
     return players;
 }
 
@@ -268,32 +268,34 @@ function getPlayer(players) {
     let currentPlayer = undefined;
     for(let i = 0; i < players.length; i++) {
         if (currentPlayer === undefined)
-            currentPlayer = players[i];
+            currentPlayer = i;
         else if (players[i].round < currentPlayer.round) {
-            currentPlayer = players[i];
+            currentPlayer = i;
             console.log('players', players);
             break;
         }
     }
-            players[0].round++;
+    players[currentPlayer].round++;
+    return currentPlayer;
 }
-async function startPong(canvas) {
+
+async function startPong(canvas, button) {
     let players = getPlayersData(canvas);
+    console.log('players', players);
     await new Promise((resolve) => {
         game = true;
         mainBall = new Ball(WIDTH / 2, HEIGHT / 2, 5, 5, 8);
-        getPlayer(players);
-        let player1 = new Player(new Paddle(0, HEIGHT / 2 - 80, 8, 160), mainBall);
+        let player1 = new Player(new Paddle(0, HEIGHT / 2 - 80, 8, 160), mainBall, getPlayer(players));
         console.log('players', players);
         getPlayer(players);
-        let player2 = new Player(new Paddle(WIDTH - 8, HEIGHT / 2 - 80, 8, 160), mainBall);
+        let player2 = new Player(new Paddle(WIDTH - 8, HEIGHT / 2 - 80, 8, 160), mainBall, getPlayer(players));
         console.log('players', players);
 
         player1.initControls('w', 's');
         player2.initControls('5', '2');
 
         drawPongArea(player1, player2);
-        updatePong(player1, player2, );
+        updatePong(player1, player2, players);
 
         const checkGameEnd = () => {
             if (player1.score === 3 || player2.score === 3) {
@@ -304,5 +306,6 @@ async function startPong(canvas) {
         };
         checkGameEnd();
     });
-    canvas.remove();
+    console.log('players', players);
+    button.style.display = 'block';
 }

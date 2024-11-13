@@ -9,9 +9,10 @@ document.addEventListener('htmx:afterSwap', function(evt) {
     }
     if (evt.detail.target.id === 'bracket') {
         let gameCanvas = document.getElementById('pongCanvas');
+        let button = document.getElementById('pongButton');
         if (gameCanvas) {
             ctx = gameCanvas.getContext('2d');
-            startPong(gameCanvas);
+            startPong(gameCanvas, button);
 		}
 		else {
 			gameCanvas = document.getElementById('breakoutCanvas');
