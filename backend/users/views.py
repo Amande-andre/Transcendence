@@ -11,6 +11,8 @@ from django.http import HttpResponse
 from django.template.response import TemplateResponse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse, HttpResponse
+
 
 # Create your views here.
 class RegisterForm(CreateView):
@@ -71,3 +73,17 @@ def Home(request):
 
 def profile(request):
     return render(request, 'profile.html')
+
+def updatePseudo(request):
+	if request.method == "POST":
+		new_Username = request.POST.get("pseudo")
+	if new_Username:
+		if User.objects.filter(username=new_Username).exists():
+			return HttpResponse('<div id="username-check" class="form-text" style="color:red">this username is already taken</div>')
+		if 5 <= len(new_Username) <= 20:
+			request.user.username = new_Username
+			request.user.save()
+			return HttpResponse('<div class="form-text" style="color:green">username mis à jour</div>')
+		else:
+			return HttpResponse('<div class="form-text" style="color:red">Le username doit faire 5 caractères min.</div>')
+		return HttpResponse('<div class="form-text" style="color:red">Veuillez entrer un username</div>')

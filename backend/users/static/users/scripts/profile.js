@@ -81,43 +81,43 @@ let matchElement = document.getElementById('matchs');
 matchElement.innerText = match;
 
 
-function editPseudo() {
-    var pseudoDiv = document.getElementById("pseudo");
-    var pseudoInput = document.getElementById("pseudo-input");
+function editUsername() {
+    var UsernameDiv = document.getElementById("Username");
+    var UsernameInput = document.getElementById("Username-input");
 
     // Fixer explicitement la largeur de l'input pour éviter les sauts
-    pseudoInput.style.width = pseudoDiv.offsetWidth + "px";
+    UsernameInput.style.width = UsernameDiv.offsetWidth + "px";
 
     // Masquer la div et afficher l'input
-    pseudoDiv.style.display = "none";
-    pseudoInput.style.display = "block";
-    pseudoInput.focus();
+    UsernameDiv.style.display = "none";
+    UsernameInput.style.display = "block";
+    UsernameInput.focus();
 }
 
-function savePseudo() {
-    var pseudoDiv = document.getElementById("pseudo");
-    var pseudoInput = document.getElementById("pseudo-input");
+function saveUsername() {
+    var UsernameDiv = document.getElementById("Username");
+    var UsernameInput = document.getElementById("Username-input");
 
     // Sauvegarder le texte et revenir à l'affichage de la div
-    pseudoDiv.textContent = pseudoInput.value;
+    UsernameDiv.textContent = UsernameInput.value;
 
     // Masquer l'input et afficher la div
-    pseudoDiv.style.display = "block";
-    pseudoInput.style.display = "none";
+    UsernameDiv.style.display = "block";
+    UsernameInput.style.display = "none";
 }
 
 function checkEnter(event) {
     if (event.key === "Enter") {
-        savePseudo();
+        saveUsername();
     }
 }
 
-function updatePseudo() {
-	var pseudo = document.getElementById("pseudoInput").value;
-	if (pseudo.trim() !== "") {
-		document.getElementById("displayPseudo").innerHTML = "Pseudo: " + pseudo;
+function updateUsername() {
+	var Username = document.getElementById("UsernameInput").value;
+	if (Username.trim() !== "") {
+		document.getElementById("displayUsername").innerHTML = "Username: " + Username;
 	} else {
-		document.getElementById("displayPseudo").innerHTML = "Veuillez entrer un pseudo.";
+		document.getElementById("displayUsername").innerHTML = "Veuillez entrer un Username.";
 	}
 }
 

@@ -8,7 +8,7 @@
 
             <!-- Image de profil cliquable pour changer la photo -->
 			<div class="image text-center profile-image-container" onclick="document.getElementById('uploadImage').click()">
-				<img id="profileImage" src="{% static 'users/images/giga4.png' %}" alt="Image de profil">
+				<img id="profileImage" src="{% static 'users/images/randy.jpg' %}" alt="Image de profil">
 			</div>
 			<input type="file" id="uploadImage" accept="image/*" style="display: none;" onchange="previewImage(event)">
 			
@@ -17,10 +17,17 @@
             <input type="file" id="uploadImage" accept="image/*" style="display: none;" onchange="previewImage(event)">
 
 			<div class="pseudo mt-4">
-				<label for="pseudoInput">Pseudo:</label>
-				<input type="text" id="pseudoInput" class="form-control mb-3" placeholder="Entrez votre pseudo" value="{{ user.username }}">
-				<button class="btn btn-primary" onclick="updatePseudo()">Enregistrer Pseudo</button>
+				<input type="text" id="pseudoInput" name="pseudo" class="form-control mb-3" placeholder="Entrez votre pseudo" value="{{ user.username }}">
+				<button class="btn btn-primary" 
+					hx-post="{% url 'users:updatePseudo' %}"
+					hx-target="#displayPseudo"
+					hx-swap="innerHTML"
+					hx-include="#pseudoInput"
+					hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+					Enregistrer Pseudo
+				</button>
 			</div>
+			<div id="displayPseudo" class="mt-3"></div>
 			
             <div id="displayPseudo" class="mt-3">
                 <!-- Le pseudo sera affiché ici -->
