@@ -21,7 +21,7 @@
     <!-- ROUND II -->
      <div class="round">
         {% for player in players %}
-            {% if player.round >= 1 %}
+            {% if player.win >= 1 %}
                 {% if forloop.counter0|divisibleby:2 %}
                     <!-- Si l'index est pair, crée une nouvelle balise 'match' -->
                     <div class="match-container match">

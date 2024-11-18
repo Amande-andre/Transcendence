@@ -53,7 +53,9 @@
     listPlayer = Array.from(listPlayer).map((input, index) => ({
         name: input.value || 'Player' + (index + 1),
         score: [0, 0, 0],
-        round: 0
+        round: 0,
+		win : 0,
+		loose : 0
     }));
 
     // Ajouter des IA si nécessaire pour avoir un nombre pair
@@ -62,7 +64,9 @@
             listPlayer.push({
                 name: 'IA' + (i + 1),
                 score: [0, 0, 0],
-                round: 0
+                round: 0,
+				win : 0,
+				loose : 0
             });
         }
     }
