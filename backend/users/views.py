@@ -12,6 +12,8 @@ from django.template.response import TemplateResponse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse, HttpResponse
+from django.core.files.base import ContentFile
+import os
 
 
 # Create your views here.
@@ -88,4 +90,41 @@ def updatePseudo(request):
 			return HttpResponse('<div class="form-text" style="color:green">username mis à jour</div>')
 		else:
 			return HttpResponse('<div class="form-text" style="color:red">Le username doit faire 5 caractères min.</div>')
-		return HttpResponse('<div class="form-text" style="color:red">Veuillez entrer un username</div>')
+	return HttpResponse('<div class="form-text" style="color:red">Veuillez entrer un username</div>')
+
+
+
+@login_required
+@csrf_exempt
+def updateImage(request):
+    if request.method == "POST" and request.FILES.get("image"):
+        new_image = request.FILES["image"]
+
+        # Validation de l'image
+        if new_image.size > 5 * 1024 * 1024:
+            return HttpResponse('<div class="form-text" style="color:red">Image trop volumineuse</div>', status=400)
+        
+        allowed_types = ['image/jpeg', 'image/png', 'image/gif']
+        if new_image.content_type not in allowed_types:
+            return HttpResponse('<div class="form-text" style="color:red">Type de fichier non autorisé</div>', status=400)
+        
+        # Générer un nom de fichier unique
+        ext = os.path.splitext(new_image.name)[1]
+        filename = f"profile_{request.user.id}{ext}"
+        
+        # Supprimer l'ancienne photo si elle existe
+        if request.user.profilePhoto:
+            request.user.profilePhoto.delete()
+        
+        # Sauvegarder la nouvelle photo
+        request.user.profilePhoto.save(filename, new_image)
+        request.user.save()
+        
+        # Retourne un fragment HTML contenant l'image mise à jour
+        return HttpResponse(f'''
+            <img id="profileImage" 
+                 src="{request.user.profilePhoto.url}" 
+                 alt="Image de profil">
+        ''', content_type='text/html')
+    
+    return HttpResponse('<div class="form-text" style="color:red">Veuillez entrer une image</div>', status=400)
