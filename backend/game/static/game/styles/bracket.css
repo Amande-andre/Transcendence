@@ -32,13 +32,13 @@
     border-radius: 3px;
 }
 
-/* .player:first-child {
+.player:first-child {
     border-color: #ff4500;
     box-shadow: 0 0 20px #ff4500;
     margin-left: 15px;
     margin-right: 15px;
-    /* border-bottom: 1px solid #444; 
-} */
+    border-bottom: 1px solid #444; 
+}
 
 .winner {
     border-color: #09ff00;

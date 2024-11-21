@@ -270,6 +270,7 @@ function getPlayersData(canvas) {
     // Récupère l'élément HTML qui contient les données JSON
     // Lit les données de l'attribut data et les parse en objet JavaScript
     const playersData = canvas.getAttribute('data-players');
+    console.log('players = ', playersData);
     players = JSON.parse(playersData.replace(/'/g, '"'));
     return players;
 }
@@ -309,17 +310,15 @@ async function startPong(canvas, button) {
             return;
         }
         let player1 = new Player(new Paddle(0, HEIGHT / 2 - 80, 8, 160), mainBall, index1);
-        console.log('players', players);
-        getPlayer(players);
+        // getPlayer(players);
         let player2 = new Player(new Paddle(WIDTH - 8, HEIGHT / 2 - 80, 8, 160), mainBall, getPlayer(players));
-        console.log('players', players);
-
+        
         player1.initControls('w', 's');
         player2.initControls('5', '2');
-
+        
         drawPongArea(player1, player2);
         updatePong(player1, player2, players);
-
+        
         const checkGameEnd = () => {
             if (player1.score === 3 || player2.score === 3) {
                 resolve();
@@ -329,10 +328,7 @@ async function startPong(canvas, button) {
         };
         checkGameEnd();
     });
-    listplayers = [players];
-    console.log('players', listplayers);
-    console.log('button', button);
+    
     button.setAttribute('hx-vals', JSON.stringify({'players': JSON.stringify(players)}));
-    console.log('button', button);
     button.style.display = 'block';
 }
