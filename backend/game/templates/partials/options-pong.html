@@ -1,3 +1,6 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
 <container id="gameOption">
 <div class="content">
 <div class="container py-5">
@@ -46,6 +49,4 @@
 	<button class="btn btn-success btn-lg" hx-get="{% url 'game:pongCanvas' %}" hx-target="#gameOption" hx-swap="morph">Start</button>
 </div>
 </container>
-
-
-
+{% endblock content %}
