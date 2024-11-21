@@ -9,32 +9,40 @@
             </button>
 		</div>
         
-        <div class="collapse navbar-collapse" id="navcol-1" style="right: 3vw; top: 0; padding: 0; z-index: 1000; position: fixed;">
+        <div class="collapse navbar-collapse" id="navcol-1" style="right: 3vw; padding: 0; z-index: 1000; position: fixed;">
             <ul class="navbar-nav ms-auto" style="display: flex; align-items: center; gap: 20px;">
                 {% if user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'home' %}" id="home-link" style="color: var(--bs-body-bg); font-size: 20px;">Home</a>
-                    </li>
-					<li class="nav-item">
-						<form method="post" action="{% url 'users:logout' %}">
-							{% csrf_token %}
-							<button type="submit" class="nav-link" style="color: var(--bs-body-bg); font-size: 20px; background: none; border: none; padding: 0; cursor: pointer;">
-								Logout
-							</button>
-						</form>
-                    </li>
+				<li class="nav-item">
+					<button class="nav-link" id="profile-button" hx-get="{% url 'users:profile' %}" hx-target="#nav" hx-swap="afterend" 
+							style="color: var(--bs-body-bg); font-size: 20px; cursor: pointer;">Profiles</button>
+				</li>
+				<li class="nav-item">
+					<button class="nav-link" id="pong-button" hx-get="{% url 'game:gameChoice' %}" hx-target="#nav" hx-swap="afterend" 
+					style="color: var(--bs-body-bg); font-size: 20px; background: none; border: none; padding: 0; cursor: pointer;">Games</button>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="{% url 'home' %}" id="home-link" style="color: var(--bs-body-bg); font-size: 20px;">Home</a>
+				</li>
+				<li class="nav-item">
+					<form method="post" action="{% url 'users:logout' %}">
+						{% csrf_token %}
+						<button type="submit" class="nav-link" style="color: var(--bs-body-bg); font-size: 20px; background: none; border: none; padding: 0; cursor: pointer;">
+							Logout
+						</button>
+					</form>
+				</li>
                 {% else %}
-                    <li class="nav-item">
-                        <button class="nav-link" id="pong-button" hx-get="{% url 'game:gameChoice' %}" hx-target="#nav" hx-swap="afterend" 
-                                style="color: var(--bs-body-bg); font-size: 20px; background: none; border: none; padding: 0; cursor: pointer;">
-                            Games
-                        </button>
+				<li class="nav-item">
+					<button class="nav-link" id="pong-button" hx-get="{% url 'game:gameChoice' %}" hx-target="#nav" hx-swap="afterend" 
+					style="color: var(--bs-body-bg); font-size: 20px; cursor: pointer;">Games</button>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'users:login' %}" style="color: var(--bs-body-bg); font-size: 20px;">Login</a>
+                        <button class="nav-link" id="login-button" hx-get="{% url 'users:login' %}" hx-target="#nav" hx-swap="afterend" 
+                                style="color: var(--bs-body-bg); font-size: 20px; cursor: pointer;">Login</button>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'users:register' %}" style="color: var(--bs-body-bg); font-size: 20px;">Register</a>
+                        <button class="nav-link" id="register-button" hx-get="{% url 'users:register' %}" hx-target="#nav" hx-swap="afterend" 
+                                style="color: var(--bs-body-bg); font-size: 20px; cursor: pointer;">Register</button>
                     </li>
                 {% endif %}
             </ul>

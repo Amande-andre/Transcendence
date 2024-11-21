@@ -27,7 +27,7 @@ document.addEventListener("htmx:beforeSwap", function(event) {
     if (event.detail.target.id === "nav") {
         // Supprime les éléments existants s'ils sont présents
 		game = false;
-        ["gameOption", "gameChoice", "breakoutCanvas", "pongCanvas"].forEach(id => {
+        ["gameOption", "gameChoice", "breakoutCanvas", "pongCanvas", "auth-form", "profilePage"].forEach(id => {
             const element = document.getElementById(id);
             if (element) {
                 element.remove();

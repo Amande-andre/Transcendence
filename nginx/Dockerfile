@@ -1,10 +1,14 @@
 FROM nginx:alpine3.19
 
-COPY ./nginx.conf /etc/nginx/conf.d/default.conf
-# COPY  ../frontend /usr/share/nginx/html
+# Copier le fichier de configuration Nginx
+COPY ./nginx.conf /etc/nginx/nginx.conf
 
-WORKDIR /usr/share/nginx/html
+# Créer le certificat auto-signé
+RUN mkdir -p /etc/nginx/ssl && \
+    openssl req -x509 -nodes -days 365 \
+    -out /etc/nginx/ssl/transcendence.crt \
+    -keyout /etc/nginx/ssl/transcendence.key \
+    -subj "/CN=transcendence.com"
 
-# VOLUME [ "/usr/share/nginx/html" ] // this is not tested
-
+# Lancement de Nginx en mode non-déamonné
 ENTRYPOINT ["nginx", "-g", "daemon off;"]
