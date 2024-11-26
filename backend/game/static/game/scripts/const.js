@@ -1,10 +1,11 @@
 const WIDTH = 800;
 const HEIGHT = 600;
 let game = true
+let ctx;
 keys = {};
 
 class Player {
-    constructor(paddle, ball) {
+    constructor(paddle, ball, i) {
         
         this.score = 0;
         this.paddles = []; 
@@ -14,6 +15,7 @@ class Player {
         this.balls.push(ball);
         this.spawnBallx = ball.x;
         this.spawnBally = ball.y;
+        this.index = i;
         this.isIa = true;
         this.time = new Date();
         this.second = this.time.getSeconds();
@@ -116,4 +118,3 @@ class GameInfo{
 
     }
 }
-let gameInfo = new GameInfo();

@@ -1,4 +1,4 @@
-function drawRec(x, y) {
+      function drawRec(x, y) {
     ctx.fillStyle = 'white';
     ctx.fillRect(x, y, paddleWidth, paddleHeight);
 }
@@ -29,8 +29,9 @@ function updatePaddlePong(player1, player2) {
     }
 }
 
-function collisionPong(player1, player2) {
+function collisionPong(player1, player2, players) {
     for (let ball of player1.balls) {
+        // Check collision with paddles
         for (let paddle of player1.paddles) {
             if (ball.x + ball.radius > paddle.x &&
                 ball.x - ball.radius < paddle.x + paddle.width &&
@@ -174,10 +175,7 @@ function choiceIaPong(player, nb)  {
             return null;
         }
 
-        console.log('player.distance == ', player.distance);
-
         player.distance = player.distance / 300 * 1000;
-        console.log('player.distance 1 == ', player.distance);
         return player.lastInput;
     }
     
@@ -204,7 +202,6 @@ function IaControlePong(player, nb) {
     if (player.second === player.past){ 
         return;
     }
-    console.log('player.second == ', player.second);
     let eventup = new KeyboardEvent('keyup', {
         key: player.lastInput,
     });
@@ -227,49 +224,108 @@ function IaControlePong(player, nb) {
             player.distance += 50;
         setTimeout(() => {
             document.dispatchEvent(eventup);
-            console.log('player.distance 2 == ', player.distance);
         }, player.distance);
     }
 }
 
-function updatePong(player1, player2) {
-
+function updatePong(player1, player2, players) {
     drawPongArea(player1, player2);
     player2.isIa = false;
     IaControlePong(player1, 0);
     player1.balls[0].x += player1.balls[0].speedX;
     player1.balls[0].y += player1.balls[0].speedY;
-    collisionPong(player1, player2);
+    collisionPong(player1, player2, players);
     updatePaddlePong(player1, player2);
-    
+
     if (game === false)
         return;
-    if (player1.score === 3 || player2.score === 3) {
+    else if (player1.score === 3 || player2.score === 3) {
+        if (player1.score === 3){
+            players[player1.index].win++;
+            players[player2.index].loose++;
+            //ici save la win or lose du players[1] ou [0]
+        }
+        else{
+            players[player2.index].win++;
+            players[player1.index].loose++;
+        }
+        let rd = players[player1.index].round;
+        console.log('rd == ', rd, ' player1.index == ', player1.index, ' score == ', player1.score, 'players score == ', players[player1.index].score[rd - 1]);
+        console.log('rd == ', rd, ' player2.index == ', player2.index, ' score == ', player2.score, 'players score == ', players[player2.index].score[rd - 1]);
+        players[player1.index].score[rd - 1] = player1.score;
+        players[player2.index].score[rd - 1] = player2.score;
+        players[player1.index].round++;
+        players[player2.index].round++;
         ctx.clearRect(0, 0, WIDTH, HEIGHT);
         ctx.strokeStyle = 'white';
         ctx.strokeRect(0, 0, WIDTH, HEIGHT);
-        if (player1.score === 3)
-            ctx.fillText('WIN', 100, 50);
-        else
-            ctx.fillText('WIN', WIDTH - 140, 50);
-        setTimeout(() => {
-            ctx.clearRect(0, 0, WIDTH, HEIGHT);
-        }, 1000)
         return;
     }
-    requestAnimationFrame(() => updatePong(player1, player2, ));
+    else
+        requestAnimationFrame(() => updatePong(player1, player2, players));
 }
 
-function startPong() {
-    game = true;
-    mainBall = new Ball(WIDTH / 2, HEIGHT / 2, 5, 5, 8);
-    let player1 = new Player(new Paddle(0, HEIGHT / 2 - 80, 8, 160), mainBall);
-    let player2 = new Player(new Paddle(WIDTH - 8, HEIGHT / 2 - 80, 8, 160), mainBall);
-    // const bonus = [newBall, increasePaddle];
+function getPlayersData(canvas) {
+    // Récupère l'élément HTML qui contient les données JSON
+    // Lit les données de l'attribut data et les parse en objet JavaScript
+    const playersData = canvas.getAttribute('data-players');
+    console.log('players = ', playersData);
+    players = JSON.parse(playersData.replace(/'/g, '"'));
+    return players;
+}
 
-    player1.initControls('w', 's');
-    player2.initControls('5', '2');
+function getPlayer(players) {
+    
+    let lowestRound = 10;
+    
+    for (let i = 0; i < players.length; i++) {
+        if (players[i].loose === 0){
+            if (players[i].round <= lowestRound){
+                lowestRound = players[i].round;
+            }
+        }
+    }
+    for (let i = 0; i < players.length; i++) {
 
-    drawPongArea(player1, player2);
-    updatePong(player1, player2, );
+        if (players[i].loose === 0 && players[i].round === lowestRound){
+            players[i].round++;
+            return i;
+        }
+    }
+    return -1;
+}
+
+async function startPong(canvas, button) {
+    let players = getPlayersData(canvas);
+    console.log('players', players);
+    await new Promise((resolve) => {
+        game = true;
+        mainBall = new Ball(WIDTH / 2, HEIGHT / 2, 5, 5, 8);
+        let index1 = getPlayer(players);
+        if (index1 === -1){
+            resolve();
+            return;
+        }
+        let player1 = new Player(new Paddle(0, HEIGHT / 2 - 80, 8, 160), mainBall, index1);
+        // getPlayer(players);
+        let player2 = new Player(new Paddle(WIDTH - 8, HEIGHT / 2 - 80, 8, 160), mainBall, getPlayer(players));
+        
+        player1.initControls('w', 's');
+        player2.initControls('5', '2');
+        
+        drawPongArea(player1, player2);
+        updatePong(player1, player2, players);
+        
+        const checkGameEnd = () => {
+            if (player1.score === 3 || player2.score === 3) {
+                resolve();
+            } else {
+                requestAnimationFrame(checkGameEnd);
+            }
+        };
+        checkGameEnd();
+    });
+    
+    button.setAttribute('hx-vals', JSON.stringify({'players': JSON.stringify(players)}));
+    button.style.display = 'block';
 }

@@ -21,7 +21,7 @@ function updatePaddles(player1, player2) {
 }
 
 function fillbrick(bricks, x, y) {
-    for (let row = 0; row < 18; row++) {
+    for (let row = 0; row < 10; row++) {
         for (let col = 0; col < 12; col++) {
             bricks.push({
                 x: (x + col) * 32, // Position X de la brique
@@ -190,23 +190,36 @@ function choiceIa(player, nb)  {
     let ball = player.balls[0].x;
     //regarde si la balle est a droite si oui il se place au milieu
     let pos = calculePositionsBr(player);
-    if (player.balls[0].speedX < 0){
+    console.log('pos == ', pos);
+    console.log('left == ', left);
+    console.log('right == ', right);
+    if (player.balls[0].speedX > 0){
         if (pos > right){
             player.distance = pos - right;
-            player.lastInput = 'a';
-            console.log('a');
-            return 'a';
+            player.lastInput = 'd';
         }
         else if (pos < left){
             player.distance = left - pos;
-            player.lastInput = 'd';
-            console.log('d');
-            return 'd';
+            player.lastInput = 'a';
         }
+        player.distance = (player.distance / 300) * 500;
     }
-    player.distance = 0;
-
-    return null;
+    else if (player.balls[0].speedX < 0){
+        if (ball > right){
+            player.distance = pos - mid;
+            player.lastInput = 'd';
+        }
+        else if (ball < left){
+            player.distance = mid - pos;
+            player.lastInput = 'a';
+        }
+        player.distance = (player.distance / 300) * 250;
+    }
+    else{
+            player.distance = 0;
+            return null;
+    }
+    return player.lastInput;
 }
 
 function IaControle(player, nb) {
@@ -225,7 +238,6 @@ function IaControle(player, nb) {
     // 
     player.past = player.second;
     let eventTab = choiceIa(player, nb);
-    console.log('====================');
     if (eventTab === null){
         
         return;
@@ -237,15 +249,12 @@ function IaControle(player, nb) {
     });
     //document.dispatchEvent(eventup);
     document.dispatchEvent(eventdown);
-    if (player.distance > 20 && player.distance < 300){
-        setTimeout(() => {
-            if (player.distance < 50)
-                player.distance = 150;
-            console.log('player.distance == ', player.distance + 100);
-            //0.3 j avance de 160
-            document.dispatchEvent(eventup);
-        }, player.distance);
-    }
+    setTimeout(() => {
+        console.log('player.distance == ', player.distance);
+        //0.3 j avance de 160
+        document.dispatchEvent(eventup);
+    }, player.distance);
+    console.log('====================');
 }
 
 function updateBreakout(player1, player2, bonus) {
@@ -290,5 +299,5 @@ function startBreakout() {
 
     drawBreakoutAera(player1, player2);
 
-    updateBreakout(player1, player2, bonus);
+    return updateBreakout(player1, player2, bonus);
 }
