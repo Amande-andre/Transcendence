@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<container id="profilePage">
+<div id="profilePage">
     <div class="container-fluid d-flex flex-row">
         <div class="col-35">
             <div class="search-bar mb-4">
@@ -48,9 +48,9 @@
             <div class="title">- Match history -</div>
 
             <div id="historique">
-                <!-- affichage des parties -->
+				{% include 'partials/infiniteScroll.html' with matchs=User_matchs %}
             </div>
         </div>
     </div>
-</container>
+</div>
 {% endblock content %}

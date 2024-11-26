@@ -9,3 +9,9 @@ class User(AbstractUser):
     class Meta:
         pass
 
+class Match(models.Model):
+    User = models.ForeignKey(User, on_delete=models.CASCADE)
+    player1 = models.CharField(max_length=100)
+    player2 = models.CharField(max_length=100)
+    score1 = models.IntegerField()
+    score2 = models.IntegerField()

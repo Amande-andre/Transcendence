@@ -1,6 +1,6 @@
 from django.views.generic import CreateView, FormView
 from .form import CustomCreationForm
-from .models import User
+from .models import User, Match
 from django.contrib.auth import login
 from .form import CustomAuthenticationForm
 from django.shortcuts import render
@@ -62,7 +62,11 @@ def Home(request):
 	return render(request, 'home.html')
 
 def profile(request):
-    return render(request, 'profile.html')
+    for i in range(100):
+        newMatch = Match(User=request.user, player1="moi", player2="lui", score1=3, score2=0)
+        newMatch.save()
+    User_matchs = request.user.match_set.all()
+    return render(request, 'profile.html', {'User_matchs': User_matchs})
 
 def updatePseudo(request):
 	if request.method == "POST":
