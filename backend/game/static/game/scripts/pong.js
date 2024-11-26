@@ -249,13 +249,11 @@ function updatePong(player1, player2, players) {
             players[player2.index].win++;
             players[player1.index].loose++;
         }
-        let rd = players[player1.index].round;
-        console.log('rd == ', rd, ' player1.index == ', player1.index, ' score == ', player1.score, 'players score == ', players[player1.index].score[rd - 1]);
-        console.log('rd == ', rd, ' player2.index == ', player2.index, ' score == ', player2.score, 'players score == ', players[player2.index].score[rd - 1]);
-        players[player1.index].score[rd - 1] = player1.score;
-        players[player2.index].score[rd - 1] = player2.score;
-        players[player1.index].round++;
-        players[player2.index].round++;
+        let rd = players[player1.index].round - 1;
+        console.log('rd == ', rd, ' player1.index == ', player1.index, ' score == ', player1.score, 'players score == ', players[player1.index].score[rd]);
+        console.log('rd == ', rd, ' player2.index == ', player2.index, ' score == ', player2.score, 'players score == ', players[player2.index].score[rd]);
+        players[player1.index].score[rd] = player1.score;
+        players[player2.index].score[rd] = player2.score;
         ctx.clearRect(0, 0, WIDTH, HEIGHT);
         ctx.strokeStyle = 'white';
         ctx.strokeRect(0, 0, WIDTH, HEIGHT);
