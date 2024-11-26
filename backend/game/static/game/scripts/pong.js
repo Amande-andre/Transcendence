@@ -92,7 +92,6 @@ function collisionPong(player1, player2, players) {
             player1.balls.push(newBall);
             player2.balls.push(newBall);
             player1.score++;
-            players[player1.index].score[players[player1.index].round] = player1.score;
         }
         if (ball.x + ball.radius > WIDTH) {
             player1.balls.splice(player1.balls.indexOf(ball), 1);
@@ -101,7 +100,6 @@ function collisionPong(player1, player2, players) {
             player1.balls.push(newBall);
             player2.balls.push(newBall);
             player2.score++;
-            players[player2.index].score[players[player2.index].round] = player2.score;
         }
     }
 }
@@ -177,10 +175,7 @@ function choiceIaPong(player, nb)  {
             return null;
         }
 
-        console.log('player.distance == ', player.distance);
-
         player.distance = player.distance / 300 * 1000;
-        console.log('player.distance 1 == ', player.distance);
         return player.lastInput;
     }
     
@@ -207,7 +202,6 @@ function IaControlePong(player, nb) {
     if (player.second === player.past){ 
         return;
     }
-    console.log('player.second == ', player.second);
     let eventup = new KeyboardEvent('keyup', {
         key: player.lastInput,
     });
@@ -230,7 +224,6 @@ function IaControlePong(player, nb) {
             player.distance += 50;
         setTimeout(() => {
             document.dispatchEvent(eventup);
-            console.log('player.distance 2 == ', player.distance);
         }, player.distance);
     }
 }
@@ -250,11 +243,17 @@ function updatePong(player1, player2, players) {
         if (player1.score === 3){
             players[player1.index].win++;
             players[player2.index].loose++;
+            //ici save la win or lose du players[1] ou [0]
         }
         else{
             players[player2.index].win++;
             players[player1.index].loose++;
         }
+        let rd = players[player1.index].round;
+        console.log('rd == ', rd, ' player1.index == ', player1.index, ' score == ', player1.score, 'players score == ', players[player1.index].score[rd - 1]);
+        console.log('rd == ', rd, ' player2.index == ', player2.index, ' score == ', player2.score, 'players score == ', players[player2.index].score[rd - 1]);
+        players[player1.index].score[rd - 1] = player1.score;
+        players[player2.index].score[rd - 1] = player2.score;
         players[player1.index].round++;
         players[player2.index].round++;
         ctx.clearRect(0, 0, WIDTH, HEIGHT);
@@ -277,7 +276,8 @@ function getPlayersData(canvas) {
 
 function getPlayer(players) {
     
-    let lowestRound = 0;
+    let lowestRound = 10;
+    
     for (let i = 0; i < players.length; i++) {
         if (players[i].loose === 0){
             if (players[i].round <= lowestRound){
@@ -286,15 +286,12 @@ function getPlayer(players) {
         }
     }
     for (let i = 0; i < players.length; i++) {
-        console.log('players here ', players[i].loose, ' ', players[i].round, ' ', lowestRound);
 
         if (players[i].loose === 0 && players[i].round === lowestRound){
             players[i].round++;
-            console.log('players[i].round == ', players[i].round,' i = ', i);
             return i;
         }
     }
-    console.log('playe ', lowestRound);
     return -1;
 }
 

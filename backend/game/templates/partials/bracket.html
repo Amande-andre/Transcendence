@@ -27,7 +27,7 @@
                     <!-- <div class="match"> -->
             {% endif %}
                 <div class="player">
-                    {{ player.name }} <span class="score">{{ player.score.0 }}</span>
+                    {{ player.name }} <span class="score">{{ player.score.1 }}</span>
                 </div>
 
             {% if forloop.counter0|divisibleby:2 != 1 %}
@@ -39,14 +39,14 @@
     </div>
         <!-- ROUND III -->
     <div class="round">
-        {% for player in players2 %}
+        {% for player in players3 %}
             {% if forloop.counter0|divisibleby:2 %}
                 <!-- Si l'index est pair, crée une nouvelle balise 'match' -->
                 <div class="match-container match">
                     <!-- <div class="match"> -->
             {% endif %}
                 <div class="player">
-                    {{ player.name }} <span class="score">{{ player.score.0 }}</span>
+                    {{ player.name }} <span class="score">{{ player.score.3 }}</span>
                 </div>
 
             {% if forloop.counter0|divisibleby:2 != 1 %}
@@ -57,5 +57,5 @@
         {% endfor %}
     </div>
 <button hx-get="{% url 'game:pongCanvas' %}" hx-target="#tournament" hx-swap="outerHTML" 
-hx-vals='{"data-players": "{{ players|escapejs }}"}' style="cursor: pointer; position: relative; z-index: 3;"> Continue </button>
+hx-vals='{"players": "{{ players|escapejs }}"}' style="cursor: pointer; position: relative; z-index: 3;"> Continue </button>
 </div>

@@ -34,7 +34,7 @@ def bracket(request):
 	
 	for players in players_raw:
 		if players['win'] >= 1:
-			player2.append(players)
+			players2.append(players)
 		if players['win'] >= 2:
-			player3.append(players)
+			players3.append(players)
 	return render(request, 'partials/bracket.html', {"players": players_raw, "players2": players2, "players3": players3})
