@@ -46,7 +46,7 @@
 		</div>
 	</div>
 	
-	<button class="btn btn-success btn-lg" hx-get="{% url 'game:bracket' %}" hx-target="#gameOption" hx-vals="js:{'players': shufflePlayer()}"
+	<button class="btn btn-success btn-lg" hx-get="{% url 'game:bracket' %}" hx-target="#gameOption" hx-vals="js:{'players': shufflePlayer(), 'game': 'pong'}"
 	 hx-swap="outerHTML">Start</button>
 </div>
 <script>
@@ -80,7 +80,6 @@
         [listPlayer[i], listPlayer[j]] = [listPlayer[j], listPlayer[i]];
     }
 
-    console.log('listPlayer  shuffle = ', JSON.stringify(listPlayer));
     return JSON.stringify(listPlayer);
 }
 </script>
