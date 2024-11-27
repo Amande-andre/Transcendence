@@ -10,6 +10,7 @@ from django.contrib.auth import logout
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 import os
@@ -116,3 +117,17 @@ def updateImage(request):
         ''', content_type='text/html')
     
     return HttpResponse('<div class="form-text" style="color:red">Veuillez entrer une image</div>', status=400)
+
+def addFriend(request):
+    search = request.POST.get('friend')  # Récupérer la valeur de la recherche
+    print(search)
+    #print le type de search
+    print(type(search))
+    if search == '':
+        return render(request, 'partials/addFriendState.html', {'message': 'Ajoutez un ami !'})
+    if User.objects.filter(username=search).exists():
+        friend = User.objects.get(username=search)
+        request.user.friends.add(friend)
+        return render(request, 'partials/addFriendState.html', {'message': f'{friend.username} ajouté comme ami !'})
+    else:
+        return render(request, 'partials/addFriendState.html', {'message': 'Utilisateur non trouvé !'})
