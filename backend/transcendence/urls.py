@@ -1,7 +1,7 @@
 """
 URL configuration for transcendence project.
 
-The `urlpatterns` list routes URLs to views. For more information please see:
+The `urlpatterns` list routes URLs to views. For more information  see:
     https://docs.djangoproject.com/en/5.1/topics/http/urls/
 Examples:
 Function views

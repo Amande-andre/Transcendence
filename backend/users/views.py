@@ -14,6 +14,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse, HttpResponse
 from django.core.files.base import ContentFile
 import os
+from django.core.validators import RegexValidator
+from django.core.exceptions import ValidationError
 
 
 # Create your views here.
@@ -59,13 +61,34 @@ class LoginForm(FormView):
             return response
         return super().form_valid(form)
 
-def checkUsername(request):
-    username = request.POST.get('username')
-    if User.objects.filter(username=username).exists():
-         return HttpResponse('<div id="username-check" class="form-text" style="color:red">this username is already taken</div>')
-    else:
-         return HttpResponse('<div id="username-check" class="form-text" style="color:green">this username is available</div>')
 
+def checkUsername(request):
+    username = request.POST.get('username', '').strip()
+    if not username:
+        return HttpResponse('<div id="username-check" class="form-text"></div>')
+    errors = []
+
+    # Vérifie min_length et max_length
+    if len(username) < 5:
+        errors.append("Le nom d'utilisateur doit contenir au moins 5 caractères.")
+    if len(username) > 30:
+        errors.append("Le nom d'utilisateur ne doit pas dépasser 30 caractères.")
+
+    # Vérifie lettres et chiffres uniquement
+    try:
+        RegexValidator(r'^[a-zA-Z0-9]+$', message="Le nom d'utilisateur ne peut contenir que des lettres et des chiffres.")(username)
+    except ValidationError as e:
+        errors.extend(e.messages)
+
+    # Vérifie si le username est déjà pris
+    if User.objects.filter(username=username).exists():
+        errors.append("Ce nom d'utilisateur est déjà pris.")
+
+    # Retourne les erreurs ou un message de succès
+    if errors:
+        return HttpResponse(f'<div id="username-check" class="form-text" style="color:red">{"<br>".join(errors)}</div>')
+    else:
+        return HttpResponse('<div id="username-check" class="form-text" style="color:green">Ce nom d\'utilisateur est disponible.</div>')
 def logout_view(request):
     logout(request)
     return redirect('home') 
