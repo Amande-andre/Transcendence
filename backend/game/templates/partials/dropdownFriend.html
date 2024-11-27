@@ -1,0 +1,7 @@
+{% if friends %}
+	    {% for friend in friends %}
+	    <li>{{ friend.username }}</li>
+	    {% endfor %}
+	{% else %}
+	    <li>No friends</li>
+{% endif %}

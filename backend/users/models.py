@@ -5,6 +5,7 @@ from django.db import models
 
 class User(AbstractUser):
     profilePhoto = models.ImageField(upload_to='profilePhoto/', null=True, blank=True)
+    friends = models.ManyToManyField("self", blank=True)
     
     class Meta:
         pass

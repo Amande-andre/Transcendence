@@ -29,7 +29,6 @@ class RegisterForm(CreateView):
         user = form.instance
         login(self.request, user)
         response = redirect(self.success_url)
-        response['HX-Location'] = self.success_url
         return response
 
 class LoginForm(FormView):
@@ -44,7 +43,6 @@ class LoginForm(FormView):
         user = form.get_user()
         login(self.request, user)
         response = redirect(self.success_url)
-        response['HX-Location'] = self.success_url
         return response
 
 def checkUsername(request):
