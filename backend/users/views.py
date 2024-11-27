@@ -22,44 +22,31 @@ from django.core.exceptions import ValidationError
 class RegisterForm(CreateView):
     template_name = 'form.html'
     form_class = CustomCreationForm
+    success_url = reverse_lazy('home')
 
     def form_invalid(self, form):
-        # En cas d'erreur de validation, on ne renvoie rien
-        if self.request.headers.get('HX-Request'):
-            return TemplateResponse(self.request, self.template_name, {'form': form})
         return super().form_invalid(form)
 
     def form_valid(self, form):
         form.save()
         user = form.instance
         login(self.request, user)
-        if self.request.headers.get('HX-Request'):
-            response = TemplateResponse(self.request, 'home.html', {})
-            # Ajouter un en-tête HTMX pour effacer le formulaire
-            response['HX-Reswap'] = 'delete'
-            response['HX-Refresh'] = 'true'  # Ceci va recharger la page entière
-            return response
-        return super().form_valid(form)
+        response = redirect(self.success_url)
+        return response
 
 class LoginForm(FormView):
     template_name = 'form.html'
     form_class = CustomAuthenticationForm
+    success_url = reverse_lazy('home')
 
     def form_invalid(self, form):
-        if self.request.headers.get('HX-Request'):
-            return TemplateResponse(self.request, self.template_name, {'form': form}, {'msg': "Nom d'utilisateur ou mot de passe incorrect"})
         return super().form_invalid(form)
 
     def form_valid(self, form):
         user = form.get_user()
         login(self.request, user)
-        if self.request.headers.get('HX-Request'):
-            response = TemplateResponse(self.request, 'home.html', {})
-            # Ajouter un en-tête HTMX pour effacer le formulaire
-            response['HX-Reswap'] = 'delete'
-            response['HX-Refresh'] = 'true'  # Ceci va recharger la page entière
-            return response
-        return super().form_valid(form)
+        response = redirect(self.success_url)
+        return response
 
 
 def checkUsername(request):
