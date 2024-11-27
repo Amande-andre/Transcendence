@@ -1,7 +1,9 @@
-html, body {
+html,
+body {
 	height: 100%;
 	margin: 0;
 }
+
 .container-fluid {
 	height: calc(100vh - 90px);
 	padding: 5px;
@@ -14,14 +16,14 @@ html, body {
 	width: 35%;
 	margin: 5px;
 	background-color: transparent;
-	
+
 	z-index: 6;
 
 
-    box-shadow: 0 0 20px #ff4500;
+	box-shadow: 0 0 20px #ff4500;
 	display: flex;
-    flex-direction: column;
-    align-items: center;
+	flex-direction: column;
+	align-items: center;
 }
 
 .col-65 {
@@ -31,24 +33,24 @@ html, body {
 
 	z-index: 6;
 
-	
-    box-shadow: 0 0 20px #ff4500;
+
+	box-shadow: 0 0 20px #ff4500;
 }
 
 .image {
 	display: flex;
-	justify-content: center; 
-	height: 30%; 
-	margin-top: 20px; 
+	justify-content: center;
+	height: 30%;
+	margin-top: 20px;
 }
 
 .image img {
-	max-height: 100%; 
+	max-height: 100%;
 	height: auto;
 }
 
 .result-item {
-	border: 5px solid #000; 
+	border: 5px solid #000;
 	color: white;
 	margin: 10px;
 	font-size: 30px;
@@ -60,13 +62,9 @@ html, body {
 	font-size: 1.5vw;
 }
 
-.player-name.left {
+.player-name.left {}
 
-}
-
-.player-name.right {
-
-}
+.player-name.right {}
 
 .vs {
 	font-family: 'Bangers';
@@ -78,14 +76,14 @@ html, body {
 
 .victoire {
 	border-color: #09ff00;
-    box-shadow: 0 0 20px #09ff00;
+	box-shadow: 0 0 20px #09ff00;
 	margin-left: 15px;
 	margin-right: 15px;
 }
 
 .defaite {
 	border-color: #ff4500;
-    box-shadow: 0 0 20px #ff4500;
+	box-shadow: 0 0 20px #ff4500;
 	margin-left: 15px;
 	margin-right: 15px;
 }
@@ -101,34 +99,34 @@ html, body {
 .search-bar {
 	margin: 15px;
 	border-color: #ff4500;
-    box-shadow: 0 0 20px #ff4500;
+	box-shadow: 0 0 20px #ff4500;
 }
 
 .search-bar input {
 	font-family: 'Press Start 2P';
 	font-size: 1.5vw;
 	background-color: transparent;
-	color:white;
+	color: white;
 }
 
 .search-bar input:focus {
 	font-family: 'Press Start 2P';
 	font-size: 1.5vw;
 	background-color: transparent;
-	color:white;
+	color: white;
 }
 
 .search-bar input::placeholder {
-	color: white; 
-	opacity: 0.7; 
+	color: white;
+	opacity: 0.7;
 }
 
 #historique {
-    max-height: 90%;
-    overflow-y: auto;
-    padding: 15px;
-    background-color: transparent;
-    border-radius: 5px;
+	max-height: 90%;
+	overflow-y: auto;
+	padding: 15px;
+	background-color: transparent;
+	border-radius: 5px;
 	margin-right: 15px;
 }
 
@@ -151,20 +149,20 @@ html, body {
 }
 
 .image-gallery {
-    margin-top: 10px;
-    display: flex;
-    gap: 10px;
+	margin-top: 10px;
+	display: flex;
+	gap: 10px;
 }
 
 .thumbnail {
-    width: 50px;
-    height: 50px;
-    cursor: pointer;
-    border: 2px solid transparent;
+	width: 50px;
+	height: 50px;
+	cursor: pointer;
+	border: 2px solid transparent;
 }
 
 .thumbnail:hover {
-    border-color: #ff4500;
+	border-color: #ff4500;
 }
 
 .image-gallery {
@@ -174,24 +172,24 @@ html, body {
 }
 
 .image-gallery {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: space-between;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	justify-content: space-between;
 }
 
 .thumbnail {
-    flex: 1 1 calc(20% - 10px);
-    max-width: calc(20% - 10px);
-    height: auto;
-    object-fit: cover;
+	flex: 1 1 calc(20% - 10px);
+	max-width: calc(20% - 10px);
+	height: auto;
+	object-fit: cover;
 }
 
 #pseudoInput {
 	font-family: 'Press Start 2P';
 	font-size: 1.5vw;
 	background-color: transparent;
-	color:white;
+	color: white;
 	border: 2px solid #000000;
 	box-shadow: 0 0 20px #ff4500;
 }
@@ -200,44 +198,45 @@ html, body {
 	font-family: 'Press Start 2P';
 	font-size: 1.5vw;
 	background-color: transparent;
-	color:white;
+	color: white;
 	border: 2px solid #000000;
 	box-shadow: 0 0 20px #ff4500;
 }
 
 .profile-image-container {
-    position: relative;
-    display: inline-block;
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    overflow: hidden;
-    cursor: pointer;
+	position: relative;
+	display: inline-block;
+	width: 150px;
+	height: 150px;
+	border-radius: 50%;
+	overflow: hidden;
+	cursor: pointer;
 }
 
 .profile-image-container img {
-    width: 100%;
-    object-fit: cover;
-    border-radius: 50%;
-    transition: opacity 0.3s ease;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	border-radius: 50%;
+	transition: opacity 0.3s ease;
 }
 
 .profile-image-container:hover img {
-    opacity: 0.6;
+	opacity: 0.6;
 }
 
 .profile-image-container::after {
-    content: "+";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 2em;
-    color: white;
-    opacity: 0;
-    transition: opacity 0.3s ease;
+	content: "+";
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	font-size: 2em;
+	color: white;
+	opacity: 0;
+	transition: opacity 0.3s ease;
 }
 
 .profile-image-container:hover::after {
-    opacity: 1;
+	opacity: 1;
 }

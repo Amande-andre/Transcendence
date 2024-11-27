@@ -21,7 +21,7 @@ function updatePaddles(player1, player2) {
 }
 
 function fillbrick(bricks, x, y) {
-    for (let row = 0; row < 18; row++) {
+    for (let row = 0; row < 10; row++) {
         for (let col = 0; col < 12; col++) {
             bricks.push({
                 x: (x + col) * 32, // Position X de la brique
@@ -33,12 +33,12 @@ function fillbrick(bricks, x, y) {
     bricks.sort((a, b) => b.y - a.y);
 }
 
-function newBall(player, ball) {
+function ft_newBall(player, ball) {
     for (let i = 0; i < Math.floor(Math.random() * 2) + 1; i++)
         player.balls.push(new Ball(ball.x, ball.y, 0, 2, 5));
 }
 
-function increasePaddle(player, ball) {
+function ft_increasePaddle(player, ball) {
     for (let paddle of player.paddles){
 
         if (paddle.width < WIDTH / 2 - 16){
@@ -162,28 +162,64 @@ function drawBreakoutAera(player1, player2) {
         player2.balls[i].drawBall();
 }
 
+function calculePositionsBr(player) {
+    let x = player.balls[0].x;
+    let y = player.balls[0].y;
+    let speedX = player.balls[0].speedX;
+    let speedY = player.balls[0].speedY;
+    if (speedY > 0){
+        for (i = y; i > 0; i-=5){
+            x += speedX;
+            y += speedY;
+            if (x >= WIDTH || x <= 0){
+                speedX = speedX * -1;
+                //speedY = speedY * -1;
+            }
+        }
+    }
+    return x;
+}
+
 function choiceIa(player, nb)  {
         
-    if (nb === 0) {
-        if (player.balls[0].x < player.paddles[0].midl){
-            this.input = 'a';
-            return 'a';
+    //faire les calcule de diff avant et toujours comparer entre un scope ex si >40 et <400 par exemple
+    let halfP = player.paddles[0].height / 2;
+    let mid = player.paddles[0].midlPong;
+    let left = player.paddles[0].x;
+    let right = player.paddles[0].x + player.paddles[0].height;
+    let ball = player.balls[0].x;
+    //regarde si la balle est a droite si oui il se place au milieu
+    let pos = calculePositionsBr(player);
+    console.log('pos == ', pos);
+    console.log('left == ', left);
+    console.log('right == ', right);
+    if (player.balls[0].speedX > 0){
+        if (pos > right){
+            player.distance = pos - right;
+            player.lastInput = 'd';
         }
-        else if (player.balls[0].x > player.paddles[0].midl){
-            this.input = 'd';
-            return 'd';
+        else if (pos < left){
+            player.distance = left - pos;
+            player.lastInput = 'a';
         }
+        player.distance = (player.distance / 300) * 500;
     }
-    else {
-        if (player.balls[0].x < player.paddles[0].midl){
-
-            return '1';
+    else if (player.balls[0].speedX < 0){
+        if (ball > right){
+            player.distance = pos - mid;
+            player.lastInput = 'd';
         }
-        else if (player.balls[0].x > player.paddles[0].midl){
-
-            return '3';
+        else if (ball < left){
+            player.distance = mid - pos;
+            player.lastInput = 'a';
         }
+        player.distance = (player.distance / 300) * 250;
     }
+    else{
+            player.distance = 0;
+            return null;
+    }
+    return player.lastInput;
 }
 
 function IaControle(player, nb) {
@@ -191,29 +227,34 @@ function IaControle(player, nb) {
     if (!player.isIa)
         return;
     player.second = new Date().getSeconds();
-    if (player.second <= player.past && (player.second !== 0 && player !== 59)){ 
+    if (player.second === player.past){ 
         return;
-    }       
+    }
     console.log('player.second == ', player.second);
-    player.past = player.second;
-    //player.past = player.second ;
-    let eventTab = choiceIa(player, nb);
-    otherevent = eventTab === 'a' ? 'd' : 'a';
-    // if (player.input === eventTab){
-    //     return;
-    // }
-    let eventdown = new KeyboardEvent('keyup', {
-        key: otherevent,
+    let eventup = new KeyboardEvent('keyup', {
+        key: player.lastInput,
     });
-    let eventup = new KeyboardEvent('keydown', {
+    document.dispatchEvent(eventup);
+    // 
+    player.past = player.second;
+    let eventTab = choiceIa(player, nb);
+    if (eventTab === null){
+        
+        return;
+    }
+    otherevent = eventTab === 'a' ? 'd' : 'a';
+    // document.dispatchEvent(player.lastInput);
+    let eventdown = new KeyboardEvent('keydown', {
         key: eventTab,
     });
-    setTimeout(() => {
-        document.dispatchEvent(eventup);
-    }, 500);
     //document.dispatchEvent(eventup);
     document.dispatchEvent(eventdown);
-    //console.log('after seconde is  == ', new Date().getSeconds());
+    setTimeout(() => {
+        console.log('player.distance == ', player.distance);
+        //0.3 j avance de 160
+        document.dispatchEvent(eventup);
+    }, player.distance);
+    console.log('====================');
 }
 
 function updateBreakout(player1, player2, bonus) {
@@ -249,7 +290,7 @@ function startBreakout() {
                         new Ball(WIDTH / 4, 3 * HEIGHT / 4, 0, 4, 5));
     let player2 = new Player(new Paddle(3 * WIDTH / 4 - 80 / 2, HEIGHT - 8, 80, 8),
                     new Ball(3 * WIDTH / 4, 3 * HEIGHT / 4, 0, 4, 5));
-    const bonus = [newBall, increasePaddle];
+    const bonus = [ft_newBall, ft_increasePaddle];
     fillbrick(player1.bricks, 0, 5);
     fillbrick(player2.bricks, 13, 5);
 
@@ -258,5 +299,5 @@ function startBreakout() {
 
     drawBreakoutAera(player1, player2);
 
-    updateBreakout(player1, player2, bonus);
+    return updateBreakout(player1, player2, bonus);
 }

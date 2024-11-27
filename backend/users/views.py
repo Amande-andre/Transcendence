@@ -122,9 +122,10 @@ def updateImage(request):
         ext = os.path.splitext(new_image.name)[1]
         filename = f"profile_{request.user.id}{ext}"
         
-        # Supprimer l'ancienne photo si elle existe
-        if request.user.profilePhoto:
-            request.user.profilePhoto.delete()
+        # Supprimer l'ancienne photo uniquement si l'image soumise est valide
+        if request.user.profilePhoto and request.user.profilePhoto.path:
+            if os.path.exists(request.user.profilePhoto.path):
+                os.remove(request.user.profilePhoto.path)
         
         # Sauvegarder la nouvelle photo
         request.user.profilePhoto.save(filename, new_image)
@@ -137,4 +138,5 @@ def updateImage(request):
                  alt="Image de profil">
         ''', content_type='text/html')
     
-    return HttpResponse('<div class="form-text" style="color:red">Veuillez entrer une image</div>', status=400)
+    # Si aucun fichier n'est soumis ou méthode non POST
+    return HttpResponse('<div class="form-text" style="color:red">Veuillez entrer une image valide</div>', status=400)

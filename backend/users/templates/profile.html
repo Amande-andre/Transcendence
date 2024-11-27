@@ -1,4 +1,6 @@
+{% extends 'base.html' %}
 {% load static %}
+{% block content %}
 <container id="profilePage">
     <div class="container-fluid d-flex flex-row">
         <div class="col-35">
@@ -14,7 +16,14 @@
 						{{ user.profilePhoto.url }}
 					{% else %}
 						{% static 'users/images/randy.jpg' %}
-					{% endif %}" 
+					{% endif %}"
+					onerror="
+					this.onerror=null;
+					{% if user.profilePhoto %}
+						this.src='{{ user.profilePhoto.url }}';
+					{% else %}
+						this.src='{% static 'users/images/randy.jpg' %}';
+					{% endif %}"
 				alt="Image de profil">
 			</div>
 			<input type="file" accept="image/*" id="uploadImage" name="image" style="display: none;" onchange="previewImage(event)" class="btn btn-primary mt-3" 
@@ -25,15 +34,13 @@
 				hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
 				hx-encoding="multipart/form-data">
 			<div class="pseudo mt-4">
-				<input type="text" id="pseudoInput" name="pseudo" class="form-control mb-3" placeholder="Entrez votre pseudo" value="{{ user.username }}">
-				<button class="btn btn-primary" 
+				<input type="text" id="pseudoInput" name="pseudo" class="form-control mb-3" placeholder="Entrez votre pseudo" value="{{ user.username }}"
 					hx-post="{% url 'users:updatePseudo' %}"
 					hx-target="#displayPseudo"
 					hx-swap="innerHTML"
 					hx-include="#pseudoInput"
-					hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
-					Enregistrer Pseudo
-				</button>
+					hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+					hx-trigger='keyup[key=="Enter"] from:body'>
 			</div>
 			<div id="displayPseudo" class="mt-3"></div>
             <div class="stats mt-4"> 
@@ -51,3 +58,4 @@
         </div>
     </div>
 </container>
+{% endblock content %}
