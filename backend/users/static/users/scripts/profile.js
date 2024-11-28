@@ -62,7 +62,7 @@ function afficherHistorique() {
     });
 }
 
-afficherHistorique();
+// afficherHistorique();
 
 function changeImage(newSrc) {
     const imgElement = document.getElementById('profileImage');
