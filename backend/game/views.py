@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from transcendence.templatetags import custom_tags
+from django.http import JsonResponse
 import json
 
 # Create your views here.
@@ -47,3 +48,8 @@ def bracket(request):
 		if players['win'] >= 2:
 			players3.append(players)
 	return render(request, 'partials/bracket.html', {"players": players_raw, "players2": players2, "players3": players3, "game": game})
+
+def saveMatch(request):
+	data = json.loads(request.body)
+	print("data:", data)
+	return JsonResponse(data)
