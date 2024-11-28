@@ -34,7 +34,7 @@ function addFriend(name) {
 		newPlayerDiv.innerHTML = `
 			<div class="input-group">
 				<span class="input-group-text">Player ${playerCount + 1}</span>
-				<input type="text" class="player form-control" placeholder="${name}" disabled>
+				<input type="text" class="player form-control" placeholder="${name}" value="${name}" disabled>
 				<input type="color" class="form-control form-control-color" value="#${Math.floor(Math.random()*16777215).toString(16)}" title="Choisir la couleur">
 			</div>
 		`;
