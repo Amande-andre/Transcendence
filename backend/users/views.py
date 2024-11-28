@@ -58,8 +58,8 @@ def checkUsername(request):
     # Vérifie min_length et max_length
     if len(username) < 5:
         errors.append("Le nom d'utilisateur doit contenir au moins 5 caractères.")
-    if len(username) > 30:
-        errors.append("Le nom d'utilisateur ne doit pas dépasser 30 caractères.")
+    if len(username) > 15:
+        errors.append("Le nom d'utilisateur ne doit pas dépasser 15 caractères.")
 
     # Vérifie lettres et chiffres uniquement
     try:
@@ -86,21 +86,31 @@ def Home(request):
 def profile(request):
     return render(request, 'profile.html')
 
+from django.shortcuts import render
+
 def updatePseudo(request):
-	if request.method == "POST":
-		new_Username = request.POST.get("pseudo")
-	if new_Username:
-		if not new_Username.isalnum():
-			return HttpResponse('<div class="form-text" style="color:red">Le nom d’utilisateur ne doit contenir que des lettres et des chiffres.</div>')
-		if User.objects.filter(username=new_Username).exists():
-			return HttpResponse('<div id="username-check" class="form-text" style="color:red">this username is already taken</div>')
-		if 5 <= len(new_Username) <= 20:
-			request.user.username = new_Username
-			request.user.save()
-			return HttpResponse('<div class="form-text" style="color:green">username mis à jour</div>')
-		else:
-			return HttpResponse('<div class="form-text" style="color:red">Le username doit faire 5 caractères min.</div>')
-	return HttpResponse('<div class="form-text" style="color:red">Veuillez entrer un username</div>')
+    if request.method == "POST":
+        new_Username = request.POST.get("pseudo", "").strip()
+        context = {"username": new_Username, "error": "", "success": False}
+
+        # Gestion des erreurs
+        if not new_Username:
+            context["error"] = "Required."
+        elif not new_Username.isalnum():
+            context["error"] = "Invalid characters."
+        elif User.objects.filter(username=new_Username).exists():
+            context["error"] = "Already taken."
+        elif len(new_Username) < 5 or len(new_Username) > 15:
+            context["error"] = "5-15 chars."
+        else:
+            # Succès : Mise à jour du pseudo
+            request.user.username = new_Username
+            request.user.save()
+            context["success"] = True
+            context["username"] = new_Username
+
+        # Toujours retourner le fragment HTML
+        return render(request, "update_pseudo_fragment.html", context)
 
 
 

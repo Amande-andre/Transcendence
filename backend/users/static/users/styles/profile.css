@@ -240,3 +240,27 @@ body {
 .profile-image-container:hover::after {
 	opacity: 1;
 }
+
+.pseudo input {
+    font-family: 'Press Start 2P'; /* Même police */
+    font-size: 1.5vw; /* Même taille de police */
+    background-color: transparent; /* Fond transparent */
+    color: white; /* Texte en blanc */
+}
+
+.pseudo input:focus {
+    font-family: 'Press Start 2P';
+    font-size: 1.5vw;
+    background-color: transparent;
+    color: white;
+}
+
+.pseudo input::placeholder {
+    color: white; /* Même couleur pour le placeholder */
+    opacity: 0.7; /* Opacité du placeholder */
+}
+
+.is-invalid {
+    box-shadow: 0 0 20px #ff4500; /* Ajoute une bordure lumineuse similaire */
+    border-color: #ff4500; /* Couleur de la bordure en cas d'erreur */
+}
