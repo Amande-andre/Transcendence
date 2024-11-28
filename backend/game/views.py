@@ -22,14 +22,10 @@ def gameChoice(request):
 	return render(request, 'partials/gameChoice.html')
 
 def optionsPong(request):
-	user = request.user
-	friendsList = user.friends.all()
-	return render(request, 'partials/options-pong.html', {'user': user, 'friendsList': friendsList})
+	return render(request, 'partials/options-pong.html')
 
 def optionsBreakout(request):
-	user = request.user
-	friendsList = user.friends.all()
-	return render(request, 'partials/options-breakout.html', {'user': user, 'friendsList': friendsList})
+	return render(request, 'partials/options-breakout.html')
 
 def bracket(request):
     # Récupérer les données des joueursplay

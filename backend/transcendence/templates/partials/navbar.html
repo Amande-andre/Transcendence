@@ -15,9 +15,6 @@
 				<li class="nav-item">
                     <a class="nav-link" href="{% url 'users:profile' %}" id="profile-link" style="color: var(--bs-body-bg); font-size: 20px;">Profile</a>
 				</li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'game:gameChoice' %}" id="game-link" style="color: var(--bs-body-bg); font-size: 20px;">Game</a>
-                </li>
 				<li class="nav-item">
                     <a class="nav-link" href="{% url 'home' %}" id="home-link" style="color: var(--bs-body-bg); font-size: 20px;">Home</a>
 				</li>
@@ -30,6 +27,9 @@
 					</form>
 				</li>
                 {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'game:gameChoice' %}" id="game-link" style="color: var(--bs-body-bg); font-size: 20px;">Game</a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'home' %}" id="home-link" style="color: var(--bs-body-bg); font-size: 20px;">Home</a>
                     </li>

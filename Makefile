@@ -22,7 +22,7 @@ stop:
 # Nettoyer toutes les ressources Docker associées
 clean: stop
 	@if [ "$$(docker volume ls -q)" ]; then \
-		docker volume rm $$(docker volume ls -q | grep 'transcendence') || true; \
+		docker volume rm $$(docker volume ls -q | grep 'transcendence'); \
 	fi
 # Nettoyer les images Docker inutilisées
 prune:

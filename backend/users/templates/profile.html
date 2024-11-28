@@ -1,19 +1,12 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<div id="profilePage">
+<container id="profilePage">
     <div class="container-fluid d-flex flex-row">
         <div class="col-35">
             <div class="search-bar mb-4">
-				<input id="friendInput" type="text" class="form-control" placeholder="Ajoutez un ami!" name="friend"
-					hx-post="{% url 'users:addFriend' %}"
-					hx-target="this"
-					hx-trigger='keyup[key=="Enter"] from:body'
-					hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
-    				hx-include="#friendInput"
-					hx-swap="outerHTML">
-
-			</div>
+                <input type="text" class="form-control" placeholder="Rechercher...">
+            </div>
 
             <!-- Image de profil cliquable pour changer la photo -->
 			<div class="image text-center profile-image-container" onclick="document.getElementById('uploadImage').click()">
@@ -55,9 +48,9 @@
             <div class="title">- Match history -</div>
 
             <div id="historique">
-				{% include 'partials/infiniteScroll.html' with matchs=User_matchs %}
+                <!-- affichage des parties -->
             </div>
         </div>
     </div>
-</div>
+</container>
 {% endblock content %}

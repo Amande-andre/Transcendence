@@ -1,7 +1,0 @@
-<input id="friendInput" type="text" class="form-control" placeholder="{{ message }}" name="friend"
-hx-post="{% url 'users:addFriend' %}"
-hx-target="this"
-hx-trigger='keyup[key=="Enter"] from:body'
-hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
-hx-include="#friendInput"
-hx-swap="outerHTML">
