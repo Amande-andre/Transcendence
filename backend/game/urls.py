@@ -10,4 +10,5 @@ urlpatterns = [
     path('optionsPong/', views.optionsPong, name='optionsPong'),
     path('optionsBreakout/', views.optionsBreakout, name='optionsBreakout'),
     path('bracket/', views.bracket, name='bracket'),
+    path('saveMatch/', views.saveMatch, name='saveMatch'),
 ]

@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from transcendence.templatetags import custom_tags
+from django.http import JsonResponse
 import json
 
 # Create your views here.
