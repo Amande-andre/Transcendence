@@ -55,7 +55,7 @@
     // Convertir les inputs en objets joueurs
     listPlayer = Array.from(listPlayer).map((input, index) => ({
         name: input.value || 'Player' + (index + 1),
-        score: [0, 0, 0],
+        score: [0, 0, 0, 0],
         round: 0,
 		win : 0,
 		loose : 0
@@ -66,7 +66,7 @@
         for (let i = 0; i < Math.log2(listPlayer.length); i++) {
             listPlayer.push({
                 name: 'IA' + (i + 1),
-                score: [0, 0, 0],
+                score: [0, 0, 0, 0],
                 round: 0,
 				win : 0,
 				loose : 0

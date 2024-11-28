@@ -34,6 +34,7 @@ def bracket(request):
 	list_bool = [False, False]
 	players2 = []
 	players3 = []
+	players4 = []
 	
 	game = request.GET.get('game')
 	for players in players_raw:
@@ -48,9 +49,9 @@ def bracket(request):
 		if i == len(players_raw):
 			for loser in players_raw:
 				if loser['loose'] == 0:
-					loser['score'][1] = 'Winner'
-					loser['score'][2] = 'Winner'
-					
+					rd = loser['round']
+					loser['score'][rd] = 'Winner'
+
 	
 	
 	

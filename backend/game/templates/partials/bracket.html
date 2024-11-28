@@ -56,6 +56,24 @@
             {% endif %}
         {% endfor %}
     </div>
+    <!-- ROUND IV -->
+    <div class="round">
+        {% for player in players4 %}
+            {% if forloop.counter0|divisibleby:2 %}
+                <!-- Si l'index est pair, crée une nouvelle balise 'match' -->
+                <div class="match-container match">
+                    <!-- <div class="match"> -->
+            {% endif %}
+                <div class="player">
+                    {{ player.name }} <span class="score">{{ player.score.3 }}</span>
+                </div>
+
+            {% if forloop.counter0|divisibleby:2 != 1 %}
+                <!-- Si i est impair (forloop.counter0), on ferme la balise 'match' -->
+                    <!-- </div> -->
+                </div>
+            {% endif %}
+        {% endfor %}
     <button hx-get="{% url 'game:pongCanvas' %}" hx-target="#tournament" hx-swap="outerHTML" 
     hx-vals='{"players": "{{ players|escapejs }}"}' style="cursor: pointer; position: relative; z-index: 3;"> Continue </button>
     <!-- <button hx-get="{% url 'game:breakoutCanvas' %}" hx-target="#tournament" hx-swap="outerHTML"
