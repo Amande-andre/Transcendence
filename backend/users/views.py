@@ -122,14 +122,15 @@ def updateImage(request):
 
 def addFriend(request):
     search = request.POST.get('friend')  # Récupérer la valeur de la recherche
-    print(search)
-    #print le type de search
-    print(type(search))
     if search == '':
         return render(request, 'partials/addFriendState.html', {'message': 'Ajoutez un ami !'})
     if User.objects.filter(username=search).exists():
         friend = User.objects.get(username=search)
+        print("function addFriend")
+        print("request.user:", request.user)
+        print("friend:", friend)
         request.user.friends.add(friend)
-        return render(request, 'partials/addFriendState.html', {'message': f'{friend.username} ajouté comme ami !'})
+        print("request.user.friends:", request.user.friends.all())
+        return render(request, 'partials/addFriendState.html', {'message': f'{friend.username} ajouté !'})
     else:
         return render(request, 'partials/addFriendState.html', {'message': 'Utilisateur non trouvé !'})

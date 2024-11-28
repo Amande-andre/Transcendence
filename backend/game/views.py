@@ -18,7 +18,8 @@ def gameChoice(request):
 
 def optionsPong(request):
 	user = request.user
-	return render(request, 'partials/options-pong.html', {'user': user})
+	friendsList = user.friends.all()
+	return render(request, 'partials/options-pong.html', {'user': user, 'friendsList': friendsList})
 
 def optionsBreakout(request):
 	user = request.user
