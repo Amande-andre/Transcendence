@@ -3,7 +3,9 @@
 {% block content %}
 <div id="profilePage">
     <div class="container-fluid d-flex flex-row">
+        <!-- Section de gauche -->
         <div class="col-35">
+            <!-- Barre de recherche -->
             <div class="search-bar mb-4">
 				<input id="friendInput" type="text" class="form-control" placeholder="Ajoutez un ami!" name="friend"
 					hx-post="{% url 'users:addFriend' %}"
@@ -15,45 +17,59 @@
 
 			</div>
 
-            <!-- Image de profil cliquable pour changer la photo -->
-			<div class="image text-center profile-image-container" onclick="document.getElementById('uploadImage').click()">
-			<img id="profileImage" 
-				src="
-					{% if user.profilePhoto %}
-						{{ user.profilePhoto.url }}
-					{% else %}
-						{% static 'users/images/randy.jpg' %}
-					{% endif %}" 
-				alt="Image de profil">
-			</div>
-			<input type="file" accept="image/*" id="uploadImage" name="image" style="display: none;" onchange="previewImage(event)" class="btn btn-primary mt-3" 
-				hx-post="{% url 'users:updateImage' %}"
-				hx-target="#profileImage"
-				hx-swap="outerHTML"
-				hx-include="#uploadImage"
-				hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
-				hx-encoding="multipart/form-data">
+            <!-- Image de profil cliquable -->
+            <div class="image text-center profile-image-container" onclick="document.getElementById('uploadImage').click()">
+                <img id="profileImage" 
+                    src="
+                        {% if user.profilePhoto %}
+                            {{ user.profilePhoto.url }}
+                        {% else %}
+                            {% static 'users/images/randy.jpg' %}
+                        {% endif %}"
+                    onerror="
+                        this.onerror=null;
+                        {% if user.profilePhoto %}
+                            this.src='{{ user.profilePhoto.url }}';
+                        {% else %}
+                            this.src='{% static 'users/images/randy.jpg' %}';
+                        {% endif %}"
+                    alt="Image de profil">
+            </div>
+            <!-- Input pour uploader une nouvelle image -->
+            <input type="file" accept="image/*" id="uploadImage" name="image" style="display: none;" 
+                onchange="previewImage(event)" 
+                class="btn btn-primary mt-3" 
+                hx-post="{% url 'users:updateImage' %}"
+                hx-target="#profileImage"
+                hx-swap="outerHTML"
+                hx-include="#uploadImage"
+                hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+                hx-encoding="multipart/form-data">
+
+            <!-- Champ pour modifier le pseudo -->
 			<div class="pseudo mt-4">
-				<input type="text" id="pseudoInput" name="pseudo" class="form-control mb-3" placeholder="Entrez votre pseudo" value="{{ user.username }}">
-				<button class="btn btn-primary" 
-					hx-post="{% url 'users:updatePseudo' %}"
-					hx-target="#displayPseudo"
-					hx-swap="innerHTML"
-					hx-include="#pseudoInput"
-					hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
-					Enregistrer Pseudo
-				</button>
+				<input type="text" id="pseudoInput" name="pseudo" 
+					   class="form-control mb-3" 
+					   placeholder="Entrez votre pseudo" 
+					   value="{{ user.username }}"
+					   hx-post="{% url 'users:updatePseudo' %}" 
+					   hx-target="#pseudoInput" 
+					   hx-swap="outerHTML" 
+					   hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' 
+					   hx-trigger="keyup[key=='Enter']">
 			</div>
-			<div id="displayPseudo" class="mt-3"></div>
+
+            <!-- Statistiques -->
             <div class="stats mt-4"> 
                 <div class="Matchs">Matchs : <span id="matchs">0</span></div>
                 <div class="win">Win : <span id="win">0</span></div>
                 <div class="lose">Lose : <span id="lose">0</span></div>
             </div>
         </div>
+
+        <!-- Section de droite -->
         <div class="col-65">
             <div class="title">- Match history -</div>
-
             <div id="historique">
 				{% include 'partials/infiniteScroll.html' with matchs=User_matchs %}
             </div>
@@ -61,3 +77,4 @@
     </div>
 </div>
 {% endblock content %}
+

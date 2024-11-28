@@ -1,0 +1,9 @@
+<input type="text" id="pseudoInput" name="pseudo" 
+       class="form-control mb-3 {% if error %}is-invalid{% endif %}" 
+       placeholder="{% if error %}{{ error }}{% else %}Enter your username{% endif %}" 
+       value="{% if success or not error %}{{ username|default:user.username }}{% endif %}"
+       hx-post="{% url 'users:updatePseudo' %}" 
+       hx-target="#pseudoInput" 
+       hx-swap="outerHTML" 
+       hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' 
+       hx-trigger="keyup[key=='Enter']">

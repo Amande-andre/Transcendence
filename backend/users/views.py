@@ -8,12 +8,17 @@ from django.urls import reverse_lazy
 from django.shortcuts import redirect
 from django.contrib.auth import logout
 from django.http import HttpResponse
+from django.template.response import TemplateResponse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse, HttpResponse
+from django.core.files.base import ContentFile
 from django.http import JsonResponse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 import os
+from django.core.validators import RegexValidator
+from django.core.exceptions import ValidationError
 
 
 # Create your views here.
@@ -46,13 +51,34 @@ class LoginForm(FormView):
         response = redirect(self.success_url)
         return response
 
-def checkUsername(request):
-    username = request.POST.get('username')
-    if User.objects.filter(username=username).exists():
-         return HttpResponse('<div id="username-check" class="form-text" style="color:red">this username is already taken</div>')
-    else:
-         return HttpResponse('<div id="username-check" class="form-text" style="color:green">this username is available</div>')
 
+def checkUsername(request):
+    username = request.POST.get('username', '').strip()
+    if not username:
+        return HttpResponse('<div id="username-check" class="form-text"></div>')
+    errors = []
+
+    # Vérifie min_length et max_length
+    if len(username) < 5:
+        errors.append("Le nom d'utilisateur doit contenir au moins 5 caractères.")
+    if len(username) > 15:
+        errors.append("Le nom d'utilisateur ne doit pas dépasser 15 caractères.")
+
+    # Vérifie lettres et chiffres uniquement
+    try:
+        RegexValidator(r'^[a-zA-Z0-9]+$', message="Le nom d'utilisateur ne peut contenir que des lettres et des chiffres.")(username)
+    except ValidationError as e:
+        errors.extend(e.messages)
+
+    # Vérifie si le username est déjà pris
+    if User.objects.filter(username=username).exists():
+        errors.append("Ce nom d'utilisateur est déjà pris.")
+
+    # Retourne les erreurs ou un message de succès
+    if errors:
+        return HttpResponse(f'<div id="username-check" class="form-text" style="color:red">{"<br>".join(errors)}</div>')
+    else:
+        return HttpResponse('<div id="username-check" class="form-text" style="color:green">Ce nom d\'utilisateur est disponible.</div>')
 def logout_view(request):
     logout(request)
     return redirect('home') 
@@ -67,21 +93,31 @@ def profile(request):
     User_matchs = request.user.match_set.all()
     return render(request, 'profile.html', {'User_matchs': User_matchs})
 
+from django.shortcuts import render
+
 def updatePseudo(request):
-	if request.method == "POST":
-		new_Username = request.POST.get("pseudo")
-	if new_Username:
-		if not new_Username.isalnum():
-			return HttpResponse('<div class="form-text" style="color:red">Le nom d’utilisateur ne doit contenir que des lettres et des chiffres.</div>')
-		if User.objects.filter(username=new_Username).exists():
-			return HttpResponse('<div id="username-check" class="form-text" style="color:red">this username is already taken</div>')
-		if 5 <= len(new_Username) <= 20:
-			request.user.username = new_Username
-			request.user.save()
-			return HttpResponse('<div class="form-text" style="color:green">username mis à jour</div>')
-		else:
-			return HttpResponse('<div class="form-text" style="color:red">Le username doit faire 5 caractères min.</div>')
-	return HttpResponse('<div class="form-text" style="color:red">Veuillez entrer un username</div>')
+    if request.method == "POST":
+        new_Username = request.POST.get("pseudo", "").strip()
+        context = {"username": new_Username, "error": "", "success": False}
+
+        # Gestion des erreurs
+        if not new_Username:
+            context["error"] = "Required."
+        elif not new_Username.isalnum():
+            context["error"] = "Invalid characters."
+        elif User.objects.filter(username=new_Username).exists():
+            context["error"] = "Already taken."
+        elif len(new_Username) < 5 or len(new_Username) > 15:
+            context["error"] = "5-15 chars."
+        else:
+            # Succès : Mise à jour du pseudo
+            request.user.username = new_Username
+            request.user.save()
+            context["success"] = True
+            context["username"] = new_Username
+
+        # Toujours retourner le fragment HTML
+        return render(request, "update_pseudo_fragment.html", context)
 
 
 
@@ -103,9 +139,10 @@ def updateImage(request):
         ext = os.path.splitext(new_image.name)[1]
         filename = f"profile_{request.user.id}{ext}"
         
-        # Supprimer l'ancienne photo si elle existe
-        if request.user.profilePhoto:
-            request.user.profilePhoto.delete()
+        # Supprimer l'ancienne photo uniquement si l'image soumise est valide
+        if request.user.profilePhoto and request.user.profilePhoto.path:
+            if os.path.exists(request.user.profilePhoto.path):
+                os.remove(request.user.profilePhoto.path)
         
         # Sauvegarder la nouvelle photo
         request.user.profilePhoto.save(filename, new_image)
@@ -117,8 +154,8 @@ def updateImage(request):
                  src="{request.user.profilePhoto.url}" 
                  alt="Image de profil">
         ''', content_type='text/html')
-    
-    return HttpResponse('<div class="form-text" style="color:red">Veuillez entrer une image</div>', status=400)
+    # Si aucun fichier n'est soumis ou méthode non POST
+    return HttpResponse('<div class="form-text" style="color:red">Veuillez entrer une image valide</div>', status=400)
 
 def addFriend(request):
     search = request.POST.get('friend')  # Récupérer la valeur de la recherche

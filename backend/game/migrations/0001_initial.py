@@ -18,9 +18,9 @@ class Migration(migrations.Migration):
             name='Game',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('player1', models.CharField(max_length=30)),
+                ('player1', models.CharField(max_length=15)),
                 ('score1', models.IntegerField()),
-                ('player2', models.CharField(max_length=30)),
+                ('player2', models.CharField(max_length=15)),
                 ('score2', models.IntegerField()),
                 ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
