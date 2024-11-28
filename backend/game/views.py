@@ -35,11 +35,24 @@ def bracket(request):
 	players2 = []
 	players3 = []
 	
-	print("game the big Game", request.GET.get('game'))
 	game = request.GET.get('game')
 	for players in players_raw:
 		if players['win'] >= 1:
 			players2.append(players)
 		if players['win'] >= 2:
 			players3.append(players)
+	i = 1
+	for players in players_raw:
+		if players['loose'] == 1:
+			i+=1
+		if i == len(players_raw):
+			for loser in players_raw:
+				if loser['loose'] == 0:
+					loser['score'][1] = 'Winner'
+					loser['score'][2] = 'Winner'
+					
+	
+	
+	
+	print("game the big Game", players2)
 	return render(request, 'partials/bracket.html', {"players": players_raw, "players2": players2, "players3": players3, "game": game})

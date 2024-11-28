@@ -307,7 +307,11 @@ async function startPong(canvas, button) {
         let player1 = new Player(new Paddle(0, HEIGHT / 2 - 80, 8, 160), mainBall, index1);
         // getPlayer(players);
         let player2 = new Player(new Paddle(WIDTH - 8, HEIGHT / 2 - 80, 8, 160), mainBall, getPlayer(players));
-        
+        if (player2.index === player1.index){
+            player1.score[player1.round] = 'Winner';
+            resolve();
+            return;
+        }
         player1.initControls('w', 's');
         player2.initControls('5', '2');
         
