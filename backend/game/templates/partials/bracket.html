@@ -56,6 +56,13 @@
             {% endif %}
         {% endfor %}
     </div>
-<button hx-get="{% url 'game:pongCanvas' %}" hx-target="#tournament" hx-swap="outerHTML" 
-hx-vals='{"players": "{{ players|escapejs }}"}' style="cursor: pointer; position: relative; z-index: 3;"> Continue </button>
+    {% if game == 'pong' %}
+    <button hx-get="{% url 'game:pongCanvas' %}" hx-target="#tournament" hx-swap="outerHTML" 
+    hx-vals='{"players": "{{ players|escapejs }}"}' style="cursor: pointer; position: relative; z-index: 3;"> Continue </button>
+    {% endif %}
+    {% if game == 'breakout' %}
+    <button hx-get="{% url 'game:breakoutCanvas' %}" hx-target="#tournament" hx-swap="outerHTML"
+    hx-vals='{"players": "{{ players|escapejs }}"}' style="cursor: pointer; position: relative; z-index: 3;"> Continue </button>
+    {% endif %}
+    
 </div>

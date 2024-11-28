@@ -16,20 +16,20 @@
                     <a class="nav-link" href="{% url 'users:profile' %}" id="profile-link" style="color: var(--bs-body-bg); font-size: 20px;">Profile</a>
 				</li>
 				<li class="nav-item">
-                    <a class="nav-link" href="{% url 'game:gameChoice' %}" id="game-link" style="color: var(--bs-body-bg); font-size: 20px;">Game</a>
+                    <a class="nav-link" href="{% url 'home' %}" id="home-link" style="color: var(--bs-body-bg); font-size: 20px;">Home</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="{% url 'home' %}" id="home-link" style="color: var(--bs-body-bg); font-size: 20px;">Home</a>
-				</li>
-				<li class="nav-item">
-					<form method="post" action="{% url 'users:logout' %}">
-						{% csrf_token %}
+                    <form method="post" action="{% url 'users:logout' %}">
+                        {% csrf_token %}
 						<button type="submit" class="nav-link" style="color: var(--bs-body-bg); font-size: 20px; background: none; border: none; padding: 0; cursor: pointer;">
-							Logout
+                            Logout
 						</button>
 					</form>
 				</li>
                 {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'game:gameChoice' %}" id="game-link" style="color: var(--bs-body-bg); font-size: 20px;">Game</a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'home' %}" id="home-link" style="color: var(--bs-body-bg); font-size: 20px;">Home</a>
                     </li>
