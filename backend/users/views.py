@@ -1,6 +1,6 @@
 from django.views.generic import CreateView, FormView
 from .form import CustomCreationForm
-from .models import User
+from .models import User, Match
 from django.contrib.auth import login
 from .form import CustomAuthenticationForm
 from django.shortcuts import render
@@ -10,6 +10,7 @@ from django.contrib.auth import logout
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 import os
@@ -29,7 +30,6 @@ class RegisterForm(CreateView):
         user = form.instance
         login(self.request, user)
         response = redirect(self.success_url)
-        response['HX-Location'] = self.success_url
         return response
 
 class LoginForm(FormView):
@@ -44,7 +44,6 @@ class LoginForm(FormView):
         user = form.get_user()
         login(self.request, user)
         response = redirect(self.success_url)
-        response['HX-Location'] = self.success_url
         return response
 
 def checkUsername(request):
@@ -62,7 +61,11 @@ def Home(request):
 	return render(request, 'home.html')
 
 def profile(request):
-    return render(request, 'profile.html')
+    for i in range(100):
+        newMatch = Match(User=request.user, player1="moi", player2="lui", score1=3, score2=0)
+        newMatch.save()
+    User_matchs = request.user.match_set.all()
+    return render(request, 'profile.html', {'User_matchs': User_matchs})
 
 def updatePseudo(request):
 	if request.method == "POST":
@@ -116,3 +119,18 @@ def updateImage(request):
         ''', content_type='text/html')
     
     return HttpResponse('<div class="form-text" style="color:red">Veuillez entrer une image</div>', status=400)
+
+def addFriend(request):
+    search = request.POST.get('friend')  # Récupérer la valeur de la recherche
+    if search == '':
+        return render(request, 'partials/addFriendState.html', {'message': 'Ajoutez un ami !'})
+    if User.objects.filter(username=search).exists():
+        friend = User.objects.get(username=search)
+        print("function addFriend")
+        print("request.user:", request.user)
+        print("friend:", friend)
+        request.user.friends.add(friend)
+        print("request.user.friends:", request.user.friends.all())
+        return render(request, 'partials/addFriendState.html', {'message': f'{friend.username} ajouté !'})
+    else:
+        return render(request, 'partials/addFriendState.html', {'message': 'Utilisateur non trouvé !'})
