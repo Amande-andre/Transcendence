@@ -1,6 +1,4 @@
 {% extends 'partials/optionsGame.html' %}
 {% block content %}
-<button class="btn btn-success btn-lg" hx-get="{% url 'game:breakoutCanvas' %}" hx-target="#gameOption" hx-swap="morph">Start</button>
-</div>
-</container>
+<button class="btn btn-success btn-lg" hx-get="{% url 'game:bracket' %}" hx-target="#gameOption" hx-vals="js:{'players': shufflePlayer()}" hx-swap="outerHTML">Start</button>
 {% endblock content %}
