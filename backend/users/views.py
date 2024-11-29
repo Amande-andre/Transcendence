@@ -1,6 +1,6 @@
 from django.views.generic import CreateView, FormView
 from .form import CustomCreationForm
-from .models import User, Match
+from .models import User
 from django.contrib.auth import login
 from .form import CustomAuthenticationForm
 from django.shortcuts import render
@@ -19,6 +19,7 @@ from django.urls import reverse
 import os
 from django.core.validators import RegexValidator
 from django.core.exceptions import ValidationError
+from game.models import Match
 
 
 # Create your views here.
@@ -87,10 +88,8 @@ def Home(request):
 	return render(request, 'home.html')
 
 def profile(request):
-    for i in range(100):
-        newMatch = Match(User=request.user, player1="moi", player2="lui", score1=3, score2=0)
-        newMatch.save()
     User_matchs = request.user.match_set.all()
+    print("User_matchs:", User_matchs)
     return render(request, 'profile.html', {'User_matchs': User_matchs})
 
 from django.shortcuts import render

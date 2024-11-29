@@ -254,6 +254,7 @@ function updatePong(player1, player2, players) {
         console.log('rd == ', rd, ' player2.index == ', player2.index, ' score == ', player2.score, 'players score == ', players[player2.index].score[rd]);
         players[player1.index].score[rd] = player1.score;
         players[player2.index].score[rd] = player2.score;
+        postMatch(players, player1, player2, rd);
         ctx.clearRect(0, 0, WIDTH, HEIGHT);
         ctx.strokeStyle = 'white';
         ctx.strokeRect(0, 0, WIDTH, HEIGHT);
