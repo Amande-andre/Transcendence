@@ -17,6 +17,7 @@
 
 			</div>
 
+
             <!-- Image de profil cliquable -->
             <div class="image text-center profile-image-container" onclick="document.getElementById('uploadImage').click()">
                 <img id="profileImage" 
@@ -58,13 +59,29 @@
 					   hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' 
 					   hx-trigger="keyup[key=='Enter']">
 			</div>
-
-            <!-- Statistiques -->
-            <div class="stats mt-4"> 
-                <div class="Matchs">Matchs : <span id="matchs">0</span></div>
-                <div class="win">Win : <span id="win">0</span></div>
-                <div class="lose">Lose : <span id="lose">0</span></div>
-            </div>
+			
+			<!-- Dropdown des amis -->
+			<div class="friends-dropdown mt-4">
+				<div class="btn-group" role="group">
+					<button 
+						type="button" 
+						class="btn btn-primary dropdown-toggle" 
+						data-bs-toggle="dropdown" 
+						aria-expanded="false">
+						<i class="fas fa-users"></i> Mes Amis
+					</button>
+					<ul class="dropdown-menu" id="friends-list">
+						{% include 'partials/friendsList.html' with friends=friendsList %}
+					</ul>
+				</div>
+			</div>
+			
+			<!-- Statistiques -->
+			<div class="stats mt-4"> 
+				<div class="Matchs">Matchs : <span id="matchs">0</span></div>
+				<div class="win">Win : <span id="win">0</span></div>
+				<div class="lose">Lose : <span id="lose">0</span></div>
+			</div>
         </div>
 
         <!-- Section de droite -->

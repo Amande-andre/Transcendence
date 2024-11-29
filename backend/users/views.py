@@ -19,9 +19,12 @@ from django.urls import reverse
 import os
 from django.core.validators import RegexValidator
 from django.core.exceptions import ValidationError
+from django.contrib.auth.signals import user_logged_in, user_logged_out
+from django.dispatch import receiver
 
 
 # Create your views here.
+
 class RegisterForm(CreateView):
     template_name = 'form.html'
     form_class = CustomCreationForm
@@ -34,6 +37,10 @@ class RegisterForm(CreateView):
         form.save()
         user = form.instance
         login(self.request, user)
+        print(f"Avant login: isOnline = {user.isOnline}")
+        user.isOnline = True
+        user.save()
+        print(f"Après login: isOnline = {user.isOnline}")
         response = redirect(self.success_url)
         return response
 
@@ -48,6 +55,8 @@ class LoginForm(FormView):
     def form_valid(self, form):
         user = form.get_user()
         login(self.request, user)
+        user.isOnline = True
+        user.save()
         response = redirect(self.success_url)
         return response
 
@@ -79,19 +88,42 @@ def checkUsername(request):
         return HttpResponse(f'<div id="username-check" class="form-text" style="color:red">{"<br>".join(errors)}</div>')
     else:
         return HttpResponse('<div id="username-check" class="form-text" style="color:green">Ce nom d\'utilisateur est disponible.</div>')
+
 def logout_view(request):
-    logout(request)
-    return redirect('home') 
+
+	print(f"Avant logout: isOnline = {request.user.isOnline}")
+	request.user.isOnline = False
+	request.user.save()
+	print(f"Après logout: isOnline = {request.user.isOnline}")
+
+    # Déconnecte l'utilisateur
+	logout(request)
+
+	return redirect('home')
+
 
 def Home(request):
 	return render(request, 'home.html')
 
 def profile(request):
-    for i in range(100):
-        newMatch = Match(User=request.user, player1="moi", player2="lui", score1=3, score2=0)
-        newMatch.save()
-    User_matchs = request.user.match_set.all()
-    return render(request, 'profile.html', {'User_matchs': User_matchs})
+    # Simulation de données de matchs (si nécessaire)
+	for i in range(100):
+		newMatch = Match(User=request.user, player1="moi", player2="lui", score1=3, score2=0)
+		newMatch.save()
+
+    # Récupérer les matchs de l'utilisateur
+	User_matchs = request.user.match_set.all()
+
+    # Récupérer la liste des amis
+	friendsList = request.user.friends.all()
+
+	for friend in friendsList:
+		print(friend.isOnline)
+	# Renvoyer le tout au template
+	return render(request, 'profile.html', {
+        'User_matchs': User_matchs,
+        'friendsList': friendsList,
+    })
 
 from django.shortcuts import render
 
@@ -171,3 +203,19 @@ def addFriend(request):
         return render(request, 'partials/addFriendState.html', {'message': f'{friend.username} ajouté !'})
     else:
         return render(request, 'partials/addFriendState.html', {'message': 'Utilisateur non trouvé !'})
+
+
+@login_required
+def update_online_status(request, status):
+    """Vue pour mettre à jour le statut en ligne."""
+    if status not in ['true', 'false']:
+        return JsonResponse({'error': 'Invalid status'}, status=400)
+    
+    # Convertir le paramètre en booléen
+    isOnline = True if status == 'true' else False
+
+    # Mettre à jour le statut de l'utilisateur
+    request.user.isOnline = isOnline
+    request.user.save()
+
+    return JsonResponse({'success': True, 'isOnline': isOnline})

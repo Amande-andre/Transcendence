@@ -1,0 +1,14 @@
+{% if friends %}
+    {% for friend in friends %}
+        <li class="dropdown-item d-flex align-items-center">
+            <span 
+                class="status-dot me-2" 
+                style="width: 10px; height: 10px; border-radius: 50%; 
+                       background-color: {% if user.isOnline %}green{% else %}red{% endif %};">
+            </span>
+            {{ friend.username }}
+        </li>
+    {% endfor %}
+{% else %}
+    <li class="dropdown-item text-muted">Aucun ami</li>
+{% endif %}
