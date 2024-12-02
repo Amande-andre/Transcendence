@@ -1,6 +1,9 @@
 {% load static %}
+{% load i18n %}
 <div id="containerCanvas">
     <canvas id="breakoutCanvas" width="800" height="600"></canvas>
     <button id="pongButton" hx-get="{% url 'game:bracket' %}" hx-target="#containerCanvas" hx-swap="outerHTML" hx-vals=""
-    style="cursor: pointer; position: relative; z-index: 3;">Continue</button>
-    </div>
+    style="cursor: pointer; position: relative; z-index: 3;">
+        {% trans "Continue" %}
+    </button>
+</div>

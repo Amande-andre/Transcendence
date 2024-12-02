@@ -1,3 +1,4 @@
+{% load i18n %}
 {% if friends %}
     {% for friend in friends %}
         <li class="dropdown-item d-flex align-items-center">
@@ -10,5 +11,5 @@
         </li>
     {% endfor %}
 {% else %}
-    <li class="dropdown-item text-muted">Aucun ami</li>
+    <li class="dropdown-item text-muted">{% trans "No friends" %}</li>
 {% endif %}

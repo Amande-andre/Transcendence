@@ -1,44 +1,83 @@
 {% load static %}
+{% load i18n %}
 <nav id="nav" class="navbar navbar-expand-md fixed-top navbar-transparency navbar-light">
     <div class="container">
         <div style="position: fixed; top: 0; left: 0; margin: 1vh; padding: 0; z-index: 1000;">
-            <a class="navbar-brand" href="#" style="color: var(--bs-body-bg);"><img src="{% static 'users/images/42_Logo.svg.png' %}"></a>
+            <a class="navbar-brand" href="#" style="color: var(--bs-body-bg);">
+                <img src="{% static 'users/images/42_Logo.svg.png' %}">
+            </a>
             <button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1">
-                <span class="visually-hidden">Toggle navigation</span>
+                <span class="visually-hidden">{% trans "Toggle navigation" %}</span>
                 <span class="navbar-toggler-icon"></span>
             </button>
-		</div>
+        </div>
         
         <div class="collapse navbar-collapse" id="navcol-1" style="right: 3vw; padding: 0; z-index: 1000; position: fixed;">
             <ul class="navbar-nav ms-auto" style="display: flex; align-items: center; gap: 20px;">
-                {% if user.is_authenticated %}
-				<li class="nav-item">
-                    <a class="nav-link" href="{% url 'users:profile' %}" id="profile-link" style="color: var(--bs-body-bg); font-size: 20px;">Profile</a>
-				</li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'game:gameChoice' %}" id="game-link" style="color: var(--bs-body-bg); font-size: 20px;">Game</a>
+                <!-- Sélecteur de langue -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: var(--bs-body-bg); font-size: 20px;">
+                        {% if LANGUAGE_CODE == 'en' %}🇬🇧 {% trans "English" %}{% endif %}
+                        {% if LANGUAGE_CODE == 'fr' %}🇫🇷 {% trans "French" %}{% endif %}
+                        {% if LANGUAGE_CODE == 'es' %}🇪🇸 {% trans "Spanish" %}{% endif %}
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <form action="{% url 'set_language' %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" name="language" value="en" class="dropdown-item">
+                                    🇬🇧 {% trans "English" %}
+                                </button>
+                                <button type="submit" name="language" value="fr" class="dropdown-item">
+                                    🇫🇷 {% trans "French" %}
+                                </button>
+                                <button type="submit" name="language" value="es" class="dropdown-item">
+                                    🇪🇸 {% trans "Spanish" %}
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
                 </li>
-				<li class="nav-item">
-                    <a class="nav-link" href="{% url 'home' %}" id="home-link" style="color: var(--bs-body-bg); font-size: 20px;">Home</a>
-				</li>
-				<li class="nav-item">
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'users:profile' %}" id="profile-link" style="color: var(--bs-body-bg); font-size: 20px;">
+                        {% trans "Profile" %}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'game:gameChoice' %}" id="game-link" style="color: var(--bs-body-bg); font-size: 20px;">
+                        {% trans "Game" %}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}" id="home-link" style="color: var(--bs-body-bg); font-size: 20px;">
+                        {% trans "Home" %}
+                    </a>
+                </li>
+                <li class="nav-item">
                     <form method="post" action="{% url 'users:logout' %}">
                         {% csrf_token %}
-						<button type="submit" class="nav-link" style="color: var(--bs-body-bg); font-size: 20px; background: none; border: none; padding: 0; cursor: pointer;">
-                            Logout
-						</button>
-					</form>
-				</li>
+                        <button type="submit" class="nav-link" style="color: var(--bs-body-bg); font-size: 20px; background: none; border: none; padding: 0; cursor: pointer;">
+                            {% trans "Logout" %}
+                        </button>
+                    </form>
+                </li>
                 {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'home' %}" id="home-link" style="color: var(--bs-body-bg); font-size: 20px;">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'users:login' %}" id="login-link" style="color: var(--bs-body-bg); font-size: 20px;">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'users:register' %}" id="register-link" style="color: var(--bs-body-bg); font-size: 20px;">Register</a>
-                    </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}" id="home-link" style="color: var(--bs-body-bg); font-size: 20px;">
+                        {% trans "Home" %}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'users:login' %}" id="login-link" style="color: var(--bs-body-bg); font-size: 20px;">
+                        {% trans "Login" %}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'users:register' %}" id="register-link" style="color: var(--bs-body-bg); font-size: 20px;">
+                        {% trans "Register" %}
+                    </a>
+                </li>
                 {% endif %}
             </ul>
         </div>

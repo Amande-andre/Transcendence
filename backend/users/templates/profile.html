@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 {% block content %}
 <div id="profilePage">
     <div class="container-fluid d-flex flex-row">
@@ -7,7 +8,7 @@
         <div class="col-35">
             <!-- Barre de recherche -->
             <div class="search-bar mb-4">
-				<input id="friendInput" type="text" class="form-control" placeholder="Ajoutez un ami!" name="friend"
+				<input id="friendInput" type="text" class="form-control" placeholder="{% trans 'Add a friend!' %}" name="friend"
 					hx-post="{% url 'users:addFriend' %}"
 					hx-target="this"
 					hx-trigger='keyup[key=="Enter"] from:body'
@@ -16,7 +17,6 @@
 					hx-swap="outerHTML">
 
 			</div>
-
 
             <!-- Image de profil cliquable -->
             <div class="image text-center profile-image-container" onclick="document.getElementById('uploadImage').click()">
@@ -34,7 +34,7 @@
                         {% else %}
                             this.src='{% static 'users/images/randy.jpg' %}';
                         {% endif %}"
-                    alt="Image de profil">
+                    alt="{% trans 'Profile image' %}">
             </div>
             <!-- Input pour uploader une nouvelle image -->
             <input type="file" accept="image/*" id="uploadImage" name="image" style="display: none;" 
@@ -51,7 +51,7 @@
 			<div class="pseudo mt-4">
 				<input type="text" id="pseudoInput" name="pseudo" 
 					   class="form-control mb-3" 
-					   placeholder="Entrez votre pseudo" 
+					   placeholder="{% trans 'Enter your username' %}" 
 					   value="{{ user.username }}"
 					   hx-post="{% url 'users:updatePseudo' %}" 
 					   hx-target="#pseudoInput" 
@@ -68,7 +68,7 @@
 						class="btn btn-primary dropdown-toggle" 
 						data-bs-toggle="dropdown" 
 						aria-expanded="false">
-						<i class="fas fa-users"></i> Mes Amis
+						<i class="fas fa-users"></i> {% trans 'My Friends' %}
 					</button>
 					<ul class="dropdown-menu" id="friends-list">
 						{% include 'partials/friendsList.html' with friends=friendsList %}
@@ -78,15 +78,15 @@
 			
 			<!-- Statistiques -->
 			<div class="stats mt-4"> 
-				<div class="Matchs">Matchs : <span id="matchs">0</span></div>
-				<div class="win">Win : <span id="win">0</span></div>
-				<div class="lose">Lose : <span id="lose">0</span></div>
+				<div class="Matchs">{% trans 'Matches' %}: <span id="matchs">0</span></div>
+				<div class="win">{% trans 'Wins' %}: <span id="win">0</span></div>
+				<div class="lose">{% trans 'Losses' %}: <span id="lose">0</span></div>
 			</div>
         </div>
 
         <!-- Section de droite -->
         <div class="col-65">
-            <div class="title">- Match history -</div>
+            <div class="title">- {% trans 'Match history' %} -</div>
             <div id="historique">
 				{% include 'partials/infiniteScroll.html' with matchs=User_matchs %}
             </div>
@@ -94,4 +94,3 @@
     </div>
 </div>
 {% endblock content %}
-
