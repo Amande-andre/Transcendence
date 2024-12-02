@@ -24,7 +24,7 @@
 }
 
 .round {
-    /* border: 5px solid red; */
+
     display: flex;
     flex-direction: column;
     justify-content: center; /*hauteur*/
@@ -44,7 +44,10 @@
     font-family: 'Press Start 2P', cursive;
     background-color: rgba(0, 0, 0, 0.459);
     font-size: calc(0.5vw + 0.5vh);
-    /* font-size: 2vw; */
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .score {
@@ -53,7 +56,6 @@
     font-family: 'Press Start 2P', cursive;
     background-color: rgba(0, 0, 0, 0.459);
     font-size: calc(0.5vw + 0.5vh);
-    /* font-size: 2vw; */
 }
 
 .continu-button {
