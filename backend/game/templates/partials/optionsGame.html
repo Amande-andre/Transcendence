@@ -60,7 +60,8 @@
         score: [0, 0, 0, 0],
         round: 0,
 		win : 0,
-		loose : 0
+		loose : 0,
+		isIa: 0
     }));
 
     // Ajouter des IA si le nombre nest pas une puissance de 2
@@ -70,7 +71,8 @@
 			score: [0, 0, 0, 0],
 			round: 0,
 			win: 0,
-			loose: 0
+			loose: 0,
+			isIa: 1
 		});
 	} else if (![2, 4, 8].includes(listPlayer.length)) {
 		const targetLength = Math.pow(2, Math.ceil(Math.log2(listPlayer.length)));
@@ -80,7 +82,8 @@
 				score: [0, 0, 0, 0],
 				round: 0,
 				win: 0,
-				loose: 0
+				loose: 0,
+				isIa: 1
 			});
 		}
 	}
@@ -90,6 +93,10 @@
         const j = Math.floor(Math.random() * (i + 1));
         [listPlayer[i], listPlayer[j]] = [listPlayer[j], listPlayer[i]];
     }
+	
+	let bonus = document.getElementById('bonusSwitch').checked;
+	if (bonus)
+		isBonus = true;
 
     console.log('listPlayer  shuffle = ', JSON.stringify(listPlayer));
     return JSON.stringify(listPlayer);

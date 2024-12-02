@@ -2,10 +2,11 @@ const WIDTH = 800;
 const HEIGHT = 600;
 let game = true
 let ctx;
+let isBonus = false;
 keys = {};
 
 class Player {
-    constructor(paddle, ball, i) {
+    constructor(paddle, ball, i, isIa, bonus) {
         
         this.score = 0;
         this.paddles = []; 
@@ -24,10 +25,15 @@ class Player {
         this.past = -1;
         this.distance = 0;
         this.lastInput = null;
+        this.keyleft = null;
+        this.keyright = null;
+        this.bonus = false;
     }
     initControls(key1, key2) {
-            const time = new Date();
+        const time = new Date();
 
+        this.keyleft = key1;
+        this.keyright = key2;
         document.addEventListener('keydown', function(event) {  
             if (event.key === key1)
                 keys[key1] = true;
