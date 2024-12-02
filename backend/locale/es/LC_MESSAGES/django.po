@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-02 20:18+0100\n"
+"POT-Creation-Date: 2024-12-02 20:50+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -83,6 +83,18 @@ msgstr "IA1"
 msgid "IA"
 msgstr "IA"
 
+#: backend/game/views.py:29
+msgid "Select your options for Pong"
+msgstr "Selecciona tus opciones para Pong"
+
+#: backend/game/views.py:38
+msgid "Select your options for Breakout"
+msgstr "Selecciona tus opciones para Breakout"
+
+#: backend/game/views.py:59
+msgid "Bracket View"
+msgstr "Vista de la tabla"
+
 #: backend/transcendence/templates/home.html:8
 msgid "Time to play"
 msgstr "Hora de jugar"
@@ -137,11 +149,27 @@ msgstr "Iniciar sesión"
 msgid "Register"
 msgstr "Registrarse"
 
+#: backend/users/form.py:15 backend/users/views.py:74
+msgid "The username can only contain letters and numbers."
+msgstr "El nombre de usuario solo puede contener letras y números."
+
+#: backend/users/form.py:19 backend/users/form.py:55
+msgid "Username"
+msgstr "Nombre de usuario"
+
+#: backend/users/form.py:31 backend/users/form.py:64
+msgid "Password"
+msgstr "Contraseña"
+
+#: backend/users/form.py:40
+msgid "Confirm Password"
+msgstr "Confirma tu contraseña"
+
 #: backend/users/templates/form.html:18
 msgid "The verification message will appear here."
 msgstr "El mensaje de verificación aparecerá aquí."
 
-#: backend/users/templates/profile.html:11
+#: backend/users/templates/profile.html:11 backend/users/views.py:164
 msgid "Add a friend!"
 msgstr "¡Añade un amigo!"
 
@@ -172,3 +200,59 @@ msgstr "Derrotas"
 #: backend/users/templates/profile.html:89
 msgid "Match history"
 msgstr "Historial de partidos"
+
+#: backend/users/views.py:69
+msgid "The username must be at least 5 characters long."
+msgstr "El nombre de usuario debe tener al menos 5 caracteres."
+
+#: backend/users/views.py:71
+msgid "The username must not exceed 15 characters."
+msgstr "El nombre de usuario no debe exceder los 15 caracteres."
+
+#: backend/users/views.py:79
+msgid "This username is already taken."
+msgstr "Este nombre de usuario ya está en uso."
+
+#: backend/users/views.py:84
+msgid "This username is available."
+msgstr "Este nombre de usuario está disponible."
+
+#: backend/users/views.py:113
+msgid "Required."
+msgstr "Requerido."
+
+#: backend/users/views.py:115
+msgid "Invalid characters."
+msgstr "Caracteres inválidos."
+
+#: backend/users/views.py:117
+msgid "Already taken."
+msgstr "Ya está en uso."
+
+#: backend/users/views.py:119
+msgid "5-15 characters."
+msgstr "De 5 a 15 caracteres."
+
+#: backend/users/views.py:136
+msgid "Image too large"
+msgstr "Imagen demasiado grande"
+
+#: backend/users/views.py:140
+msgid "Unsupported file type"
+msgstr "Tipo de archivo no compatible"
+
+#: backend/users/views.py:158
+msgid "Please upload a valid image."
+msgstr "Por favor, sube una imagen válida."
+
+#: backend/users/views.py:168
+msgid "added!"
+msgstr "¡añadido!"
+
+#: backend/users/views.py:170
+msgid "User not found!"
+msgstr "¡Usuario no encontrado!"
+
+#: backend/users/views.py:176
+msgid "Invalid status"
+msgstr "Estado inválido"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-02 20:18+0100\n"
+"POT-Creation-Date: 2024-12-02 20:50+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -82,6 +82,18 @@ msgstr ""
 msgid "IA"
 msgstr ""
 
+#: backend/game/views.py:29
+msgid "Select your options for Pong"
+msgstr ""
+
+#: backend/game/views.py:38
+msgid "Select your options for Breakout"
+msgstr ""
+
+#: backend/game/views.py:59
+msgid "Bracket View"
+msgstr ""
+
 #: backend/transcendence/templates/home.html:8
 msgid "Time to play"
 msgstr ""
@@ -136,11 +148,27 @@ msgstr ""
 msgid "Register"
 msgstr ""
 
+#: backend/users/form.py:15 backend/users/views.py:74
+msgid "The username can only contain letters and numbers."
+msgstr ""
+
+#: backend/users/form.py:19 backend/users/form.py:55
+msgid "Username"
+msgstr ""
+
+#: backend/users/form.py:31 backend/users/form.py:64
+msgid "Password"
+msgstr ""
+
+#: backend/users/form.py:40
+msgid "Confirm Password"
+msgstr ""
+
 #: backend/users/templates/form.html:18
 msgid "The verification message will appear here."
 msgstr ""
 
-#: backend/users/templates/profile.html:11
+#: backend/users/templates/profile.html:11 backend/users/views.py:164
 msgid "Add a friend!"
 msgstr ""
 
@@ -170,4 +198,60 @@ msgstr ""
 
 #: backend/users/templates/profile.html:89
 msgid "Match history"
+msgstr ""
+
+#: backend/users/views.py:69
+msgid "The username must be at least 5 characters long."
+msgstr ""
+
+#: backend/users/views.py:71
+msgid "The username must not exceed 15 characters."
+msgstr ""
+
+#: backend/users/views.py:79
+msgid "This username is already taken."
+msgstr ""
+
+#: backend/users/views.py:84
+msgid "This username is available."
+msgstr ""
+
+#: backend/users/views.py:113
+msgid "Required."
+msgstr ""
+
+#: backend/users/views.py:115
+msgid "Invalid characters."
+msgstr ""
+
+#: backend/users/views.py:117
+msgid "Already taken."
+msgstr ""
+
+#: backend/users/views.py:119
+msgid "5-15 characters."
+msgstr ""
+
+#: backend/users/views.py:136
+msgid "Image too large"
+msgstr ""
+
+#: backend/users/views.py:140
+msgid "Unsupported file type"
+msgstr ""
+
+#: backend/users/views.py:158
+msgid "Please upload a valid image."
+msgstr ""
+
+#: backend/users/views.py:168
+msgid "added!"
+msgstr ""
+
+#: backend/users/views.py:170
+msgid "User not found!"
+msgstr ""
+
+#: backend/users/views.py:176
+msgid "Invalid status"
 msgstr ""
