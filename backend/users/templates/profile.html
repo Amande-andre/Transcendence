@@ -77,13 +77,61 @@
 			</div>
 			
 			<!-- Statistiques -->
-			<div class="stats mt-4"> 
-				<div class="Matchs">{% trans 'Matches' %}: <span id="matchs">0</span></div>
-				<div class="win">{% trans 'Wins' %}: <span id="win">0</span></div>
-				<div class="lose">{% trans 'Losses' %}: <span id="lose">0</span></div>
-			</div>
+            <div class="stats mt-4"> 
+                <div class="Matchs">{% trans 'Matches' %}: <span id="matchs">3</span></div>
+                <div class="win">{% trans 'Wins' %}: <span id="win">1</span></div>
+                <div class="lose">{% trans 'Losses' %}: <span id="lose">2</span></div>
+                <button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#statsModal">
+                    {% trans "View Graph" %}
+                </button>
+            </div>
         </div>
-
+        <div class="modal fade stats-modal" id="statsModal" tabindex="-1" aria-labelledby="statsModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <!-- Header -->
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="statsModalLabel">{% trans "Player Statistics" %}</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+        
+                    <!-- Body -->
+                    <div class="modal-body">
+                        <!-- Section des graphiques -->
+                        <div class="charts-container d-flex justify-content-between">
+                            <!-- Graphique des victoires/défaites -->
+                            <div class="chart-container me-3">
+                                <canvas id="statsChartWins"></canvas>
+                            </div>
+                            <!-- Graphique des statistiques supplémentaires -->
+                            <div class="chart-container">
+                                <canvas id="statsChartStats"></canvas>
+                            </div>
+                        </div>
+        
+                        <!-- Statistiques supplémentaires -->
+                        <hr>
+                        <div id="extra-stats" class="mt-3">
+                            <h6>{% trans "Key Metrics" %}</h6>
+                            <ul class="list-group">
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <span>{% trans "Number of rebounds" %}</span>
+                                    <span id="rebounds">-</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <span>{% trans "Number of bricks broken" %}</span>
+                                    <span id="bricks-broken">-</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <span>{% trans "Longest rally" %}</span>
+                                    <span id="longest-rally">-</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>        
         <!-- Section de droite -->
         <div class="col-65">
             <div class="title">- {% trans 'Match history' %} -</div>
