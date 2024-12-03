@@ -115,7 +115,7 @@ function drawPongArea(player1, player2) {
     for (let i = 0; i < player2.paddles.length; i++)
         player2.paddles[i].drawPaddle();
     for (let i = 0; i < player1.balls.length; i++)
-        player1.balls[i].drawBall();
+        player1.balls[i].drawBall();backend/users/templates/profile.html
     for (let i = 0; i < player2.balls.length; i++)
         player2.balls[i].drawBall();
 }
@@ -132,7 +132,7 @@ function calculePositions(player) {
         for (i = x; x > 0; i-=5){
             x += speedX;
             y += speedY;
-            if (y >= HEIGHT || y <= 0){
+            if (y >= HEIGHT || y <= 0){backend/users/templates/profile.html
                 speedY = speedY * -1;
             }
         }
