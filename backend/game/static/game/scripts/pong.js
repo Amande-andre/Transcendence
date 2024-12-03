@@ -11,7 +11,7 @@ function swapControls(player1, player2) {
 
 function drawRec(x, y) {
     ctx.fillStyle = 'white';
-    ctx.fillRect(x, y, paddleWidth, paddleHeight);
+    ctx.fillRect(x, y, 15, 15);
 }
 
 function drawBall(x, y) {
@@ -33,14 +33,14 @@ function displayPongScore(scorePlayer1, scorePlayer2) {
 
 function updatePaddlePong(player1, player2) {
     for (let i = 0; i < player1.paddles.length; i++) {
-        player1.paddles[i].update('w', 's', 0, HEIGHT, 'vertical');
+        player1.paddles[i].update(player1.keyleft, player1.keyright, 0, HEIGHT, 'vertical');
     }
     for (let i = 0; i < player2.paddles.length; i++) {
-        player2.paddles[i].update('5', '2', 0, HEIGHT, 'vertical');
+        player2.paddles[i].update(player2.keyleft, player2.keyright, 0, HEIGHT, 'vertical');
     }
 }
 
-function collisionPong(player1, player2, players) {
+function collisionPong(player1, player2, playersi, bonus) {
     // Create a copy of balls to safely iterate and modify
     const ballsToProcess = [...player1.balls];
 
@@ -56,7 +56,7 @@ function collisionPong(player1, player2, players) {
 
         // Handle bonus collisions
         if (isBonus)
-            handleBonusCollisions(ball, player1, player2);
+            handleBonusCollisions(ball, player1, player2, bonus);
     });
 }
 
@@ -133,16 +133,18 @@ function handleScoring(ball, player1, player2) {
 }
 
 // Handle bonus collisions
-function handleBonusCollisions(ball, player1, player2) {
+function handleBonusCollisions(ball, player1, player2, applyBonus) {
     // Check collision for both players
-    if (player1.bricks.length === 0)
-        player1.bricks.push({x: generateX(), y: generateY(), bonus: 0});
+    if (player1.bricks.length === 0) {
+        for (let i = 0; i < 3; i++)
+            player1.bricks.push({x: generateX(), y: generateY(), bonus: 0});
+    }
     player1.bricks.forEach(brick => {
         if (isCollidingWithBrick(ball, brick)) {
             bonusWinner = ball.speedX > 0 ? player1 : player2;
             bonusLoser = ball.speedX > 0 ? player2 : player1;
-            applyBonus(bonusWinner, bonusLoser);
-            brick.splice(brick.indexOf(brick), 1);
+            applyBonus[0](bonusWinner, bonusLoser);
+            player1.bricks.splice(player1.bricks.indexOf(brick), 1);
         }
     });
 }
@@ -159,9 +161,9 @@ function generateY() {
 
 function isCollidingWithBrick(ball, brick) {
     return (ball.x + ball.radius > brick.x &&
-            ball.x - ball.radius < brick.x + 32 &&
+            ball.x - ball.radius < brick.x + 15 &&
             ball.y + ball.radius > brick.y &&
-            ball.y - ball.radius < brick.y + 16);
+            ball.y - ball.radius < brick.y + 15);
 }
 
 // Remove ball from both players' ball arrays
@@ -199,41 +201,44 @@ function drawPongArea(player1, player2) {
         drawRec(player1.brick.x, player1.brick.y);
 }
 
+function handleEndGame(player1, player2, players) {
+    if (player1.score === 3){
+        players[player1.index].win++;
+        players[player2.index].loose++;
+        //ici save la win or lose du players[1] ou [0]
+    }
+    else{
+        players[player2.index].win++;
+        players[player1.index].loose++;
+    }
+    let rd = players[player1.index].round - 1;
+    console.log('rd == ', rd, ' player1.index == ', player1.index, ' score == ', player1.score, 'players score == ', players[player1.index].score[rd]);
+    console.log('rd == ', rd, ' player2.index == ', player2.index, ' score == ', player2.score, 'players score == ', players[player2.index].score[rd]);
+    players[player1.index].score[rd] = player1.score;
+    players[player2.index].score[rd] = player2.score;
+    postMatch(players, player1, player2, rd);
+    ctx.clearRect(0, 0, WIDTH, HEIGHT);
+    ctx.strokeStyle = 'white';
+    ctx.strokeRect(0, 0, WIDTH, HEIGHT);
+}
 
-function updatePong(player1, player2, players) {
+function updatePong(player1, player2, players, bonus) {
     drawPongArea(player1, player2);
     player2.isIa = false;
     IaControlePong(player1, 0);
     player1.balls[0].x += player1.balls[0].speedX;
     player1.balls[0].y += player1.balls[0].speedY;
-    collisionPong(player1, player2, players);
+    collisionPong(player1, player2, players, bonus);
     updatePaddlePong(player1, player2);
 
     if (game === false)
         return;
     else if (player1.score === 3 || player2.score === 3) {
-        if (player1.score === 3){
-            players[player1.index].win++;
-            players[player2.index].loose++;
-            //ici save la win or lose du players[1] ou [0]
-        }
-        else{
-            players[player2.index].win++;
-            players[player1.index].loose++;
-        }
-        let rd = players[player1.index].round - 1;
-        console.log('rd == ', rd, ' player1.index == ', player1.index, ' score == ', player1.score, 'players score == ', players[player1.index].score[rd]);
-        console.log('rd == ', rd, ' player2.index == ', player2.index, ' score == ', player2.score, 'players score == ', players[player2.index].score[rd]);
-        players[player1.index].score[rd] = player1.score;
-        players[player2.index].score[rd] = player2.score;
-        postMatch(players, player1, player2, rd);
-        ctx.clearRect(0, 0, WIDTH, HEIGHT);
-        ctx.strokeStyle = 'white';
-        ctx.strokeRect(0, 0, WIDTH, HEIGHT);
+        handleEndGame(player1, player2, players);
         return;
     }
     else
-        requestAnimationFrame(() => updatePong(player1, player2, players));
+        requestAnimationFrame(() => updatePong(player1, player2, players, bonus));
 }
 
 function getPlayersData(canvas) {
@@ -273,10 +278,8 @@ async function startPong(canvas, button) {
         game = true;
         mainBall = new Ball(WIDTH / 2, HEIGHT / 2, 5, 5, 8);
         let index1 = getPlayer(players);
-        if (index1 === -1){
-            resolve();
-            return;
-        }
+        if (index1 === -1)
+            return resolve();
         let player1 = new Player(new Paddle(0, HEIGHT / 2 - 80, 8, 160), mainBall, index1, players[index1].isIa);
         index2 = getPlayer(players);
         let player2 = new Player(new Paddle(WIDTH - 8, HEIGHT / 2 - 80, 8, 160), mainBall, index2, players[index2].isIa);
@@ -286,7 +289,7 @@ async function startPong(canvas, button) {
         const bonus = [swapControls];
         
         drawPongArea(player1, player2);
-        updatePong(player1, player2, players);
+        updatePong(player1, player2, players, bonus);
         
         const checkGameEnd = () => {
             if (player1.score === 3 || player2.score === 3) {

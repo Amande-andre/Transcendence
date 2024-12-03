@@ -95,10 +95,9 @@
     }
 	
 	let bonus = document.getElementById('bonusSwitch').checked;
+	console.log('bonus = ', bonus);
 	if (bonus)
 		isBonus = true;
-
-    console.log('listPlayer  shuffle = ', JSON.stringify(listPlayer));
     return JSON.stringify(listPlayer);
 }
 </script>
