@@ -6,6 +6,7 @@ from django.db import models
 class User(AbstractUser):
     profilePhoto = models.ImageField(upload_to='profilePhoto/', null=True, blank=True)
     
+    username = models.CharField(max_length=15, unique=True)
     class Meta:
         pass
 

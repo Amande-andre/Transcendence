@@ -133,3 +133,4 @@ function previewImage(event) {
 		reader.readAsDataURL(file);
 	}
 }
+

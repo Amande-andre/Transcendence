@@ -2,11 +2,19 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import User
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
+from django.core.validators import RegexValidator
 
 class CustomCreationForm(UserCreationForm):
     username = forms.CharField(
-        max_length=30, 
-        required=True, 
+        max_length=30,
+        min_length=5,
+        required=True,
+        validators=[
+            RegexValidator(
+                regex=r'^[a-zA-Z0-9]+$',
+                message="Le nom d'utilisateur ne peut contenir que des lettres et des chiffres."
+            )
+        ],
         widget=forms.TextInput(attrs={
             'placeholder': 'Username', 
             'class': 'register-input form-control mb-3',  # Classe Bootstrap uniforme
@@ -38,7 +46,6 @@ class CustomCreationForm(UserCreationForm):
     class Meta:
         model = User
         fields = ["username", "password1", "password2"]
-
 
 class CustomAuthenticationForm(AuthenticationForm):
     username = forms.CharField(

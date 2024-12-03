@@ -64,7 +64,15 @@
     }));
 
     // Ajouter des IA si le nombre nest pas une puissance de 2
-	if (![2, 4, 8].includes(listPlayer.length)) {
+	if (listPlayer.length === 1) {
+		listPlayer.push({
+			name: 'IA1',
+			score: [0, 0, 0, 0],
+			round: 0,
+			win: 0,
+			loose: 0
+		});
+	} else if (![2, 4, 8].includes(listPlayer.length)) {
 		const targetLength = Math.pow(2, Math.ceil(Math.log2(listPlayer.length)));
 		for (let i = listPlayer.length; i < targetLength; i++) {
 			listPlayer.push({
