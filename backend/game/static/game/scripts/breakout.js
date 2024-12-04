@@ -46,89 +46,129 @@ function ft_increasePaddle(player, ball) {
         }
     }
 }
-
 function Collision(player, lWall, rWall, bonus) {
-    // Ball-Wall Collision
-    let topWall = 0;
-    let bottomWall = HEIGHT;
-    for (let ball of player.balls) {
+    const topWall = 0;
+    const bottomWall = HEIGHT;
+
+    // Handle ball-wall and out-of-bounds collisions
+    player.balls = player.balls.filter(ball => {
+        // Horizontal wall collisions
         if (ball.x + ball.radius > rWall || ball.x - ball.radius < lWall) {
             ball.x = Math.max(lWall + ball.radius, Math.min(rWall - ball.radius, ball.x));
             ball.speedX = -ball.speedX;
         }
-        if (ball.y - ball.radius < 0) {
-            ball.y = Math.max(topWall + ball.radius, Math.min(bottomWall - ball.radius, ball.y));
+
+        // Top wall collision
+        if (ball.y - ball.radius < topWall) {
+            ball.y = topWall + ball.radius;
             ball.speedY = -ball.speedY;
         }
-        // Ball out of bounds (bottom)
-        if (ball.y + ball.radius > HEIGHT) {
-            player.balls.splice(player.balls.indexOf(ball), 1);
-            if (player.balls.length === 0)
-                player.balls.push(new Ball(player.spawnBallx, player.spawnBally, 4, 4, 5));
-        }
-    }
-    for (let ball of player.balls) {
-        if (ball.speedY === 2)
-            ball.speedY = 4;
-        for (let paddle of player.paddles) {
-            if (ball.y + ball.radius > paddle.y &&
-                ball.y - ball.radius < paddle.y + paddle.height &&
-                ball.x > paddle.x &&
-                ball.x < paddle.x + paddle.width) {
-                
-                // Reverse the vertical direction
-                ball.speedY = -Math.abs(ball.speedY);  // Ensure the ball always bounces upward
-                
-                // Calculate new horizontal speed based on where the ball hit the paddle
-                let hitPos = (ball.x - paddle.x) / paddle.width;
-                
-                // Adjust the multiplier to control the maximum horizontal speed
-                let maxSpeedX = 8;  // Maximum horizontal speed
-                
-                // Use a sine function to create a more balanced curve
-                ball.speedX = Math.sin((hitPos - 0.5) * Math.PI) * maxSpeedX;
-                
-                // Ensure a minimum horizontal speed to prevent straight vertical bounces
-                let minSpeedX = 2;
-                if (Math.abs(ball.speedX) < minSpeedX) {
-                    ball.speedX = ball.speedX > 0 ? minSpeedX : -minSpeedX;
-                }
-            }
-        }
-    } 
-    // Ball-Brick Collision
-    for (let ball of player.balls) {
-        for (let i = 0; i < player.bricks.length; i++) {
-            let brick = player.bricks[i];
-            if (ball.x + ball.radius > brick.x &&
-                ball.x - ball.radius < brick.x + 32 &&
-                ball.y + ball.radius > brick.y &&
-                ball.y - ball.radius < brick.y + 16) {
-                // Determine collision direction
-                let overlapLeft = ball.x + ball.radius - brick.x;
-                let overlapRight = brick.x + 32 - (ball.x - ball.radius);
-                let overlapTop = ball.y + ball.radius - brick.y;
-                let overlapBottom = brick.y + 16 - (ball.y - ball.radius);
 
-                if (Math.min(overlapLeft, overlapRight) < Math.min(overlapTop, overlapBottom)) {
-                    ball.speedX = -ball.speedX;
-                } else {
-                    ball.speedY = -ball.speedY;
-                }
-                if (brick.bonus !== -1) {
-                    console.log('brick.bonus == ', brick.bonus);
-                    bonus[brick.bonus](player, ball);
-                }
-                player.bricks.splice(i, 1);
-                break; // Exit loop after collision
+        // Ball out of bounds (bottom)
+        if (ball.y + ball.radius > bottomWall) {
+            return false; // Remove this ball
+        }
+
+        return true;
+    });
+
+    // Respawn ball if no balls remain
+    if (player.balls.length === 0) {
+        player.balls.push(new Ball(player.spawnBallx, player.spawnBally, 4, 4, 5));
+    }
+
+    // Paddle collision handling
+    player.balls.forEach(ball => {
+        // Ensure ball speed is not too low
+        if (ball.speedY === 2) {
+            ball.speedY = 4;
+        }
+
+        player.paddles.forEach(paddle => {
+            if (isCollidingWithPaddle(ball, paddle)) {
+                handlePaddleCollision(ball, paddle);
+            }
+        });
+    });
+
+    // Brick collision handling
+    player.balls.forEach(ball => {
+        for (let i = player.bricks.length - 1; i >= 0; i--) {
+            const brick = player.bricks[i];
+            if (isCollidingWithBrick(ball, brick)) {
+                handleBrickCollision(player, ball, brick, i, bonus);
+                break; // Exit loop after first collision
             }
         }
-    }
+    });
+
     // Update ball positions
-    for (let ball of player.balls) {
+    player.balls.forEach(ball => {
         ball.x += ball.speedX;
         ball.y += ball.speedY;
+    });
+}
+
+// Helper function to check paddle collision
+function isCollidingWithPaddle(ball, paddle) {
+    return (ball.y + ball.radius > paddle.y &&
+            ball.y - ball.radius < paddle.y + paddle.height &&
+            ball.x > paddle.x &&
+            ball.x < paddle.x + paddle.width);
+}
+
+// Helper function to handle paddle collision with advanced angle calculation
+function handlePaddleCollision(ball, paddle) {
+    // Reverse the vertical direction
+    ball.speedY = -Math.abs(ball.speedY);  // Ensure the ball always bounces upward
+    
+    // Calculate new horizontal speed based on where the ball hit the paddle
+    const hitPos = (ball.x - paddle.x) / paddle.width;
+    
+    // Maximum and minimum horizontal speed constraints
+    const maxSpeedX = 8;
+    const minSpeedX = 2;
+    
+    // Use sine function for more balanced horizontal velocity
+    ball.speedX = Math.sin((hitPos - 0.5) * Math.PI) * maxSpeedX;
+    
+    // Ensure minimum horizontal speed
+    if (Math.abs(ball.speedX) < minSpeedX) {
+        ball.speedX = ball.speedX > 0 ? minSpeedX : -minSpeedX;
     }
+}
+
+// Helper function to check brick collision
+function isCollidingWithBrick(ball, brick) {
+    return (ball.x + ball.radius > brick.x &&
+            ball.x - ball.radius < brick.x + 32 &&
+            ball.y + ball.radius > brick.y &&
+            ball.y - ball.radius < brick.y + 16);
+}
+
+// Helper function to handle brick collision
+function handleBrickCollision(player, ball, brick, brickIndex, bonus) {
+    // Determine collision direction
+    const overlapLeft = ball.x + ball.radius - brick.x;
+    const overlapRight = brick.x + 32 - (ball.x - ball.radius);
+    const overlapTop = ball.y + ball.radius - brick.y;
+    const overlapBottom = brick.y + 16 - (ball.y - ball.radius);
+
+    // Change ball direction based on smallest overlap
+    if (Math.min(overlapLeft, overlapRight) < Math.min(overlapTop, overlapBottom)) {
+        ball.speedX = -ball.speedX;
+    } else {
+        ball.speedY = -ball.speedY;
+    }
+
+    // Apply bonus if brick has one
+    if (brick.bonus !== -1) {
+        console.log('Brick bonus:', brick.bonus);
+        bonus[brick.bonus](player, ball);
+    }
+
+    // Remove the brick
+    player.bricks.splice(brickIndex, 1);
 }
 
 function drawBreakoutBorder() {
@@ -162,103 +202,7 @@ function drawBreakoutAera(player1, player2) {
         player2.balls[i].drawBall();
 }
 
-function calculePositionsBr(player) {
-    let x = player.balls[0].x;
-    let y = player.balls[0].y;
-    let speedX = player.balls[0].speedX;
-    let speedY = player.balls[0].speedY;
-    if (speedY > 0){
-        for (i = y; i > 0; i-=5){
-            x += speedX;
-            y += speedY;
-            if (x >= WIDTH || x <= 0){
-                speedX = speedX * -1;
-                //speedY = speedY * -1;
-            }
-        }
-    }
-    return x;
-}
-
-function choiceIa(player, nb)  {
-        
-    //faire les calcule de diff avant et toujours comparer entre un scope ex si >40 et <400 par exemple
-    let halfP = player.paddles[0].height / 2;
-    let mid = player.paddles[0].midlPong;
-    let left = player.paddles[0].x;
-    let right = player.paddles[0].x + player.paddles[0].height;
-    let ball = player.balls[0].x;
-    //regarde si la balle est a droite si oui il se place au milieu
-    let pos = calculePositionsBr(player);
-    console.log('pos == ', pos);
-    console.log('left == ', left);
-    console.log('right == ', right);
-    if (player.balls[0].speedX > 0){
-        if (pos > right){
-            player.distance = pos - right;
-            player.lastInput = 'd';
-        }
-        else if (pos < left){
-            player.distance = left - pos;
-            player.lastInput = 'a';
-        }
-        player.distance = (player.distance / 300) * 500;
-    }
-    else if (player.balls[0].speedX < 0){
-        if (ball > right){
-            player.distance = pos - mid;
-            player.lastInput = 'd';
-        }
-        else if (ball < left){
-            player.distance = mid - pos;
-            player.lastInput = 'a';
-        }
-        player.distance = (player.distance / 300) * 250;
-    }
-    else{
-            player.distance = 0;
-            return null;
-    }
-    return player.lastInput;
-}
-
-function IaControle(player, nb) {
-    
-    if (!player.isIa)
-        return;
-    player.second = new Date().getSeconds();
-    if (player.second === player.past){ 
-        return;
-    }
-    console.log('player.second == ', player.second);
-    let eventup = new KeyboardEvent('keyup', {
-        key: player.lastInput,
-    });
-    document.dispatchEvent(eventup);
-    // 
-    player.past = player.second;
-    let eventTab = choiceIa(player, nb);
-    if (eventTab === null){
-        
-        return;
-    }
-    otherevent = eventTab === 'a' ? 'd' : 'a';
-    // document.dispatchEvent(player.lastInput);
-    let eventdown = new KeyboardEvent('keydown', {
-        key: eventTab,
-    });
-    //document.dispatchEvent(eventup);
-    document.dispatchEvent(eventdown);
-    setTimeout(() => {
-        console.log('player.distance == ', player.distance);
-        //0.3 j avance de 160
-        document.dispatchEvent(eventup);
-    }, player.distance);
-    console.log('====================');
-}
-
 function updateBreakout(player1, player2, bonus) {
-
     drawBreakoutAera(player1, player2);
     player2.isIa = false;
     IaControle(player1, 0);

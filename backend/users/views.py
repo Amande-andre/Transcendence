@@ -1,7 +1,7 @@
 from django.utils.translation import gettext as _  # Import pour les traductions
 from django.views.generic import CreateView, FormView
 from .form import CustomCreationForm
-from .models import User, Match
+from .models import User
 from django.contrib.auth import login
 from .form import CustomAuthenticationForm
 from django.shortcuts import render
@@ -20,8 +20,10 @@ from django.urls import reverse
 import os
 from django.core.validators import RegexValidator
 from django.core.exceptions import ValidationError
+from game.models import Match
 from django.contrib.auth.signals import user_logged_in, user_logged_out
 from django.dispatch import receiver
+
 
 
 class RegisterForm(CreateView):
