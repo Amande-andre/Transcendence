@@ -6,6 +6,7 @@ from django.db import models
 class User(AbstractUser):
     profilePhoto = models.ImageField(upload_to='profilePhoto/', null=True, blank=True)
     friends = models.ManyToManyField("self", blank=True)
+    isOnline = models.BooleanField(default=False)
     
     username = models.CharField(max_length=15, unique=True)
     class Meta:

@@ -1,9 +1,10 @@
+{% load i18n %}
 {% if friends %}
-	    {% for friend in friends %}
-		<button class="dropdown-item" type="button" onclick="addFriend('{{ friend.username }}')">
-	    <li>{{ friend.username }}</li>
-		</button>
-	    {% endfor %}
-	{% else %}
-	    <li>No friends</li>
+    {% for friend in friends %}
+        <button class="dropdown-item" type="button" onclick="addFriend('{{ friend.username }}')">
+            <li>{{ friend.username }}</li>
+        </button>
+    {% endfor %}
+{% else %}
+    <li>{% trans "No friends" %}</li>
 {% endif %}

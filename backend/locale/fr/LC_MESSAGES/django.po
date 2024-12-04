@@ -1,0 +1,257 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-12-02 20:50+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: backend/game/templates/partials/bracket.html:69
+#: backend/game/templates/partials/breakoutCanvas.html:7
+#: backend/game/templates/partials/pongCanvas.html:8
+msgid "Continue"
+msgstr "Continuer"
+
+#: backend/game/templates/partials/dropdownFriend.html:9
+#: backend/users/templates/partials/friendsList.html:14
+msgid "No friends"
+msgstr "Aucun ami"
+
+#: backend/game/templates/partials/gameChoice.html:9
+msgid "Time to play!"
+msgstr "À vous de jouer !"
+
+#: backend/game/templates/partials/options-breakout.html:5
+#: backend/game/templates/partials/options-pong.html:5
+msgid "Start"
+msgstr "Commencer"
+
+#: backend/game/templates/partials/optionsGame.html:5
+msgid "Options"
+msgstr "Options"
+
+#: backend/game/templates/partials/optionsGame.html:9
+msgid "Players"
+msgstr "Joueurs"
+
+#: backend/game/templates/partials/optionsGame.html:13
+msgid "Player 1"
+msgstr "Joueur 1"
+
+#: backend/game/templates/partials/optionsGame.html:15
+msgid "Choose color"
+msgstr "Choisir une couleur"
+
+#: backend/game/templates/partials/optionsGame.html:21
+msgid "Add player"
+msgstr "Ajouter un joueur"
+
+#: backend/game/templates/partials/optionsGame.html:29
+msgid "Add friend"
+msgstr "Ajouter un ami"
+
+#: backend/game/templates/partials/optionsGame.html:36
+msgid "Delete player"
+msgstr "Supprimer un joueur"
+
+#: backend/game/templates/partials/optionsGame.html:44
+msgid "Game options"
+msgstr "Options de jeu"
+
+#: backend/game/templates/partials/optionsGame.html:47
+msgid "Enable bonuses"
+msgstr "Activer les bonus"
+
+#: backend/game/templates/partials/optionsGame.html:70
+msgid "IA1"
+msgstr "IA1"
+
+#: backend/game/templates/partials/optionsGame.html:80
+msgid "IA"
+msgstr "IA"
+
+#: backend/game/views.py:29
+msgid "Select your options for Pong"
+msgstr "Sélectionnez vos options pour Pong"
+
+#: backend/game/views.py:38
+msgid "Select your options for Breakout"
+msgstr "Sélectionnez vos options pour Breakout"
+
+#: backend/game/views.py:59
+msgid "Bracket View"
+msgstr "Vue du tableau"
+
+#: backend/transcendence/templates/home.html:8
+msgid "Time to play"
+msgstr "À vous de jouer"
+
+#: backend/transcendence/templates/home.html:11
+msgid "Transcendence"
+msgstr "Transcendence"
+
+#: backend/transcendence/templates/partials/navbar.html:10
+msgid "Toggle navigation"
+msgstr "Basculer la navigation"
+
+#: backend/transcendence/templates/partials/navbar.html:20
+#: backend/transcendence/templates/partials/navbar.html:29
+msgid "English"
+msgstr "Anglais"
+
+#: backend/transcendence/templates/partials/navbar.html:21
+#: backend/transcendence/templates/partials/navbar.html:32
+msgid "French"
+msgstr "Français"
+
+#: backend/transcendence/templates/partials/navbar.html:22
+#: backend/transcendence/templates/partials/navbar.html:35
+msgid "Spanish"
+msgstr "Espagnol"
+
+#: backend/transcendence/templates/partials/navbar.html:44
+msgid "Profile"
+msgstr "Profil"
+
+#: backend/transcendence/templates/partials/navbar.html:49
+msgid "Game"
+msgstr "Jeu"
+
+#: backend/transcendence/templates/partials/navbar.html:54
+#: backend/transcendence/templates/partials/navbar.html:68
+msgid "Home"
+msgstr "Accueil"
+
+#: backend/transcendence/templates/partials/navbar.html:61
+msgid "Logout"
+msgstr "Déconnexion"
+
+#: backend/transcendence/templates/partials/navbar.html:73
+#: backend/users/templates/form.html:27
+msgid "Login"
+msgstr "Connexion"
+
+#: backend/transcendence/templates/partials/navbar.html:78
+#: backend/users/templates/form.html:29
+msgid "Register"
+msgstr "Inscription"
+
+#: backend/users/form.py:15 backend/users/views.py:74
+msgid "The username can only contain letters and numbers."
+msgstr "Le nom d'utilisateur ne peut contenir que des lettres et des chiffres."
+
+#: backend/users/form.py:19 backend/users/form.py:55
+msgid "Username"
+msgstr "Nom d'utilisateur"
+
+#: backend/users/form.py:31 backend/users/form.py:64
+msgid "Password"
+msgstr "Mot de passe"
+
+#: backend/users/form.py:40
+msgid "Confirm Password"
+msgstr "Confirmez le mot de passe"
+
+#: backend/users/templates/form.html:18
+msgid "The verification message will appear here."
+msgstr "Le message de vérification s'affichera ici."
+
+#: backend/users/templates/profile.html:11 backend/users/views.py:164
+msgid "Add a friend!"
+msgstr "Ajouter un ami !"
+
+#: backend/users/templates/profile.html:37
+msgid "Profile image"
+msgstr "Image de profil"
+
+#: backend/users/templates/profile.html:54
+msgid "Enter your username"
+msgstr "Entrez votre pseudo"
+
+#: backend/users/templates/profile.html:71
+msgid "My Friends"
+msgstr "Mes amis"
+
+#: backend/users/templates/profile.html:81
+msgid "Matches"
+msgstr "Matchs"
+
+#: backend/users/templates/profile.html:82
+msgid "Wins"
+msgstr "Victoires"
+
+#: backend/users/templates/profile.html:83
+msgid "Losses"
+msgstr "Défaites"
+
+#: backend/users/templates/profile.html:89
+msgid "Match history"
+msgstr "Historique des matchs"
+
+#: backend/users/views.py:69
+msgid "The username must be at least 5 characters long."
+msgstr "Le nom d'utilisateur doit contenir au moins 5 caractères."
+
+#: backend/users/views.py:71
+msgid "The username must not exceed 15 characters."
+msgstr "Le nom d'utilisateur ne doit pas dépasser 15 caractères."
+
+#: backend/users/views.py:79
+msgid "This username is already taken."
+msgstr "Ce nom d'utilisateur est déjà pris."
+
+#: backend/users/views.py:84
+msgid "This username is available."
+msgstr "Ce nom d'utilisateur est disponible."
+
+#: backend/users/views.py:113
+msgid "Required."
+msgstr "Requis."
+
+#: backend/users/views.py:115
+msgid "Invalid characters."
+msgstr "Caractères non valides."
+
+#: backend/users/views.py:117
+msgid "Already taken."
+msgstr "Déjà pris."
+
+#: backend/users/views.py:119
+msgid "5-15 characters."
+msgstr "5 à 15 caractères."
+
+#: backend/users/views.py:136
+msgid "Image too large"
+msgstr "Image trop volumineuse"
+
+#: backend/users/views.py:140
+msgid "Unsupported file type"
+msgstr "Type de fichier non pris en charge"
+
+#: backend/users/views.py:158
+msgid "Please upload a valid image."
+msgstr "Veuillez télécharger une image valide."
+
+#: backend/users/views.py:168
+msgid "added!"
+msgstr "ajouté !"
+
+#: backend/users/views.py:170
+msgid "User not found!"
+msgstr "Utilisateur non trouvé !"
+
+#: backend/users/views.py:176
+msgid "Invalid status"
+msgstr "Statut invalide"

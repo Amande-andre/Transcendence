@@ -2,6 +2,10 @@
 from django.shortcuts import render
 from users.models import User
 from django.views.generic import ListView
+from django.utils import translation
+from django.conf import settings
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 
 def Home(request):
 	return render(request, 'home.html')
