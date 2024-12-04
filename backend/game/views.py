@@ -32,6 +32,8 @@ def optionsBreakout(request):
 	friendsList = user.friends.all()
 	return render(request, 'partials/options-breakout.html', {'user': user, 'friendsList': friendsList})
 
+
+
 def bracket(request):
     # Récupérer les données des joueursplay
 	
@@ -42,11 +44,17 @@ def bracket(request):
 	
 	print("game the big Game", request.GET.get('game'))
 	game = request.GET.get('game')
+	
+	i = 0
+
 	for players in players_raw:
+		players['score'][3] = i // 2
 		if players['win'] >= 1:
 			players2.append(players)
 		if players['win'] >= 2:
 			players3.append(players)
+		i += 1
+	
 	return render(request, 'partials/bracket.html', {"players": players_raw, "players2": players2, "players3": players3, "game": game})
 
 def saveMatch(request):

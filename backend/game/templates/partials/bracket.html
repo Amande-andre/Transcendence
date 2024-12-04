@@ -4,6 +4,7 @@
             {% for player in players %}
                 {% if forloop.counter0|divisibleby:2 %}
                     <!-- Si l'index est pair, crée une nouvelle balise 'match' -->
+                    <span class="inGame">{{player.score.3}}</span>
                     <div class="match-container match">
                         <!-- <div class="match"> -->
                 {% endif %}

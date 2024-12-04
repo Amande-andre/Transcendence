@@ -90,7 +90,8 @@
         const j = Math.floor(Math.random() * (i + 1));
         [listPlayer[i], listPlayer[j]] = [listPlayer[j], listPlayer[i]];
     }
-
+	listPlayer[0].score[3] = 1;
+	listPlayer[1].score[3] = 1;
     console.log('listPlayer  shuffle = ', JSON.stringify(listPlayer));
     return JSON.stringify(listPlayer);
 }

@@ -115,7 +115,7 @@ function drawPongArea(player1, player2) {
     for (let i = 0; i < player2.paddles.length; i++)
         player2.paddles[i].drawPaddle();
     for (let i = 0; i < player1.balls.length; i++)
-        player1.balls[i].drawBall();backend/users/templates/profile.html
+        player1.balls[i].drawBall();
     for (let i = 0; i < player2.balls.length; i++)
         player2.balls[i].drawBall();
 }
@@ -254,6 +254,8 @@ function updatePong(player1, player2, players) {
         console.log('rd == ', rd, ' player2.index == ', player2.index, ' score == ', player2.score, 'players score == ', players[player2.index].score[rd]);
         players[player1.index].score[rd] = player1.score;
         players[player2.index].score[rd] = player2.score;
+        players[player1.index].score[3] = 0;
+        players[player2.index].score[3] = 0;
         ctx.clearRect(0, 0, WIDTH, HEIGHT);
         ctx.strokeStyle = 'white';
         ctx.strokeRect(0, 0, WIDTH, HEIGHT);
@@ -307,7 +309,11 @@ async function startPong(canvas, button) {
         let player1 = new Player(new Paddle(0, HEIGHT / 2 - 80, 8, 160), mainBall, index1);
         // getPlayer(players);
         let player2 = new Player(new Paddle(WIDTH - 8, HEIGHT / 2 - 80, 8, 160), mainBall, getPlayer(players));
-        
+        if (player2.index === player1.index){
+            resolve();
+            return;
+        }
+
         player1.initControls('w', 's');
         player2.initControls('5', '2');
         
