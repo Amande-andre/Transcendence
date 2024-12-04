@@ -4,6 +4,7 @@ from . import views
 from django.contrib.auth.views import LogoutView
 from django.conf import settings
 from django.conf.urls.static import static
+from .views import update_online_status
 
 app_name = 'users'
 
@@ -16,6 +17,7 @@ urlpatterns = [
 	path('updatePseudo/', views.updatePseudo, name='updatePseudo'),
 	path('updateImage/', views.updateImage, name='updateImage'),
 	path('addFriend/', views.addFriend, name='addFriend'),
+ 	path('update_status/<str:status>/', update_online_status, name='update_status'),
 ]
 
 if settings.DEBUG:

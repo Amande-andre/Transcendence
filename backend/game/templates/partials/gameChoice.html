@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 {% block content %}
 <!DOCTYPE html>
 
 <container id="gameChoice">
 <div class="content">
-    <h1 class="game-title">Time to play!</h1>
+    <h1 class="game-title">{% trans "Time to play!" %}</h1>
         <div class="boxes-container">
             <div class="box box1">
                 <img src="{% static 'game/images/pong2.jpg' %}" hx-get="{% url 'game:optionsPong' %} " hx-target="#gameChoice" hx-swap="outerHTML">

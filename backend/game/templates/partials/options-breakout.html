@@ -1,4 +1,7 @@
 {% extends 'partials/optionsGame.html' %}
+{% load i18n %}
 {% block content %}
-    <button class="btn btn-success btn-lg" hx-get="{% url 'game:bracket' %}" hx-target="#gameOption" hx-vals="js:{'players': shufflePlayer()}" hx-swap="outerHTML">Start</button>
+    <button class="btn btn-success btn-lg" hx-get="{% url 'game:bracket' %}" hx-target="#gameOption" hx-vals="js:{'players': shufflePlayer()}" hx-swap="outerHTML">
+        {% trans "Start" %}
+    </button>
 {% endblock content %}

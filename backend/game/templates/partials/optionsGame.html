@@ -1,23 +1,24 @@
+{% load i18n %}
 <container id="gameOption">
 <div class="content">
 <div class="container py-5">
-<h1 class="mb-4-title">Options</h1>
+<h1 class="mb-4-title">{% trans "Options" %}</h1>
 
 <div class="card mb-4">
 	<div class="card-body">
-		<h5 class="card-title">Joueurs</h5>
+		<h5 class="card-title">{% trans "Players" %}</h5>
 		<div id="players-container">
 			<div class="player-input mb-3">
 				<div class="input-group">
-					<span class="input-group-text">Player 1</span>
+					<span class="input-group-text">{% trans "Player 1" %}</span>
 					<input type="text" class="form-control player" placeholder="{{user.username}}" value="{{user.username}}" disabled>
-					<input type="color" class="form-control form-control-color" value="#ff0000" title="Choisir la couleur">
+					<input type="color" class="form-control form-control-color" value="#ff0000" title="{% trans "Choose color" %}">
 				</div>
 			</div>
 		</div>
 		<div class="btn-group" role="group">
 			<button class="btn btn-primary" onclick="addPlayer()">
-				<i class="fas fa-plus"></i> Add player
+				<i class="fas fa-plus"></i> {% trans "Add player" %}
 			</button>
 			<div class="btn-group" role="group">
 				<button 
@@ -25,14 +26,14 @@
 					class="btn btn-primary dropdown-toggle" 
 					data-bs-toggle="dropdown" 
 					aria-expanded="false">
-					<i class="fas fa-plus"></i> Add friend
+					<i class="fas fa-plus"></i> {% trans "Add friend" %}
 				</button>
 				<ul class="dropdown-menu" id="friend-dropdown">
 					{% include 'partials/dropdownFriend.html' with friends=friendsList %}
 				</ul>
 			</div>
 			<button class="btn btn-danger" onclick="removePlayer()">
-				<i class="fas fa-minus"></i> Delete player
+				<i class="fas fa-minus"></i> {% trans "Delete player" %}
 			</button>
 		</div>
 	</div>
@@ -40,10 +41,10 @@
 
 <div class="card mb-4">
 	<div class="card-body">
-		<h5 class="card-title">Options de jeu</h5>
+		<h5 class="card-title">{% trans "Game options" %}</h5>
 		<div class="form-check form-switch">
 			<input class="form-check-input" type="checkbox" id="bonusSwitch">
-			<label class="form-check-label" for="bonusSwitch">Activer les bonus</label>
+			<label class="form-check-label" for="bonusSwitch">{% trans "Enable bonuses" %}</label>
 		</div>
 	</div>
 </div>
@@ -67,7 +68,7 @@
     // Ajouter des IA si le nombre nest pas une puissance de 2
 	if (listPlayer.length === 1) {
 		listPlayer.push({
-			name: 'IA1',
+			name: '{% trans "IA1" %}',
 			score: [0, 0, 0, 0],
 			round: 0,
 			win: 0,
@@ -78,7 +79,7 @@
 		const targetLength = Math.pow(2, Math.ceil(Math.log2(listPlayer.length)));
 		for (let i = listPlayer.length; i < targetLength; i++) {
 			listPlayer.push({
-				name: 'IA' + (i - listPlayer.length + 1),
+				name: '{% trans "IA" %}' + (i - listPlayer.length + 1),
 				score: [0, 0, 0, 0],
 				round: 0,
 				win: 0,

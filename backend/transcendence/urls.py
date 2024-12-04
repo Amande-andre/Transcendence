@@ -20,10 +20,13 @@ from users import views
 from game import views
 from . import views
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
 	path('', views.Home, name='home'),
     path('match/', views.HomeView.as_view(), name="match"),
     path('', include('users.urls')),
     path('', include('game.urls')),
+    
+    path('i18n/', include('django.conf.urls.i18n')),
 ]

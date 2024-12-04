@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 <!DOCTYPE html>
 <html data-bs-theme="light" lang="en">
 
@@ -35,6 +36,10 @@
 	<script src="{% static 'game/scripts/breakout.js' %}" defer></script>
 	<script src="{% static 'game/scripts/pong.js' %}" defer></script>
     <script src="{% static 'game/scripts/bracket.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{% static 'users/scripts/statsChart.js' %}"></script>
+
+
 </head>
 
 <body class="animated-bg" style="height: 100vh;">
