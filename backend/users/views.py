@@ -9,20 +9,18 @@ from django.urls import reverse_lazy
 from django.shortcuts import redirect
 from django.contrib.auth import logout
 from django.http import HttpResponse
-from django.template.response import TemplateResponse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse, HttpResponse
-from django.core.files.base import ContentFile
 from django.http import JsonResponse
-from django.http import HttpResponse, HttpResponseRedirect
-from django.urls import reverse
+from django.http import HttpResponse
 import os
 from django.core.validators import RegexValidator
 from django.core.exceptions import ValidationError
-from game.models import Match
 from django.contrib.auth.signals import user_logged_in, user_logged_out
-from django.dispatch import receiver
+from django.shortcuts import redirect
+from django.conf import settings
+import logging
 
 
 
@@ -103,6 +101,7 @@ def profile(request):
     return render(request, 'profile.html', {
         'User_matchs': User_matchs,
         'friendsList': friendsList,
+        'user': request.user
     })
 
 
@@ -181,3 +180,62 @@ def update_online_status(request, status):
     request.user.isOnline = isOnline
     request.user.save()
     return JsonResponse({'success': True, 'isOnline': isOnline})
+
+logger = logging.getLogger(__name__)
+
+def oauth2_login(request):
+    client_id = settings.OA_UID
+    redirect_uri = settings.OA_REDIR
+    response_type = 'code'
+    scope = 'public'
+    authorization_url = f"https://api.intra.42.fr/oauth/authorize?client_id={client_id}&redirect_uri={redirect_uri}&response_type={response_type}&scope={scope}"
+    return redirect(authorization_url)
+
+def oauth2_callback(request):
+    print('callback!!!')
+    code = request.GET.get('code')
+
+    client_id = settings.OA_UID
+    client_secret = settings.OA_SECRET
+    redirect_uri = settings.OA_REDIR
+    token_url = 'https://api.intra.42.fr/oauth/token'
+    
+    data = {
+        'grant_type': 'authorization_code',
+        'code': code,
+        'redirect_uri': redirect_uri,
+        'client_id': client_id,
+        'client_secret': client_secret,
+    }
+    
+    response = request.post(token_url, data=data)
+    token_data = response.json()
+
+    if response.status_code == 200 and 'access_token' in token_data:
+        access_token = token_data['access_token']
+        
+        # Fetch user info from OAuth2 provider
+        user_info_url = 'https://api.intra.42.fr/v2/me'
+        headers = {'Authorization': f'Bearer {access_token}'}
+        user_info_response = request.get(user_info_url, headers=headers)
+        user_info = user_info_response.json()
+
+        # Check if user exists
+        username = '42' + user_info['login']
+        email = user_info['email']
+
+        try:
+            user = User.objects.get(username=username)
+        except User.DoesNotExist:
+            # Create new user
+            user = User.objects.create_user(username=username, email=email)
+            user.save()
+
+        # Log the user in
+        login(request, user)
+
+        # Redirect to profile or home page
+        return redirect('home')  # Change 'profile' to your desired URL name
+    else:
+        # Authentication failed
+        return redirect('users:login')

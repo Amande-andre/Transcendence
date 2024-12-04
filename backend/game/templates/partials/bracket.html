@@ -66,6 +66,5 @@
     </div>
     <button class="continu-button" hx-get="{% url 'game:pongCanvas' %}" hx-target="#tmp" hx-swap="outerHTML"
     hx-vals='{"players": "{{ players|escapejs }}"}' style="cursor: pointer; z-index: 3;">
-        {% trans "Continue" %}
-    </button>
+     Continue    </button>
 </div>

@@ -78,9 +78,9 @@
 			
 			<!-- Statistiques -->
             <div class="stats mt-4"> 
-                <div class="Matchs">{% trans 'Matches' %}: <span id="matchs">3</span></div>
-                <div class="win">{% trans 'Wins' %}: <span id="win">1</span></div>
-                <div class="lose">{% trans 'Losses' %}: <span id="lose">2</span></div>
+                <div class="Matchs">{% trans 'Matches' %}: <span id="matchs">{{ user.gamePlayed }}</span></div>
+                <div class="win">{% trans 'Wins' %}: <span id="win">{{ user.win }}</span></div>
+                <div class="lose">{% trans 'Losses' %}: <span id="lose">{{ user.lose }}</span></div>
                 <button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#statsModal">
                     {% trans "View Graph" %}
                 </button>

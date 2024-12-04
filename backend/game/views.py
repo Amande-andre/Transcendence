@@ -1,6 +1,4 @@
 from django.shortcuts import render
-from django.http import HttpResponse, JsonResponse
-from transcendence.templatetags import custom_tags
 from django.http import JsonResponse
 from game.models import Match
 from django.utils.translation import gettext as _  # Import pour les traductions

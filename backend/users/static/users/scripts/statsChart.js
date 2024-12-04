@@ -1,12 +1,15 @@
 document.addEventListener('DOMContentLoaded', () => {
     const statsModal = document.getElementById('statsModal');
-
+	
+	if (!statsModal)
+		return;
     statsModal.addEventListener('shown.bs.modal', () => {
         // Données pour les victoires/défaites
         const matches = parseInt(document.getElementById('matchs').textContent);
         const wins = parseInt(document.getElementById('win').textContent);
         const losses = parseInt(document.getElementById('lose').textContent);
-
+		if (matches === 0 || wins === 0 || losses === 0)
+			return;
         // Données pour les statistiques supplémentaires
         const rebounds = 35; // Exemple dynamique ou API
         const bricksBroken = 42;
