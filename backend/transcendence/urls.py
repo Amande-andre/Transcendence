@@ -1,7 +1,7 @@
 """
 URL configuration for transcendence project.
 
-The `urlpatterns` list routes URLs to views. For more information please see:
+The `urlpatterns` list routes URLs to views. For more information  see:
     https://docs.djangoproject.com/en/5.1/topics/http/urls/
 Examples:
 Function views
@@ -20,9 +20,13 @@ from users import views
 from game import views
 from . import views
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
 	path('', views.Home, name='home'),
+    path('match/', views.HomeView.as_view(), name="match"),
     path('', include('users.urls')),
     path('', include('game.urls')),
+    
+    path('i18n/', include('django.conf.urls.i18n')),
 ]

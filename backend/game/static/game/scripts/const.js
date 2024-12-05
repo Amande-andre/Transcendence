@@ -1,10 +1,14 @@
 const WIDTH = 800;
 const HEIGHT = 600;
+const paddleWidth = 100;
+const paddleHeight = 10;
 let game = true
+let ctx;
+let isBonus = false;
 keys = {};
 
 class Player {
-    constructor(paddle, ball) {
+    constructor(paddle, ball, i, isIa, bonus) {
         
         this.score = 0;
         this.paddles = []; 
@@ -14,6 +18,7 @@ class Player {
         this.balls.push(ball);
         this.spawnBallx = ball.x;
         this.spawnBally = ball.y;
+        this.index = i;
         this.isIa = true;
         this.time = new Date();
         this.second = this.time.getSeconds();
@@ -22,10 +27,16 @@ class Player {
         this.past = -1;
         this.distance = 0;
         this.lastInput = null;
+        this.keyleft = null;
+        this.keyright = null;
+        this.bonus = false;
+        this.color = null;
     }
     initControls(key1, key2) {
-            const time = new Date();
+        const time = new Date();
 
+        this.keyleft = key1;
+        this.keyright = key2;
         document.addEventListener('keydown', function(event) {  
             if (event.key === key1)
                 keys[key1] = true;
@@ -74,17 +85,18 @@ class Ball {
 }
 
 class Paddle {
-    constructor(x, y, width, height) {
+    constructor(x, y, width, height, color) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
         this.midl = x + (width / 2);
         this.midlPong = y + (height / 2);
+        this.color = color;
     }
 
     drawPaddle() {
-        ctx.fillStyle = 'white';
+        ctx.fillStyle = this.color;
         ctx.fillRect(this.x, this.y, this.width, this.height);
     }
     update(key1, key2, limitL, limitR, orientation) {
@@ -116,4 +128,3 @@ class GameInfo{
 
     }
 }
-let gameInfo = new GameInfo();

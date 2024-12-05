@@ -21,7 +21,7 @@ function updatePaddles(player1, player2) {
 }
 
 function fillbrick(bricks, x, y) {
-    for (let row = 0; row < 18; row++) {
+    for (let row = 0; row < 10; row++) {
         for (let col = 0; col < 12; col++) {
             bricks.push({
                 x: (x + col) * 32, // Position X de la brique
@@ -46,89 +46,129 @@ function ft_increasePaddle(player, ball) {
         }
     }
 }
-
 function Collision(player, lWall, rWall, bonus) {
-    // Ball-Wall Collision
-    let topWall = 0;
-    let bottomWall = HEIGHT;
-    for (let ball of player.balls) {
+    const topWall = 0;
+    const bottomWall = HEIGHT;
+
+    // Handle ball-wall and out-of-bounds collisions
+    player.balls = player.balls.filter(ball => {
+        // Horizontal wall collisions
         if (ball.x + ball.radius > rWall || ball.x - ball.radius < lWall) {
             ball.x = Math.max(lWall + ball.radius, Math.min(rWall - ball.radius, ball.x));
             ball.speedX = -ball.speedX;
         }
-        if (ball.y - ball.radius < 0) {
-            ball.y = Math.max(topWall + ball.radius, Math.min(bottomWall - ball.radius, ball.y));
+
+        // Top wall collision
+        if (ball.y - ball.radius < topWall) {
+            ball.y = topWall + ball.radius;
             ball.speedY = -ball.speedY;
         }
-        // Ball out of bounds (bottom)
-        if (ball.y + ball.radius > HEIGHT) {
-            player.balls.splice(player.balls.indexOf(ball), 1);
-            if (player.balls.length === 0)
-                player.balls.push(new Ball(player.spawnBallx, player.spawnBally, 4, 4, 5));
-        }
-    }
-    for (let ball of player.balls) {
-        if (ball.speedY === 2)
-            ball.speedY = 4;
-        for (let paddle of player.paddles) {
-            if (ball.y + ball.radius > paddle.y &&
-                ball.y - ball.radius < paddle.y + paddle.height &&
-                ball.x > paddle.x &&
-                ball.x < paddle.x + paddle.width) {
-                
-                // Reverse the vertical direction
-                ball.speedY = -Math.abs(ball.speedY);  // Ensure the ball always bounces upward
-                
-                // Calculate new horizontal speed based on where the ball hit the paddle
-                let hitPos = (ball.x - paddle.x) / paddle.width;
-                
-                // Adjust the multiplier to control the maximum horizontal speed
-                let maxSpeedX = 8;  // Maximum horizontal speed
-                
-                // Use a sine function to create a more balanced curve
-                ball.speedX = Math.sin((hitPos - 0.5) * Math.PI) * maxSpeedX;
-                
-                // Ensure a minimum horizontal speed to prevent straight vertical bounces
-                let minSpeedX = 2;
-                if (Math.abs(ball.speedX) < minSpeedX) {
-                    ball.speedX = ball.speedX > 0 ? minSpeedX : -minSpeedX;
-                }
-            }
-        }
-    } 
-    // Ball-Brick Collision
-    for (let ball of player.balls) {
-        for (let i = 0; i < player.bricks.length; i++) {
-            let brick = player.bricks[i];
-            if (ball.x + ball.radius > brick.x &&
-                ball.x - ball.radius < brick.x + 32 &&
-                ball.y + ball.radius > brick.y &&
-                ball.y - ball.radius < brick.y + 16) {
-                // Determine collision direction
-                let overlapLeft = ball.x + ball.radius - brick.x;
-                let overlapRight = brick.x + 32 - (ball.x - ball.radius);
-                let overlapTop = ball.y + ball.radius - brick.y;
-                let overlapBottom = brick.y + 16 - (ball.y - ball.radius);
 
-                if (Math.min(overlapLeft, overlapRight) < Math.min(overlapTop, overlapBottom)) {
-                    ball.speedX = -ball.speedX;
-                } else {
-                    ball.speedY = -ball.speedY;
-                }
-                if (brick.bonus !== -1) {
-                    console.log('brick.bonus == ', brick.bonus);
-                    bonus[brick.bonus](player, ball);
-                }
-                player.bricks.splice(i, 1);
-                break; // Exit loop after collision
+        // Ball out of bounds (bottom)
+        if (ball.y + ball.radius > bottomWall) {
+            return false; // Remove this ball
+        }
+
+        return true;
+    });
+
+    // Respawn ball if no balls remain
+    if (player.balls.length === 0) {
+        player.balls.push(new Ball(player.spawnBallx, player.spawnBally, 4, 4, 5));
+    }
+
+    // Paddle collision handling
+    player.balls.forEach(ball => {
+        // Ensure ball speed is not too low
+        if (ball.speedY === 2) {
+            ball.speedY = 4;
+        }
+
+        player.paddles.forEach(paddle => {
+            if (isCollidingWithPaddle(ball, paddle)) {
+                handlePaddleCollision(ball, paddle);
+            }
+        });
+    });
+
+    // Brick collision handling
+    player.balls.forEach(ball => {
+        for (let i = player.bricks.length - 1; i >= 0; i--) {
+            const brick = player.bricks[i];
+            if (isCollidingWithBrick(ball, brick)) {
+                handleBrickCollision(player, ball, brick, i, bonus);
+                break; // Exit loop after first collision
             }
         }
-    }
+    });
+
     // Update ball positions
-    for (let ball of player.balls) {
+    player.balls.forEach(ball => {
         ball.x += ball.speedX;
         ball.y += ball.speedY;
+    });
+}
+
+// Helper function to check paddle collision
+function isCollidingWithPaddle(ball, paddle) {
+    return (ball.y + ball.radius > paddle.y &&
+            ball.y - ball.radius < paddle.y + paddle.height &&
+            ball.x > paddle.x &&
+            ball.x < paddle.x + paddle.width);
+}
+
+// Helper function to handle paddle collision with advanced angle calculation
+function handlePaddleCollision(ball, paddle) {
+    // Reverse the vertical direction
+    ball.speedY = -Math.abs(ball.speedY);  // Ensure the ball always bounces upward
+    
+    // Calculate new horizontal speed based on where the ball hit the paddle
+    const hitPos = (ball.x - paddle.x) / paddle.width;
+    
+    // Maximum and minimum horizontal speed constraints
+    const maxSpeedX = 8;
+    const minSpeedX = 2;
+    
+    // Use sine function for more balanced horizontal velocity
+    ball.speedX = Math.sin((hitPos - 0.5) * Math.PI) * maxSpeedX;
+    
+    // Ensure minimum horizontal speed
+    if (Math.abs(ball.speedX) < minSpeedX) {
+        ball.speedX = ball.speedX > 0 ? minSpeedX : -minSpeedX;
     }
+}
+
+// Helper function to check brick collision
+function isCollidingWithBrick(ball, brick) {
+    return (ball.x + ball.radius > brick.x &&
+            ball.x - ball.radius < brick.x + 32 &&
+            ball.y + ball.radius > brick.y &&
+            ball.y - ball.radius < brick.y + 16);
+}
+
+// Helper function to handle brick collision
+function handleBrickCollision(player, ball, brick, brickIndex, bonus) {
+    // Determine collision direction
+    const overlapLeft = ball.x + ball.radius - brick.x;
+    const overlapRight = brick.x + 32 - (ball.x - ball.radius);
+    const overlapTop = ball.y + ball.radius - brick.y;
+    const overlapBottom = brick.y + 16 - (ball.y - ball.radius);
+
+    // Change ball direction based on smallest overlap
+    if (Math.min(overlapLeft, overlapRight) < Math.min(overlapTop, overlapBottom)) {
+        ball.speedX = -ball.speedX;
+    } else {
+        ball.speedY = -ball.speedY;
+    }
+
+    // Apply bonus if brick has one
+    if (brick.bonus !== -1) {
+        // console.log('Brick bonus:', brick.bonus);
+        bonus[brick.bonus](player, ball);
+    }
+
+    // Remove the brick
+    player.bricks.splice(brickIndex, 1);
 }
 
 function drawBreakoutBorder() {
@@ -162,133 +202,83 @@ function drawBreakoutAera(player1, player2) {
         player2.balls[i].drawBall();
 }
 
-function calculePositionsBr(player) {
-    let x = player.balls[0].x;
-    let y = player.balls[0].y;
-    let speedX = player.balls[0].speedX;
-    let speedY = player.balls[0].speedY;
-    if (speedY > 0){
-        for (i = y; i > 0; i-=5){
-            x += speedX;
-            y += speedY;
-            if (x >= WIDTH || x <= 0){
-                speedX = speedX * -1;
-                //speedY = speedY * -1;
-            }
-        }
+function handleEndGame(player1, player2, players) {
+    if (player1.bricks.length === 0) {
+        players[player1.index].win++;
+        players[player2.index].loose++;
+        player1.score += 1;
+        players[player1.index].score[player1.round] = player1.score;
+        //ici save la win or lose du players[1] ou [0]
     }
-    return x;
+    else{
+        players[player2.index].win++;
+        players[player1.index].loose++;
+        player2.score += 1;
+        players[player2.index].score[player2.round] = player2.score;
+    }
+    console.log(player1.score, player2.score);
+    let rd = players[player1.index].round - 1;
+    players[player1.index].score[rd] = player1.score;
+    players[player2.index].score[rd] = player2.score;
+    postMatch(players, player1, player2, rd);
+    ctx.clearRect(0, 0, WIDTH, HEIGHT);
+    ctx.strokeStyle = 'white';
+    ctx.strokeRect(0, 0, WIDTH, HEIGHT);
 }
 
-function choiceIa(player, nb)  {
-        
-    //faire les calcule de diff avant et toujours comparer entre un scope ex si >40 et <400 par exemple
-    let halfP = player.paddles[0].height / 2;
-    let mid = player.paddles[0].midlPong;
-    let left = player.paddles[0].x;
-    let right = player.paddles[0].x + player.paddles[0].height;
-    let ball = player.balls[0].x;
-    //regarde si la balle est a droite si oui il se place au milieu
-    let pos = calculePositionsBr(player);
-    if (player.balls[0].speedX < 0){
-        if (pos > right){
-            player.distance = pos - right;
-            player.lastInput = 'a';
-            console.log('a');
-            return 'a';
-        }
-        else if (pos < left){
-            player.distance = left - pos;
-            player.lastInput = 'd';
-            console.log('d');
-            return 'd';
-        }
-    }
-    player.distance = 0;
-
-    return null;
-}
-
-function IaControle(player, nb) {
-    
-    if (!player.isIa)
-        return;
-    player.second = new Date().getSeconds();
-    if (player.second === player.past){ 
-        return;
-    }
-    console.log('player.second == ', player.second);
-    let eventup = new KeyboardEvent('keyup', {
-        key: player.lastInput,
-    });
-    document.dispatchEvent(eventup);
-    // 
-    player.past = player.second;
-    let eventTab = choiceIa(player, nb);
-    console.log('====================');
-    if (eventTab === null){
-        
-        return;
-    }
-    otherevent = eventTab === 'a' ? 'd' : 'a';
-    // document.dispatchEvent(player.lastInput);
-    let eventdown = new KeyboardEvent('keydown', {
-        key: eventTab,
-    });
-    //document.dispatchEvent(eventup);
-    document.dispatchEvent(eventdown);
-    if (player.distance > 20 && player.distance < 300){
-        setTimeout(() => {
-            if (player.distance < 50)
-                player.distance = 150;
-            console.log('player.distance == ', player.distance + 100);
-            //0.3 j avance de 160
-            document.dispatchEvent(eventup);
-        }, player.distance);
-    }
-}
-
-function updateBreakout(player1, player2, bonus) {
-
+function updateBreakout(player1, player2, players, bonus) {
     drawBreakoutAera(player1, player2);
-    player2.isIa = false;
     IaControle(player1, 0);
+    IaControle(player2, 0);
     Collision(player1, 0, WIDTH / 2 - 16, bonus);
     Collision(player2, WIDTH / 2 + 16, WIDTH, bonus);
     updatePaddles(player1, player2);
+    console.log("============================================");
+    console.log(player1.bricks.length, player2.bricks.length);
     if (game === false)
         return
     if (player1.bricks.length === 0 || player2.bricks.length === 0) {
-        ctx.clearRect(0, 0, WIDTH, HEIGHT);
-        drawBreakoutBorder();
-        if (player1.bricks.length === 0)
-            ctx.fillText('WIN', 100, 50);
-        else
-            ctx.fillText('WIN', WIDTH - 140, 50);
-        setTimeout(() => {
-            ctx.clearRect(0, 0, WIDTH, HEIGHT);
-        }, 1000)
+        handleEndGame(player1, player2, players);
+        return;
     }
     else
-        requestAnimationFrame(() => updateBreakout(player1, player2, bonus));
+        requestAnimationFrame(() => updateBreakout(player1, player2, players, bonus));
 }
 
-
-function startBreakout() {
-    game = true;
-
-    let player1 = new Player(new Paddle(WIDTH / 4 - 80 / 2, HEIGHT - 8, 80, 8),
-                        new Ball(WIDTH / 4, 3 * HEIGHT / 4, 0, 4, 5));
-    let player2 = new Player(new Paddle(3 * WIDTH / 4 - 80 / 2, HEIGHT - 8, 80, 8),
-                    new Ball(3 * WIDTH / 4, 3 * HEIGHT / 4, 0, 4, 5));
-    const bonus = [ft_newBall, ft_increasePaddle];
-    fillbrick(player1.bricks, 0, 5);
-    fillbrick(player2.bricks, 13, 5);
-
-    player1.initControls('a', 'd');
-    player2.initControls('1', '3');
-
-    drawBreakoutAera(player1, player2);
-
-    updateBreakout(player1, player2, bonus);
+async function startBreakout(canvas, button) {
+    let players = getPlayersData(canvas);
+    await new Promise((resolve) => {
+        game = true;
+        let index1 = getPlayer(players);
+        if (index1 === -1)
+            return resolve();
+        let player1 = new Player(new Paddle(WIDTH / 4 - 80 / 2, HEIGHT - 8, 80, 8, players[index1].color), new Ball(WIDTH / 4, 3 * HEIGHT / 4, 0, 4, 5)
+        , index1, players[index1].isIa);
+        player1.isIa = isIa(players[index1].isIa);
+        let index2 = getPlayer(players);
+        let player2 = new Player(new Paddle(3 * WIDTH / 4 - 80 / 2, HEIGHT - 8, 80, 8, players[index2].color), new Ball(3 * WIDTH / 4, 3 * HEIGHT / 4, 0, 4, 5)
+        , index2, players[index2].isIa);
+        player2.isIa = isIa(players[index2].isIa);
+        
+        player1.initControls('a', 'd');
+        player2.initControls('1', '3');
+        const bonus = [ft_newBall, ft_increasePaddle];
+        
+        fillbrick(player1.bricks, 0, 5);
+        fillbrick(player2.bricks, 13, 5);
+        drawBreakoutAera(player1, player2);
+        updateBreakout(player1, player2, players, bonus);
+        
+        const checkGameEnd = () => {
+            if (player1.score || player2.score === 0) {
+                resolve();
+            } else {
+                requestAnimationFrame(checkGameEnd);
+            }
+        };
+        checkGameEnd();
+    });
+    
+    button.setAttribute('hx-vals', JSON.stringify({'players': JSON.stringify(players), 'game': 'breakout'}));
+    button.style.display = 'block';
 }

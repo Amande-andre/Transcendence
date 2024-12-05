@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+<div id="profilePage">
+    <div class="container-fluid d-flex flex-row">
+        <!-- Section de gauche -->
+        <div class="col-35">
+            <!-- Barre de recherche -->
+            <div class="search-bar mb-4">
+				<input id="friendInput" type="text" class="form-control" placeholder="{% trans 'Add a friend!' %}" name="friend"
+					hx-post="{% url 'users:addFriend' %}"
+					hx-target="this"
+					hx-trigger='keyup[key=="Enter"] from:body'
+					hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+    				hx-include="#friendInput"
+					hx-swap="outerHTML">
+
+			</div>
+
+            <!-- Image de profil cliquable -->
+            <div class="image text-center profile-image-container" onclick="document.getElementById('uploadImage').click()">
+                <img id="profileImage" 
+                    src="
+                        {% if user.profilePhoto %}
+                            {{ user.profilePhoto.url }}
+                        {% else %}
+                            {% static 'users/images/randy.jpg' %}
+                        {% endif %}"
+                    onerror="
+                        this.onerror=null;
+                        {% if user.profilePhoto %}
+                            this.src='{{ user.profilePhoto.url }}';
+                        {% else %}
+                            this.src='{% static 'users/images/randy.jpg' %}';
+                        {% endif %}"
+                    alt="{% trans 'Profile image' %}">
+            </div>
+            <!-- Input pour uploader une nouvelle image -->
+            <input type="file" accept="image/*" id="uploadImage" name="image" style="display: none;" 
+                onchange="previewImage(event)" 
+                class="btn btn-primary mt-3" 
+                hx-post="{% url 'users:updateImage' %}"
+                hx-target="#profileImage"
+                hx-swap="outerHTML"
+                hx-include="#uploadImage"
+                hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+                hx-encoding="multipart/form-data">
+
+            <!-- Champ pour modifier le pseudo -->
+			<div class="pseudo mt-4">
+				<input type="text" id="pseudoInput" name="pseudo" 
+					   class="form-control mb-3" 
+					   placeholder="{% trans 'Enter your username' %}" 
+					   value="{{ user.username }}"
+					   hx-post="{% url 'users:updatePseudo' %}" 
+					   hx-target="#pseudoInput" 
+					   hx-swap="outerHTML" 
+					   hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' 
+					   hx-trigger="keyup[key=='Enter']">
+			</div>
+			
+			<!-- Dropdown des amis -->
+			<div class="friends-dropdown mt-4">
+				<div class="btn-group" role="group">
+					<button 
+						type="button" 
+						class="btn btn-primary dropdown-toggle" 
+						data-bs-toggle="dropdown" 
+						aria-expanded="false">
+						<i class="fas fa-users"></i> {% trans 'My Friends' %}
+					</button>
+					<ul class="dropdown-menu" id="friends-list">
+						{% include 'partials/friendsList.html' with friends=friendsList %}
+					</ul>
+				</div>
+			</div>
+			
+			<!-- Statistiques -->
+            <div class="stats mt-4"> 
+                <div class="Matchs">{% trans 'Matches' %}: <span id="matchs">{{ user.gamePlayed }}</span></div>
+                <div class="win">{% trans 'Wins' %}: <span id="win">{{ user.win }}</span></div>
+                <div class="lose">{% trans 'Losses' %}: <span id="lose">{{ user.lose }}</span></div>
+                <button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#statsModal">
+                    {% trans "View Graph" %}
+                </button>
+            </div>
+        </div>
+        <div class="modal fade stats-modal" id="statsModal" tabindex="-1" aria-labelledby="statsModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <!-- Header -->
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="statsModalLabel">{% trans "Player Statistics" %}</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+        
+                    <!-- Body -->
+                    <div class="modal-body">
+                        <!-- Section des graphiques -->
+                        <div class="charts-container d-flex justify-content-between">
+                            <!-- Graphique des victoires/défaites -->
+                            <div class="chart-container me-3">
+                                <canvas id="statsChartWins"></canvas>
+                            </div>
+                            <!-- Graphique des statistiques supplémentaires -->
+                            <div class="chart-container">
+                                <canvas id="statsChartStats"></canvas>
+                            </div>
+                        </div>
+        
+                        <!-- Statistiques supplémentaires -->
+                        <hr>
+                        <div id="extra-stats" class="mt-3">
+                            <h6>{% trans "Key Metrics" %}</h6>
+                            <ul class="list-group">
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <span>{% trans "Number of rebounds" %}</span>
+                                    <span id="rebounds">-</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <span>{% trans "Number of bricks broken" %}</span>
+                                    <span id="bricks-broken">-</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <span>{% trans "Longest rally" %}</span>
+                                    <span id="longest-rally">-</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>        
+        <!-- Section de droite -->
+        <div class="col-65">
+            <div class="title">- {% trans 'Match history' %} -</div>
+            <div id="historique">
+				{% include 'partials/infiniteScroll.html' with matchs=User_matchs %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

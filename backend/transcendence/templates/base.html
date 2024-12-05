@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 <!DOCTYPE html>
 <html data-bs-theme="light" lang="en">
 
@@ -8,15 +9,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>transcendence</title>
 	<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" sizes="512x512" href="{% static 'users/images/42_logo.svg.png' %}">
     <link rel="stylesheet" href="{% static 'users/styles/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'users/styles/fixed-navbar-starting-with-transparency-styles.css' %}">
     <link rel="stylesheet" href="{% static 'users/styles/untitled.css' %}">
 	<link rel="stylesheet" href="{% static 'users/styles/style.css' %}">
+    <link rel="stylesheet" href="{% static 'users/styles/login-form---Ambrodu-register.css' %}">
+	<link rel="stylesheet" href="{% static 'users/styles/profile.css' %}">
 	<link rel="stylesheet" href="{% static 'game/styles/background.css' %}">
 	<link rel="stylesheet" href="{% static 'game/styles/gameChoice.css' %}">
 	<link rel="stylesheet" href="{% static 'game/styles/options-pong.css' %}">
 	<link rel="stylesheet" href="{% static 'game/styles/options-breakout.css' %}">
+    <link rel="stylesheet" href="{% static 'game/styles/tournament.css' %}">
     <script src="{% static 'users/scripts/jQuery.js' %}" defer></script>
     <script src="{% static 'users/scripts/navigate.js' %}" defer></script>
     <script src="{% static 'users/scripts/bootstrap.min.js' %}" defer></script>
@@ -24,12 +29,22 @@
 	<script src="{% static 'game/scripts/optionsGames.js' %}" defer></script>
 	<script src="{% static 'game/scripts/DrawStars.js' %}" defer></script>
 	<script src="{% static 'game/scripts/const.js' %}" defer></script>
-	<script src="{% static 'game/scripts/gameLoader.js' %}" defer></script>
-	<script src="{% static 'game/scripts/breakout.js' %}" defer></script>
+    <script src="{% static 'game/scripts/tournamentAnimation.js' %}" defer></script>
+    <script src="{% static 'game/scripts/tournament.js' %}" defer></script>
+    <script src="{% static 'game/scripts/ia.js' %}" defer></script>
 	<script src="{% static 'game/scripts/pong.js' %}" defer></script>
+	<script src="{% static 'game/scripts/breakout.js' %}" defer></script>
+	<script src="{% static 'game/scripts/gameLoader.js' %}" defer></script>
+    <script src="{% static 'game/scripts/bracket.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{% static 'users/scripts/statsChart.js' %}"></script>
+
+
 </head>
 
 <body class="animated-bg" style="height: 100vh;">
+	<canvas id="star-canvas"></canvas>
+    {% include 'partials/navbar.html' %}
     {% block content %}
     {% endblock %}
 </body>

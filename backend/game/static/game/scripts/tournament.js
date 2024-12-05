@@ -1,0 +1,40 @@
+let winner = 'player1';
+let loser = 'player2';
+
+function getCsrfToken() {
+    const csrfToken = document.cookie
+        .split('; ')
+        .find((row) => row.startsWith('csrftoken='));
+    return csrfToken ? csrfToken.split('=')[1] : null;
+}
+
+function postMatch(players, player1, player2, round) {
+    score1 = players[player1.index].score[round];
+    score2 = players[player2.index].score[round];
+    name1 = players[player1.index].name;
+    name2 = players[player2.index].name;
+    const date = new Date();
+    const dateTime = `${date.getHours()}:${date.getMinutes()} ${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+    fetch('/saveMatch/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCsrfToken(),
+        },
+        body: JSON.stringify({
+            player1: name1,
+            player2: name2,
+            score1: score1,
+            score2: score2,
+            dateTime: dateTime,
+
+        }),
+    })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log('Success:', data);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+}

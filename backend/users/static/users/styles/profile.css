@@ -1,0 +1,340 @@
+html,
+body {
+	height: 100%;
+	margin: 0;
+}
+
+.container-fluid {
+	height: calc(100vh - 90px);
+	padding: 5px;
+	border: 5px;
+	z-index: 5;
+	margin-top: 90px;
+}
+
+.col-35 {
+	width: 35%;
+	margin: 5px;
+	background-color: transparent;
+
+	z-index: 6;
+
+
+	box-shadow: 0 0 20px #ff4500;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.col-65 {
+	width: 65%;
+	margin: 5px;
+	background-color: transparent;
+
+	z-index: 6;
+
+
+	box-shadow: 0 0 20px #ff4500;
+}
+
+.image {
+	display: flex;
+	justify-content: center;
+	height: 30%;
+	margin-top: 20px;
+}
+
+.image img {
+	max-height: 100%;
+	height: auto;
+}
+
+.result-item {
+	border: 5px solid #000;
+	color: white;
+	margin: 10px;
+	font-size: 30px;
+	padding: 5px;
+}
+
+.player-name {
+	font-family: 'Press Start 2P';
+	font-size: 1.5vw;
+}
+
+.vs {
+	font-family: 'Bangers';
+	font-family: 'Press Start 2P';
+	font-size: 1.5vw;
+	color: rgb(221, 135, 7);
+	margin: 10px;
+}
+
+.victoire {
+	border-color: #09ff00;
+	box-shadow: 0 0 20px #09ff00;
+	margin-left: 15px;
+	margin-right: 15px;
+}
+
+.defaite {
+	border-color: #ff4500;
+	box-shadow: 0 0 20px #ff4500;
+	margin-left: 15px;
+	margin-right: 15px;
+}
+
+.title {
+	font-family: 'Press Start 2P';
+	text-align: center;
+	color: white;
+	font-size: 2.5vw;
+	margin: 5px;
+}
+
+.search-bar {
+	margin: 15px;
+	border-color: #ff4500;
+	box-shadow: 0 0 20px #ff4500;
+}
+
+.search-bar input {
+	font-family: 'Press Start 2P';
+	font-size: 1.5vw;
+	background-color: transparent;
+	color: white;
+}
+
+.search-bar input:focus {
+	font-family: 'Press Start 2P';
+	font-size: 1.5vw;
+	background-color: transparent;
+	color: white;
+}
+
+.search-bar input::placeholder {
+	color: white;
+	opacity: 0.7;
+}
+
+#historique {
+	max-height: 90%;
+	overflow-y: auto;
+	padding: 15px;
+	background-color: transparent;
+	border-radius: 5px;
+	margin-right: 15px;
+}
+
+.stats {
+	font-family: 'Press Start 2P';
+	font-size: 1.5vw;
+	color: white;
+	text-align: center;
+	margin: 15px;
+	border: 2px solid #000000;
+	box-shadow: 0 0 20px #ff4500;
+}
+
+.win {
+	color: #09ff00;
+}
+
+.lose {
+	color: #ff4500;
+}
+
+.image-gallery {
+	margin-top: 10px;
+	display: flex;
+	gap: 10px;
+}
+
+.thumbnail {
+	width: 50px;
+	height: 50px;
+	cursor: pointer;
+	border: 2px solid transparent;
+}
+
+.thumbnail:hover {
+	border-color: #ff4500;
+}
+
+.image-gallery {
+	border: 2px solid #000000;
+	box-shadow: 0 0 20px #ff4500;
+	margin: 15px;
+}
+
+.image-gallery {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	justify-content: space-between;
+}
+
+.thumbnail {
+	flex: 1 1 calc(20% - 10px);
+	max-width: calc(20% - 10px);
+	height: auto;
+	object-fit: cover;
+}
+
+#pseudoInput {
+	font-family: 'Press Start 2P';
+	font-size: 1.5vw;
+	background-color: transparent;
+	color: white;
+	border: 2px solid #000000;
+	box-shadow: 0 0 20px #ff4500;
+}
+
+#pseudoInput:focus {
+	font-family: 'Press Start 2P';
+	font-size: 1.5vw;
+	background-color: transparent;
+	color: white;
+	border: 2px solid #000000;
+	box-shadow: 0 0 20px #ff4500;
+}
+
+.profile-image-container {
+	position: relative;
+	display: inline-block;
+	width: 150px;
+	height: 150px;
+	overflow: hidden;
+	cursor: pointer;
+	width: 35%;
+}
+
+.profile-image-container img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	/* border-radius: 50%; */
+	transition: opacity 0.3s ease;
+}
+
+.profile-image-container:hover img {
+	opacity: 0.6;
+}
+
+.profile-image-container::after {
+	content: "+";
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	font-size: 2em;
+	color: white;
+	opacity: 0;
+	transition: opacity 0.3s ease;
+}
+
+.profile-image-container:hover::after {
+	opacity: 1;
+}
+
+.pseudo input {
+    font-family: 'Press Start 2P';
+    font-size: 1.5vw;
+    background-color: transparent;
+    color: white;
+}
+
+.pseudo input:focus {
+    font-family: 'Press Start 2P';
+    font-size: 1.5vw;
+    background-color: transparent;
+    color: white;
+}
+
+.pseudo input::placeholder {
+    color: white;
+    opacity: 0.7;
+}
+
+.is-invalid {
+    box-shadow: 0 0 20px #ff4500;
+    border-color: #ff4500;
+}
+
+.friends-dropdown {
+	border: 2px solid #000000;
+	box-shadow: 0 0 20px #ff4500;
+	display: flex;
+    justify-content: center;
+}
+
+.dropdown-toggle {
+	background-color: transparent;
+	font-family: 'Press Start 2P';
+	border-color: transparent;
+}
+
+.dropdown-toggle:hover, .dropdown-toggle:focus, .dropdown-toggle:active {
+	background-color: transparent !important; 
+	border-color: transparent !important;
+}
+
+.dropdown-toggle:focus {
+    outline: none;
+}
+
+.dropdown-menu {
+	background-color: hsla(0, 0%, 94%, 0.589);
+	font-family: 'Press Start 2P';	
+}
+
+
+/* Modal général */
+.stats-modal .modal-content {
+    background-color: #1e1e2e; /* Fond sombre */
+    color: #ffffff; /* Texte clair */
+    border-radius: 12px; /* Coins arrondis */
+    border: 1px solid #4caf50; /* Accent vert */
+}
+
+/* Header */
+.stats-modal .modal-header {
+    background-color: #2b2b3c;
+    border-bottom: 2px solid #4caf50;
+    color: #4caf50;
+}
+
+/* Body */
+.stats-modal .chart-container {
+    position: relative;
+    height: 300px; /* Taille ajustée pour le graphique */
+}
+
+.stats-modal .list-group-item {
+    background-color: #2b2b3c;
+    border: none;
+    color: #ffffff;
+    padding: 10px 20px;
+}
+
+.stats-modal .list-group-item span {
+    font-size: 1rem;
+}
+
+.stats-modal .modal-footer {
+    background-color: #2b2b3c;
+    border-top: 2px solid #4caf50;
+}
+
+/* Conteneur des graphiques */
+.charts-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+/* Graphiques alignés et ajustés */
+.chart-container {
+    flex: 1;
+    height: 300px;
+}

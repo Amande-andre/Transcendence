@@ -1,51 +1,7 @@
-<container id="gameOption">
-<div class="content">
-<div class="container py-5">
-	<h1 class="mb-4-title">Options</h1>
-	
-	<div class="card mb-4">
-		<div class="card-body">
-			<h5 class="card-title">Joueurs</h5>
-			<div id="players-container">
-				<div class="player-input mb-3">
-					<div class="input-group">
-						<span class="input-group-text">Player 1</span>
-						<input type="text" class="form-control" placeholder="Player name">
-						<input type="color" class="form-control form-control-color" value="#ff0000" title="Choisir la couleur">
-					</div>
-				</div>
-				<div class="player-input mb-3">
-					<div class="input-group">
-						<span class="input-group-text">Player 2</span>
-						<input type="text" class="form-control" placeholder="Player name">
-						<input type="color" class="form-control form-control-color" value="#0000ff" title="Choisir la couleur">
-					</div>
-				</div>
-			</div>
-			<div class="btn-group" role="group">
-				<button class="btn btn-primary" onclick="addPlayer()">
-					<i class="fas fa-plus"></i> Add player
-				</button>
-				<button class="btn btn-danger" onclick="removePlayer()">
-					<i class="fas fa-minus"></i> Delete player
-				</button>
-			</div>
-		</div>
-	</div>
-	
-	<div class="card mb-4">
-		<div class="card-body">
-			<h5 class="card-title">Options de jeu</h5>
-			<div class="form-check form-switch">
-				<input class="form-check-input" type="checkbox" id="bonusSwitch">
-				<label class="form-check-label" for="bonusSwitch">Activer les bonus</label>
-			</div>
-		</div>
-	</div>
-	
-	<button class="btn btn-success btn-lg" hx-get="{% url 'game:pongCanvas' %}" hx-target="#gameOption" hx-swap="morph">Start</button>
-</div>
-</container>
-
-
-
+{% extends 'partials/optionsGame.html' %}
+{% load i18n %}
+{% block content %}
+	<button class="btn btn-success btn-lg" hx-get="{% url 'game:bracket' %}" hx-target="#gameOption" hx-vals="js:{'players': shufflePlayer(), 'game': 'pong'}" hx-swap="outerHTML">
+		{% trans "Start" %}
+	</button>
+{% endblock content %}
