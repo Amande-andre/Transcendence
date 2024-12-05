@@ -196,7 +196,6 @@ def oauth2_login(request):
     return redirect(authorization_url)
 
 def oauth2_callback(request):
-    print('callback!!!')
     code = request.GET.get('code')
 
     client_id = settings.OA_UID
