@@ -249,14 +249,15 @@ async function startBreakout(canvas, button) {
     let players = getPlayersData(canvas);
     await new Promise((resolve) => {
         game = true;
-        mainBall = new Ball(WIDTH / 2, HEIGHT / 2, 5, 5, 8);
         let index1 = getPlayer(players);
         if (index1 === -1)
             return resolve();
-        let player1 = new Player(new Paddle(WIDTH / 4 - 80 / 2, HEIGHT - 8, 80, 8, players[index1].color), mainBall, index1, players[index1].isIa);
+        let player1 = new Player(new Paddle(WIDTH / 4 - 80 / 2, HEIGHT - 8, 80, 8, players[index1].color), new Ball(WIDTH / 4, 3 * HEIGHT / 4, 0, 4, 5)
+        , index1, players[index1].isIa);
         player1.isIa = isIa(players[index1].isIa);
         let index2 = getPlayer(players);
-        let player2 = new Player(new Paddle(3 * WIDTH / 4 - 80 / 2, HEIGHT - 8, 80, 8, players[index2].color), mainBall, index2, players[index2].isIa);
+        let player2 = new Player(new Paddle(3 * WIDTH / 4 - 80 / 2, HEIGHT - 8, 80, 8, players[index2].color), new Ball(3 * WIDTH / 4, 3 * HEIGHT / 4, 0, 4, 5)
+        , index2, players[index2].isIa);
         player2.isIa = isIa(players[index2].isIa);
         
         player1.initControls('a', 'd');
