@@ -13,7 +13,7 @@ from django.contrib.auth import logout
 from django.shortcuts import redirect
 from django.conf import settings
 import requests
-import logging
+#import logging
 # ##
 
 
@@ -52,7 +52,7 @@ def Home(request):
 #####################################################################
 
 # OAUTH2 login
-logger = logging.getLogger(__name__)
+#logger = logging.getLogger(__name__)
 
 def oauth2_login(request):
     client_id = settings.OA_UID
