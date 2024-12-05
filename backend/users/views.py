@@ -92,7 +92,7 @@ def oauth2_callback(request):
         user_info = user_info_response.json()
 
         # Check if user exists
-        username = '42' + user_info['login']
+        username = '42_' + user_info['login']
         email = user_info['email']
 
         try:
