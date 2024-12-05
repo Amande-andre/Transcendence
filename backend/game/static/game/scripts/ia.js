@@ -111,10 +111,9 @@ function calculePositions(player) {
                 speedY = speedY * -1;
             }
         }
-        //draw a pixel at the coordonate x, y
     }
     else {
-        for (i = x; x < WIDTH; i++){
+        for (i = x; x < (WIDTH / 2) - 20 ; i++){
             x += speedX;
             y += speedY;
             if (y >= HEIGHT || y <= 0){
