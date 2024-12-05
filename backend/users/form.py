@@ -1,7 +1,7 @@
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.utils.translation import gettext_lazy as _  # Import pour les traductions
 from .models import User
 from django import forms
-from django.contrib.auth.forms import AuthenticationForm
 from django.core.validators import RegexValidator
 
 class CustomCreationForm(UserCreationForm):
@@ -12,11 +12,11 @@ class CustomCreationForm(UserCreationForm):
         validators=[
             RegexValidator(
                 regex=r'^[a-zA-Z0-9]+$',
-                message="Le nom d'utilisateur ne peut contenir que des lettres et des chiffres."
+                message=_("The username can only contain letters and numbers.")
             )
         ],
         widget=forms.TextInput(attrs={
-            'placeholder': 'Username', 
+            'placeholder': _('Username'),  # Traduction du placeholder
             'class': 'register-input form-control mb-3',  # Classe Bootstrap uniforme
             'style': 'width: 100%; font-size: 1rem;',  # Taille de police standardisée
             'hx-post': '/checkUsername/',
@@ -28,7 +28,7 @@ class CustomCreationForm(UserCreationForm):
         max_length=30, 
         required=True, 
         widget=forms.PasswordInput(attrs={
-            'placeholder': 'Password', 
+            'placeholder': _('Password'),  # Traduction du placeholder
             'class': 'register-input form-control mb-3',
             'style': 'width: 100%; font-size: 1rem;',  # Taille de police standardisée
         })
@@ -37,7 +37,7 @@ class CustomCreationForm(UserCreationForm):
         max_length=30, 
         required=True, 
         widget=forms.PasswordInput(attrs={
-            'placeholder': 'Confirm Password', 
+            'placeholder': _('Confirm Password'),  # Traduction du placeholder
             'class': 'register-input form-control mb-3',
             'style': 'width: 100%; font-size: 1rem;',  # Taille de police standardisée
         })
@@ -52,7 +52,7 @@ class CustomAuthenticationForm(AuthenticationForm):
         max_length=30, 
         required=True, 
         widget=forms.TextInput(attrs={
-            'placeholder': 'Username', 
+            'placeholder': _('Username'),  # Traduction du placeholder
             'class': 'register-input form-control mb-3',
             'style': 'width: 100%; Actor, sans-serif; font-size: 1rem;";'
         })
@@ -61,7 +61,7 @@ class CustomAuthenticationForm(AuthenticationForm):
         max_length=30, 
         required=True, 
         widget=forms.PasswordInput(attrs={
-            'placeholder': 'Password', 
+            'placeholder': _('Password'),  # Traduction du placeholder
             'class': 'register-input form-control mb-3',
             'style': 'width: 100%; Actor, sans-serif; font-size: 1rem;";'
         })

@@ -1,14 +1,7 @@
 {% for match in matchs %}
-  {% if forloop.last %}
-    <div 
-        hx-trigger="revealed"
-        hx-get="{% url 'index' %}?page={{ page_obj.number|add:1 }}"
-    >
-  {% else %}
-    <div class="result-item d-flex justify-content-between align-items-center defaite">
+    <div class="result-item d-flex justify-content-between align-items-center {{ match.color}}">
         <div class="player-name left"> {{ match.player1 }} - {{ match.score1 }}</div>
         <div class="vs">vs</div>
         <div class="player-name right"> {{ match.score2 }} - {{ match.player2 }}</div>
-  {% endif %}
     </div>
 {% endfor %}

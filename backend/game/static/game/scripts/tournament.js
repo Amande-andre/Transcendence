@@ -8,7 +8,13 @@ function getCsrfToken() {
     return csrfToken ? csrfToken.split('=')[1] : null;
 }
 
-function sendData() {
+function postMatch(players, player1, player2, round) {
+    score1 = players[player1.index].score[round];
+    score2 = players[player2.index].score[round];
+    name1 = players[player1.index].name;
+    name2 = players[player2.index].name;
+    const date = new Date();
+    const dateTime = `${date.getHours()}:${date.getMinutes()} ${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
     fetch('/saveMatch/', {
         method: 'POST',
         headers: {
@@ -16,8 +22,12 @@ function sendData() {
             'X-CSRFToken': getCsrfToken(),
         },
         body: JSON.stringify({
-            'winner': winner,
-            'loser': loser,
+            player1: name1,
+            player2: name2,
+            score1: score1,
+            score2: score2,
+            dateTime: dateTime,
+
         }),
     })
         .then((response) => response.json())
@@ -28,5 +38,3 @@ function sendData() {
             console.error('Error:', error);
         });
 }
-
-sendData();
