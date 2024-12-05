@@ -163,7 +163,7 @@ def addFriend(request):
     search = request.POST.get('friend')
     if search == '':
         return render(request, 'partials/addFriendState.html', {'message': _('Add a friend!')})
-    if User.objects.filter(username=search).exists():
+    if User.objects.filter(username=search).exists() and search != request.user.username:
         friend = User.objects.get(username=search)
         request.user.friends.add(friend)
         return render(request, 'partials/addFriendState.html', {'message': f'{friend.username} ' + _('added!')})

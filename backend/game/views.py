@@ -7,15 +7,19 @@ import json
 # Create your views here.
 def pongCanvas(request):
     # Récupérer les données des joueurs
+	print("request.GET:", request.GET)
 	players_raw = request.GET.get('players')
 	game = request.GET.get('game')
-	return render(request, 'partials/pongCanvas.html', {'players': players_raw, 'game': game})
+	print("game:", game)
+	return render(request, 'partials/canvas.html', {'players': players_raw, 'game': game})
 
 def breakoutCanvas(request):
 	# Récupérer les données des joueurs
+	print("request.GET:", request.GET)
 	players_raw = request.GET.get('players')
 	game = request.GET.get('game')
-	return render(request, 'partials/breakoutCanvas.html', {'players': players_raw, 'game': game})
+	print("game:", game)
+	return render(request, 'partials/canvas.html', {'players': players_raw, 'game': game})
 
 def gameChoice(request):
 	return render(request, 'partials/gameChoice.html')
@@ -46,6 +50,7 @@ def bracket(request):
 	players3 = []
 	
 	game = request.GET.get('game')
+	print("game:", game)
 	for players in players_raw:
 		if players['win'] >= 1:
 			players2.append(players)

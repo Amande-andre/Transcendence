@@ -55,6 +55,7 @@
 <script>
 	function shufflePlayer() {
     let listPlayer = Array.from(document.querySelectorAll('.player'));
+	let color = Array.from(document.querySelectorAll('.form-control-color'));
     // Convertir les inputs en objets joueurs
     listPlayer = Array.from(listPlayer).map((input, index) => ({
         name: input.value || 'Player' + (index + 1),
@@ -62,9 +63,11 @@
         round: 0,
 		win : 0,
 		loose : 0,
-		isIa: 0
+		isIa: 0,
+		color: color[index].value
     }));
 
+	console.log('listPlayer = ', listPlayer);
     // Ajouter des IA si le nombre nest pas une puissance de 2
 	if (listPlayer.length === 1) {
 		listPlayer.push({
@@ -73,7 +76,8 @@
 			round: 0,
 			win: 0,
 			loose: 0,
-			isIa: 1
+			isIa: 1,
+			color: '#ff0000'
 		});
 	} else if (![2, 4, 8].includes(listPlayer.length)) {
 		const targetLength = Math.pow(2, Math.ceil(Math.log2(listPlayer.length)));
@@ -84,7 +88,8 @@
 				round: 0,
 				win: 0,
 				loose: 0,
-				isIa: 1
+				isIa: 1,
+				color: '#ff0000'
 			});
 		}
 	}
