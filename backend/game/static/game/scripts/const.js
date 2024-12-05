@@ -30,6 +30,7 @@ class Player {
         this.keyleft = null;
         this.keyright = null;
         this.bonus = false;
+        this.color = null;
     }
     initControls(key1, key2) {
         const time = new Date();
@@ -84,17 +85,18 @@ class Ball {
 }
 
 class Paddle {
-    constructor(x, y, width, height) {
+    constructor(x, y, width, height, color) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
         this.midl = x + (width / 2);
         this.midlPong = y + (height / 2);
+        this.color = color;
     }
 
     drawPaddle() {
-        ctx.fillStyle = 'white';
+        ctx.fillStyle = this.color;
         ctx.fillRect(this.x, this.y, this.width, this.height);
     }
     update(key1, key2, limitL, limitR, orientation) {
