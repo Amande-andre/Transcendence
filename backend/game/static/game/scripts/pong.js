@@ -292,7 +292,6 @@ async function startPong(canvas, button) {
         let index2 = getPlayer(players);
         let player2 = new Player(new Paddle(WIDTH - 8, HEIGHT / 2 - 80, 8, 160, players[index2].color), mainBall, index2, players[index2].isIa);
         player2.isIa = isIa(players[index2].isIa);
-        
         player1.initControls('w', 's');
         player2.initControls('5', '2');
         const bonus = [swapControls, decreasePaddleSize, increasePaddleSize, teleportBall, addNewBall];

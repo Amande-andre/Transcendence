@@ -99,9 +99,7 @@
         const j = Math.floor(Math.random() * (i + 1));
         [listPlayer[i], listPlayer[j]] = [listPlayer[j], listPlayer[i]];
     }
-	
 	let bonus = document.getElementById('bonusSwitch').checked;
-	console.log('bonus = ', bonus);
 	if (bonus)
 		isBonus = true;
     return JSON.stringify(listPlayer);

@@ -42,6 +42,8 @@ def optionsBreakout(request):
 		'message': _('Select your options for Breakout')  # Exemple de message traduisible
 	})
 
+
+
 def bracket(request):
 	# Récupérer les données des joueurs
 	players_raw = json.loads(request.GET.get('players'))
@@ -50,12 +52,14 @@ def bracket(request):
 	players3 = []
 	
 	game = request.GET.get('game')
-	print("game:", game)
+	i = 0
 	for players in players_raw:
+		players['score'][3] = i // 2
 		if players['win'] >= 1:
 			players2.append(players)
 		if players['win'] >= 2:
 			players3.append(players)
+		i += 1
 	return render(request, 'partials/bracket.html', {
 		"players": players_raw, 
 		"players2": players2, 
