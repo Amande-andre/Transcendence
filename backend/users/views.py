@@ -241,5 +241,5 @@ def oauth2_callback(request):
         return redirect('home')  # Change 'profile' to your desired URL name
     else:
         # Authentication failed
-        return redirect('users:login')
+        return redirect('home')
 # ##
