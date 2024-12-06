@@ -26,6 +26,12 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+handler404 = 'monapp.views.custom_page_not_found_view'
+handler403 = 'monapp.views.custom_permission_denied_view'
+
+LOGIN_URL = '/login/'  # Page de connexion
+
+
 # Application definition
 
 INSTALLED_APPS = [

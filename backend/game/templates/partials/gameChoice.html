@@ -9,10 +9,10 @@
     <h1 class="game-title">{% trans "Time to play!" %}</h1>
         <div class="boxes-container">
             <div class="box box1">
-                <img src="{% static 'game/images/pong2.jpg' %}" hx-get="{% url 'game:optionsPong' %} " hx-target="#gameChoice" hx-swap="outerHTML">
+                <img src="{% static 'game/images/pong2.jpg' %}" hx-get="{% url 'game:optionsPong' %} " hx-target="#gameChoice" hx-swap="outerHTML" hx-push-url="true">
             </div>
             <div class="box box2">
-                <img src="{% static 'game/images/casseBrick2.jpg' %}" hx-get="{% url 'game:optionsBreakout' %} " hx-target="#gameChoice" hx-swap="outerHTML">
+                <img src="{% static 'game/images/casseBrick2.jpg' %}" hx-get="{% url 'game:optionsBreakout' %} " hx-target="#gameChoice" hx-swap="outerHTML" hx-push-url="true">
             </div>
         </div>
     </div>
