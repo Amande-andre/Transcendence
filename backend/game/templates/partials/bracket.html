@@ -4,7 +4,18 @@
             {% for player in players %}
                 {% if forloop.counter0|divisibleby:2 %}
                     <!-- Si l'index est pair, crée une nouvelle balise 'match' -->
-                    <span class="inGame">{{player.score.3}}</span>
+                    <span class="inGame" style="font-family: 'Press Start 2P'; color: #fff;">
+                        {% if forloop.counter0 == 0 %}
+                            1
+                        {% elif forloop.counter0 == 2 %}
+                            2
+                        {% elif forloop.counter0 == 4 %}
+                            3
+                        {% elif forloop.counter0 == 6 %}
+                            4
+                        {% endif %}
+                    </span>
+
                     <div class="match-container match">
                         <!-- <div class="match"> -->
                 {% endif %}
@@ -24,6 +35,17 @@
         <div class="round">
             {% for player in players2 %}
                 {% if forloop.counter0|divisibleby:2 %}
+                    <span class="inGame" style="font-family: 'Press Start 2P'; color: #fff;">
+                        {% if forloop.counter0 == 0 %}
+                            1
+                        {% elif forloop.counter0 == 2 %}
+                            2
+                        {% elif forloop.counter0 == 4 %}
+                            3
+                        {% elif forloop.counter0 == 6 %}
+                            4
+                        {% endif %}
+                    </span>
                     <!-- Si l'index est pair, crée une nouvelle balise 'match' -->
                     <div class="match-container match">
                         <!-- <div class="match"> -->
@@ -46,6 +68,17 @@
         <div class="round">
             {% for player in players3 %}
                 {% if forloop.counter0|divisibleby:2 %}
+                    <span class="inGame" style="font-family: 'Press Start 2P'; color: #fff;">
+                        {% if forloop.counter0 == 0 %}
+                            1
+                        {% elif forloop.counter0 == 2 %}
+                            2
+                        {% elif forloop.counter0 == 4 %}
+                            3
+                        {% elif forloop.counter0 == 6 %}
+                            4
+                        {% endif %}
+                    </span>
                     <!-- Si l'index est pair, crée une nouvelle balise 'match' -->
                     <div class="match-container match">
                         <!-- <div class="match"> -->

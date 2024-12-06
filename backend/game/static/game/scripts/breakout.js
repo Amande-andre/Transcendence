@@ -56,12 +56,14 @@ function Collision(player, lWall, rWall, bonus) {
         if (ball.x + ball.radius > rWall || ball.x - ball.radius < lWall) {
             ball.x = Math.max(lWall + ball.radius, Math.min(rWall - ball.radius, ball.x));
             ball.speedX = -ball.speedX;
+            player.bounce++;
         }
 
         // Top wall collision
         if (ball.y - ball.radius < topWall) {
             ball.y = topWall + ball.radius;
             ball.speedY = -ball.speedY;
+            player.bounce++;
         }
 
         // Ball out of bounds (bottom)
@@ -86,7 +88,7 @@ function Collision(player, lWall, rWall, bonus) {
 
         player.paddles.forEach(paddle => {
             if (isCollidingWithPaddle(ball, paddle)) {
-                handlePaddleCollision(ball, paddle);
+                handlePaddleCollision(ball, paddle, player);
             }
         });
     });
@@ -118,7 +120,7 @@ function isCollidingWithPaddle(ball, paddle) {
 }
 
 // Helper function to handle paddle collision with advanced angle calculation
-function handlePaddleCollision(ball, paddle) {
+function handlePaddleCollision(ball, paddle, player) {
     // Reverse the vertical direction
     ball.speedY = -Math.abs(ball.speedY);  // Ensure the ball always bounces upward
     
@@ -136,6 +138,7 @@ function handlePaddleCollision(ball, paddle) {
     if (Math.abs(ball.speedX) < minSpeedX) {
         ball.speedX = ball.speedX > 0 ? minSpeedX : -minSpeedX;
     }
+    player.bounce++;
 }
 
 // Helper function to check brick collision
@@ -160,15 +163,16 @@ function handleBrickCollision(player, ball, brick, brickIndex, bonus) {
     } else {
         ball.speedY = -ball.speedY;
     }
-
     // Apply bonus if brick has one
-    if (brick.bonus !== -1) {
+    if (brick.bonus !== -1 && bonus) {
         // console.log('Brick bonus:', brick.bonus);
         bonus[brick.bonus](player, ball);
+        player.bonusTaken++;
     }
 
     // Remove the brick
     player.bricks.splice(brickIndex, 1);
+    player.bounce++;
 }
 
 function drawBreakoutBorder() {

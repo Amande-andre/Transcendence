@@ -70,10 +70,10 @@ function collisionPong(player1, player2, playersi, bonus) {
 
     ballsToProcess.forEach(ball => {
         // Handle paddle collisions
-        handlePaddleCollisions(ball, player1.paddles, player2.paddles);
+        handlePaddleCollisions(ball, player1, player2);
 
         // Handle wall collisions
-        handleWallCollisions(ball);
+        handleWallCollisions(ball, player1, player2);
 
         // Handle scoring and ball reset
         handleScoring(ball, player1, player2);
@@ -114,29 +114,33 @@ function adjustBallTrajectoryOnPaddle(ball, paddle) {
 }
 
 // Handle paddle collisions for a single ball
-function handlePaddleCollisions(ball, player1Paddles, player2Paddles) {
+function handlePaddleCollisions(ball, player1, player2) {
     // Check collision with player1's paddles
-    for (let paddle of player1Paddles) {
+    for (let paddle of player1.paddles) {
         if (isPaddleCollision(ball, paddle)) {
             adjustBallTrajectoryOnPaddle(ball, paddle);
+            player1.bounce++;
             return; // Exit after first collision to prevent multiple hits
         }
     }
 
     // Check collision with player2's paddles
-    for (let paddle of player2Paddles) {
+    for (let paddle of player2.paddles) {
         if (isPaddleCollision(ball, paddle)) {
             adjustBallTrajectoryOnPaddle(ball, paddle);
+            player2.bounce++;
             return; // Exit after first collision to prevent multiple hits
         }
     }
 }
 
 // Handle vertical wall collisions
-function handleWallCollisions(ball) {
+function handleWallCollisions(ball, player1, player2) {
     // Reverse vertical direction when hitting top or bottom walls
     if (ball.y + ball.radius > HEIGHT || ball.y - ball.radius < 0) {
         ball.speedY = -ball.speedY;
+        player1.bounce++;
+        player2.bounce++;
     }
 }
 
@@ -167,6 +171,7 @@ function handleBonusCollisions(ball, player1, player2, applyBonus) {
         if (isCollidingWithBrick(ball, brick)) {
             bonusWinner = ball.speedX > 0 ? player1 : player2;
             bonusLoser = ball.speedX > 0 ? player2 : player1;
+            bonusWinner.bonusTaken++;
             applyBonus[0](bonusWinner, bonusLoser);
             player1.bricks.splice(player1.bricks.indexOf(brick), 1);
         }

@@ -112,14 +112,29 @@ def saveMatch(request):
 		
 		try:
 			if user.username == data['player1'] and data['score1'] > data['score2']:
+				print("user", user)
 				color = "victoire"
 				user.win += 1
+				user.bounce += data['bounce1']
+				user.bonus += data['bonus1']
 			elif user.username == data['player2'] and data['score2'] > data['score1']:
+				print("user", user)
 				color = "victoire"
 				user.win += 1
-			else:
+				user.bounce += data['bounce2']
+				user.bonus += data['bonus2']
+			elif user.username == data['player1'] and data['score1'] < data['score2']:
+				print("user", user)
 				color = "defaite"
 				user.lose += 1
+				user.bounce += data['bounce1']
+				user.bonus += data['bonus1']
+			else:
+				print("user", user)
+				color = "defaite"
+				user.lose += 1
+				user.bounce += data['bounce2']
+				user.bonus += data['bonus2']
 			user.gamePlayed += 1
 			user.save()
 			newMatch = Match.objects.create(player1=data['player1'], score1=data['score1'], player2=data['player2'], score2=data['score2'], user=user, dateTime=data['dateTime'], color=color)
