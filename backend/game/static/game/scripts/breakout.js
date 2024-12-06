@@ -206,14 +206,13 @@ function handleEndGame(player1, player2, players) {
     if (player1.bricks.length === 0) {
         players[player1.index].win++;
         players[player2.index].loose++;
-        player1.score += 1;
+
         players[player1.index].score[player1.round] = player1.score;
         //ici save la win or lose du players[1] ou [0]
     }
     else{
         players[player2.index].win++;
         players[player1.index].loose++;
-        player2.score += 1;
         players[player2.index].score[player2.round] = player2.score;
     }
     console.log(player1.score, player2.score);
@@ -238,6 +237,10 @@ function updateBreakout(player1, player2, players, bonus) {
     if (game === false)
         return
     if (player1.bricks.length === 0 || player2.bricks.length === 0) {
+		if (player1.bricks.length === 0)
+			player2.score += 1;
+		else
+			player1.score += 1;
         handleEndGame(player1, player2, players);
         return;
     }
@@ -280,5 +283,5 @@ async function startBreakout(canvas, button) {
     });
     
     button.setAttribute('hx-vals', JSON.stringify({'players': JSON.stringify(players), 'game': 'breakout'}));
-    button.style.display = 'block';
+	button.classList.remove('popito');
 }

@@ -22,6 +22,8 @@ document.addEventListener('htmx:afterSwap', function(evt) {
         }
         else {
             gameCanvas = document.getElementById('breakoutCanvas');
+			if (!gameCanvas)
+				return;
             ctx =  gameCanvas.getContext('2d');
             startBreakout(gameCanvas, button)
         }

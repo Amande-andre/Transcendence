@@ -310,5 +310,6 @@ async function startPong(canvas, button) {
     });
     
     button.setAttribute('hx-vals', JSON.stringify({'players': JSON.stringify(players), 'game': 'pong'}));
-    button.style.display = 'block';
+	// remove the class popito
+	button.classList.remove('popito');
 }

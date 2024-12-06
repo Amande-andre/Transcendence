@@ -127,8 +127,9 @@ def updatePseudo(request):
 			return render(request, '403.html', status=403)
 		new_Username = request.POST.get("pseudo", "").strip()
 		context = {"username": new_Username, "error": "", "success": False}
-
-		if not new_Username:
+		if request.user.username[:3] == '42_':
+			context["error"] = _("Can't change: 42_")
+		elif not new_Username:
 			context["error"] = _("Required.")
 		elif not new_Username.isalnum():
 			context["error"] = _("Invalid characters.")

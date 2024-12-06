@@ -65,7 +65,22 @@
             {% endif %}
         </div>
     </div>
-    {% if game == 'breakout' %}
+    {% if players|length == 2 and players2|length == 1 %}
+		<button class="continu-button" hx-get="{% url 'game:gameChoice' %}" hx-target="#tmp" hx-swap="outerHTML"
+			style="cursor: pointer; z-index: 3;">
+			Continue
+		</button>
+    {% elif players|length == 4 and players3|length == 1 %}
+		<button class="continu-button" hx-get="{% url 'game:gameChoice' %}" hx-target="#tmp" hx-swap="outerHTML"
+			style="cursor: pointer; z-index: 3;">
+			Continue
+		</button>
+    {% elif players|length == 8 and players4|length == 1 %}
+        <button class="continu-button" hx-get="{% url 'game:gameChoice' %}" hx-target="#tmp" hx-swap="outerHTML"
+            style="cursor: pointer; z-index: 3;">
+            Continue
+        </button>
+    {% elif game == 'breakout' %}
         <button class="continu-button" hx-get="{% url 'game:breakoutCanvas' %}" hx-target="#tmp" hx-swap="outerHTML"
             hx-vals='{"players": "{{ players|escapejs }}", "game": "breakout"}' style="cursor: pointer; z-index: 3;">
             Continue

@@ -75,6 +75,7 @@ def bracket(request):
 		players_raw = json.loads(request.GET.get('players'))
 		players2 = []
 		players3 = []
+		players4 = []
 		
 		game = request.GET.get('game')
 		for players in players_raw:
@@ -82,10 +83,13 @@ def bracket(request):
 				players2.append(players)
 			if players['win'] >= 2:
 				players3.append(players)
+			if players['win'] >= 3:
+				players4.append(players)
 		return render(request, 'partials/bracket.html', {
 			"players": players_raw, 
 			"players2": players2, 
-			"players3": players3, 
+			"players3": players3,
+            "players4": players4,
 			"game": game,
 			'title': _('Bracket View'),  # Exemple de traduction
 		})
