@@ -9,6 +9,30 @@ function swapControls(player1, player2) {
     }, 5000);
 }
 
+function decreasePaddleSize(player1, player2) {
+    player2.paddles.forEach(paddle => {
+        paddle.height -= 10;
+    });
+}
+
+function increasePaddleSize(player1, player2) {
+    player1.paddles.forEach(paddle => {
+        paddle.height += 10;
+    });
+}
+
+function teleportBall(player1, player2) {
+    player1.balls.forEach(ball => {
+        ball.y = Math.floor(Math.random() * HEIGHT);
+    });
+}
+
+function addNewBall(player1, player2) {
+    const newBall = new Ball(player1.spawnBallx, player1.spawnBally, 5, 5, 8);
+    player1.balls.push(newBall);
+    player2.balls.push(newBall);
+}
+
 function drawRec(x, y) {
     ctx.fillStyle = 'white';
     ctx.fillRect(x, y, 15, 15);
@@ -137,7 +161,7 @@ function handleBonusCollisions(ball, player1, player2, applyBonus) {
     // Check collision for both players
     if (player1.bricks.length === 0) {
         for (let i = 0; i < 3; i++)
-            player1.bricks.push({x: generateX(), y: generateY(), bonus: 0});
+            player1.bricks.push({x: generateX(), y: generateY(), bonus: generateBonus});
     }
     player1.bricks.forEach(brick => {
         if (isCollidingWithBrick(ball, brick)) {
@@ -157,6 +181,10 @@ function generateX() {
 // return a number between 0 and 600
 function generateY() {
     return Math.floor(Math.random() * 600);
+}
+
+function generateBonus() {
+    return Math.floor(Math.random() * 5);
 }
 
 function isCollidingWithBrick(ball, brick) {
@@ -201,31 +229,10 @@ function drawPongArea(player1, player2) {
         drawRec(player1.brick.x, player1.brick.y);
 }
 
-function handleEndGame(player1, player2, players) {
-    if (player1.score === 3){
-        players[player1.index].win++;
-        players[player2.index].loose++;
-        //ici save la win or lose du players[1] ou [0]
-    }
-    else{
-        players[player2.index].win++;
-        players[player1.index].loose++;
-    }
-    let rd = players[player1.index].round - 1;
-    console.log('rd == ', rd, ' player1.index == ', player1.index, ' score == ', player1.score, 'players score == ', players[player1.index].score[rd]);
-    console.log('rd == ', rd, ' player2.index == ', player2.index, ' score == ', player2.score, 'players score == ', players[player2.index].score[rd]);
-    players[player1.index].score[rd] = player1.score;
-    players[player2.index].score[rd] = player2.score;
-    postMatch(players, player1, player2, rd);
-    ctx.clearRect(0, 0, WIDTH, HEIGHT);
-    ctx.strokeStyle = 'white';
-    ctx.strokeRect(0, 0, WIDTH, HEIGHT);
-}
-
 function updatePong(player1, player2, players, bonus) {
     drawPongArea(player1, player2);
-    player2.isIa = false;
-    IaControlePong(player1, 0);
+    IaControlePong(player1);
+    IaControlePong(player2);
     player1.balls[0].x += player1.balls[0].speedX;
     player1.balls[0].y += player1.balls[0].speedY;
     collisionPong(player1, player2, players, bonus);
@@ -280,13 +287,14 @@ async function startPong(canvas, button) {
         let index1 = getPlayer(players);
         if (index1 === -1)
             return resolve();
-        let player1 = new Player(new Paddle(0, HEIGHT / 2 - 80, 8, 160), mainBall, index1, players[index1].isIa);
-        index2 = getPlayer(players);
-        let player2 = new Player(new Paddle(WIDTH - 8, HEIGHT / 2 - 80, 8, 160), mainBall, index2, players[index2].isIa);
-        
+        let player1 = new Player(new Paddle(0, HEIGHT / 2 - 80, 8, 160, players[index1].color), mainBall, index1, players[index1].isIa);
+        player1.isIa = isIa(players[index1].isIa);
+        let index2 = getPlayer(players);
+        let player2 = new Player(new Paddle(WIDTH - 8, HEIGHT / 2 - 80, 8, 160, players[index2].color), mainBall, index2, players[index2].isIa);
+        player2.isIa = isIa(players[index2].isIa);
         player1.initControls('w', 's');
         player2.initControls('5', '2');
-        const bonus = [swapControls];
+        const bonus = [swapControls, decreasePaddleSize, increasePaddleSize, teleportBall, addNewBall];
         
         drawPongArea(player1, player2);
         updatePong(player1, player2, players, bonus);
@@ -301,6 +309,6 @@ async function startPong(canvas, button) {
         checkGameEnd();
     });
     
-    button.setAttribute('hx-vals', JSON.stringify({'players': JSON.stringify(players)}));
+    button.setAttribute('hx-vals', JSON.stringify({'players': JSON.stringify(players), 'game': 'pong'}));
     button.style.display = 'block';
 }

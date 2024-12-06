@@ -6,7 +6,7 @@
         <button class="btn btn-map">Map 2</button>
         <button class="btn btn-map">Map 3</button>
     </div>
-    <button class="btn btn-success btn-lg" hx-get="{% url 'game:bracket' %}" hx-target="#gameOption" hx-vals="js:{'players': shufflePlayer()}" hx-swap="outerHTML">
+    <button class="btn btn-success btn-lg" hx-get="{% url 'game:bracket' %}" hx-target="#gameOption" hx-vals="js:{'players': shufflePlayer(), 'game': 'breakout'}" hx-swap="outerHTML">
         {% trans "Start" %}
     </button>
     <script>

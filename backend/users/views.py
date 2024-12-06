@@ -20,10 +20,9 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth.signals import user_logged_in, user_logged_out
 from django.shortcuts import redirect
 from django.conf import settings
+import requests
 import logging
 from django.contrib.auth.decorators import permission_required
-
-
 from django.shortcuts import redirect
 
 class RegisterForm(CreateView):
@@ -184,7 +183,7 @@ def addFriend(request):
     search = request.POST.get('friend')
     if search == '':
         return render(request, 'partials/addFriendState.html', {'message': _('Add a friend!')})
-    if User.objects.filter(username=search).exists():
+    if User.objects.filter(username=search).exists() and search != request.user.username:
         friend = User.objects.get(username=search)
         request.user.friends.add(friend)
         return render(request, 'partials/addFriendState.html', {'message': f'{friend.username} ' + _('added!')})
@@ -201,7 +200,12 @@ def update_online_status(request, status):
     request.user.save()
     return JsonResponse({'success': True, 'isOnline': isOnline})
 
-logger = logging.getLogger(__name__)
+
+
+#####################################################################
+
+# OAUTH2 login
+#logger = logging.getLogger(__name__)
 
 def oauth2_login(request):
     client_id = settings.OA_UID
@@ -212,7 +216,6 @@ def oauth2_login(request):
     return redirect(authorization_url)
 
 def oauth2_callback(request):
-    print('callback!!!')
     code = request.GET.get('code')
 
     client_id = settings.OA_UID
@@ -228,7 +231,7 @@ def oauth2_callback(request):
         'client_secret': client_secret,
     }
     
-    response = request.post(token_url, data=data)
+    response = requests.post(token_url, data=data)
     token_data = response.json()
 
     if response.status_code == 200 and 'access_token' in token_data:
@@ -237,11 +240,11 @@ def oauth2_callback(request):
         # Fetch user info from OAuth2 provider
         user_info_url = 'https://api.intra.42.fr/v2/me'
         headers = {'Authorization': f'Bearer {access_token}'}
-        user_info_response = request.get(user_info_url, headers=headers)
+        user_info_response = requests.get(user_info_url, headers=headers)
         user_info = user_info_response.json()
 
         # Check if user exists
-        username = '42' + user_info['login']
+        username = '42_' + user_info['login']
         email = user_info['email']
 
         try:
@@ -258,4 +261,5 @@ def oauth2_callback(request):
         return redirect('home')  # Change 'profile' to your desired URL name
     else:
         # Authentication failed
-        return redirect('users:login')
+        return redirect('home')
+# ##

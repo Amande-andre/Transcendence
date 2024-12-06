@@ -14,7 +14,8 @@ def pongCanvas(request):
 		return render(request, '403.html', status=403)
 	players_raw = request.GET.get('players')
 	game = request.GET.get('game')
-	return render(request, 'partials/pongCanvas.html', {'players': players_raw, 'game': game})
+	print("game:", game)
+	return render(request, 'partials/canvas.html', {'players': players_raw, 'game': game})
 
 def breakoutCanvas(request):
 	# Récupérer les données des joueurs
@@ -22,7 +23,8 @@ def breakoutCanvas(request):
 		return render(request, '403.html', status=403)
 	players_raw = request.GET.get('players')
 	game = request.GET.get('game')
-	return render(request, 'partials/breakoutCanvas.html', {'players': players_raw, 'game': game})
+	print("game:", game)
+	return render(request, 'partials/canvas.html', {'players': players_raw, 'game': game})
 
 @login_required
 def gameChoice(request):
@@ -63,6 +65,8 @@ def optionsBreakout(request):
             'friendsList': request.user.friends.all(),
             'message': _('Select your options for Pong')
             })
+
+
 
 
 def bracket(request):

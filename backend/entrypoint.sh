@@ -27,6 +27,12 @@ python manage.py migrate
 # collecter les fichiers statiques
 python manage.py collectstatic --no-input
 
+python manage.py createsuperuserwithpassword \
+        --username admin \
+        --password admin \
+        --email admin@example.org \
+        --preserve
+
 # Démarrer Gunicorn
 echo "Starting Gunicorn..."
 gunicorn --bind 0.0.0.0:8000 --workers 3 transcendence.wsgi:application

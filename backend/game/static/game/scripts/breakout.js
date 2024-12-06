@@ -163,7 +163,7 @@ function handleBrickCollision(player, ball, brick, brickIndex, bonus) {
 
     // Apply bonus if brick has one
     if (brick.bonus !== -1) {
-        console.log('Brick bonus:', brick.bonus);
+        // console.log('Brick bonus:', brick.bonus);
         bonus[brick.bonus](player, ball);
     }
 
@@ -202,46 +202,83 @@ function drawBreakoutAera(player1, player2) {
         player2.balls[i].drawBall();
 }
 
-function updateBreakout(player1, player2, bonus) {
+function handleEndGame(player1, player2, players) {
+    if (player1.bricks.length === 0) {
+        players[player1.index].win++;
+        players[player2.index].loose++;
+        player1.score += 1;
+        players[player1.index].score[player1.round] = player1.score;
+        //ici save la win or lose du players[1] ou [0]
+    }
+    else{
+        players[player2.index].win++;
+        players[player1.index].loose++;
+        player2.score += 1;
+        players[player2.index].score[player2.round] = player2.score;
+    }
+    console.log(player1.score, player2.score);
+    let rd = players[player1.index].round - 1;
+    players[player1.index].score[rd] = player1.score;
+    players[player2.index].score[rd] = player2.score;
+    postMatch(players, player1, player2, rd);
+    ctx.clearRect(0, 0, WIDTH, HEIGHT);
+    ctx.strokeStyle = 'white';
+    ctx.strokeRect(0, 0, WIDTH, HEIGHT);
+}
+
+function updateBreakout(player1, player2, players, bonus) {
     drawBreakoutAera(player1, player2);
-    player2.isIa = false;
     IaControle(player1, 0);
+    IaControle(player2, 0);
     Collision(player1, 0, WIDTH / 2 - 16, bonus);
     Collision(player2, WIDTH / 2 + 16, WIDTH, bonus);
     updatePaddles(player1, player2);
+    console.log("============================================");
+    console.log(player1.bricks.length, player2.bricks.length);
     if (game === false)
         return
     if (player1.bricks.length === 0 || player2.bricks.length === 0) {
-        ctx.clearRect(0, 0, WIDTH, HEIGHT);
-        drawBreakoutBorder();
-        if (player1.bricks.length === 0)
-            ctx.fillText('WIN', 100, 50);
-        else
-            ctx.fillText('WIN', WIDTH - 140, 50);
-        setTimeout(() => {
-            ctx.clearRect(0, 0, WIDTH, HEIGHT);
-        }, 1000)
+        handleEndGame(player1, player2, players);
+        return;
     }
     else
-        requestAnimationFrame(() => updateBreakout(player1, player2, bonus));
+        requestAnimationFrame(() => updateBreakout(player1, player2, players, bonus));
 }
 
-
-function startBreakout() {
-    game = true;
-
-    let player1 = new Player(new Paddle(WIDTH / 4 - 80 / 2, HEIGHT - 8, 80, 8),
-                        new Ball(WIDTH / 4, 3 * HEIGHT / 4, 0, 4, 5));
-    let player2 = new Player(new Paddle(3 * WIDTH / 4 - 80 / 2, HEIGHT - 8, 80, 8),
-                    new Ball(3 * WIDTH / 4, 3 * HEIGHT / 4, 0, 4, 5));
-    const bonus = [ft_newBall, ft_increasePaddle];
-    fillbrick(player1.bricks, 0, 5);
-    fillbrick(player2.bricks, 13, 5);
-
-    player1.initControls('a', 'd');
-    player2.initControls('1', '3');
-
-    drawBreakoutAera(player1, player2);
-
-    return updateBreakout(player1, player2, bonus);
+async function startBreakout(canvas, button) {
+    let players = getPlayersData(canvas);
+    await new Promise((resolve) => {
+        game = true;
+        let index1 = getPlayer(players);
+        if (index1 === -1)
+            return resolve();
+        let player1 = new Player(new Paddle(WIDTH / 4 - 80 / 2, HEIGHT - 8, 80, 8, players[index1].color), new Ball(WIDTH / 4, 3 * HEIGHT / 4, 0, 4, 5)
+        , index1, players[index1].isIa);
+        player1.isIa = isIa(players[index1].isIa);
+        let index2 = getPlayer(players);
+        let player2 = new Player(new Paddle(3 * WIDTH / 4 - 80 / 2, HEIGHT - 8, 80, 8, players[index2].color), new Ball(3 * WIDTH / 4, 3 * HEIGHT / 4, 0, 4, 5)
+        , index2, players[index2].isIa);
+        player2.isIa = isIa(players[index2].isIa);
+        
+        player1.initControls('a', 'd');
+        player2.initControls('1', '3');
+        const bonus = [ft_newBall, ft_increasePaddle];
+        
+        fillbrick(player1.bricks, 0, 5);
+        fillbrick(player2.bricks, 13, 5);
+        drawBreakoutAera(player1, player2);
+        updateBreakout(player1, player2, players, bonus);
+        
+        const checkGameEnd = () => {
+            if (player1.score || player2.score === 0) {
+                resolve();
+            } else {
+                requestAnimationFrame(checkGameEnd);
+            }
+        };
+        checkGameEnd();
+    });
+    
+    button.setAttribute('hx-vals', JSON.stringify({'players': JSON.stringify(players), 'game': 'breakout'}));
+    button.style.display = 'block';
 }
