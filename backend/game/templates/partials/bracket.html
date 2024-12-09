@@ -1,9 +1,9 @@
+{% load i18n %}
 <div id="tmp" class="tmp">
     <div id="tournament" class="tournament-bracket">
         <div class="round">
             {% for player in players %}
                 {% if forloop.counter0|divisibleby:2 %}
-                    <!-- Si l'index est pair, crée une nouvelle balise 'match' -->
                     <span class="inGame" style="font-family: 'Press Start 2P'; color: #fff;">
                         {% if forloop.counter0 == 0 %}
                             1
@@ -15,22 +15,16 @@
                             4
                         {% endif %}
                     </span>
-
                     <div class="match-container match">
-                        <!-- <div class="match"> -->
                 {% endif %}
                     <div class="bracket-player">
                         {{ player.name }} <span class="score">{{ player.score.0 }}</span>
                     </div>
-
                 {% if forloop.counter0|divisibleby:2 != 1 %}
-                    <!-- Si i est impair (forloop.counter0), on ferme la balise 'match' -->
-                        <!-- </div> -->
                     </div>
                 {% endif %}
             {% endfor %}
         </div>
-        <!-- </div> -->
         <!-- ROUND II -->
         <div class="round">
             {% for player in players2 %}
@@ -46,17 +40,12 @@
                             4
                         {% endif %}
                     </span>
-                    <!-- Si l'index est pair, crée une nouvelle balise 'match' -->
                     <div class="match-container match">
-                        <!-- <div class="match"> -->
                 {% endif %}
                     <div class="bracket-player">
                         {{ player.name }} <span class="score">{{ player.score.1 }}</span>
                     </div>
-
                 {% if forloop.counter0|divisibleby:2 != 1 %}
-                    <!-- Si i est impair (forloop.counter0), on ferme la balise 'match' -->
-                        <!-- </div> -->
                     </div>
                 {% endif %}
             {% endfor %}
@@ -64,7 +53,7 @@
                 </div>
             {% endif %}
         </div>
-            <!-- ROUND III -->
+        <!-- ROUND III -->
         <div class="round">
             {% for player in players3 %}
                 {% if forloop.counter0|divisibleby:2 %}
@@ -79,17 +68,12 @@
                             4
                         {% endif %}
                     </span>
-                    <!-- Si l'index est pair, crée une nouvelle balise 'match' -->
                     <div class="match-container match">
-                        <!-- <div class="match"> -->
                 {% endif %}
                     <div class="bracket-player">
                         {{ player.name }} <span class="score">{{ player.score.2 }}</span>
                     </div>
-
                 {% if forloop.counter0|divisibleby:2 != 1 %}
-                    <!-- Si i est impair (forloop.counter0), on ferme la balise 'match' -->
-                        <!-- </div> -->
                     </div>
                 {% endif %}
             {% endfor %}
@@ -99,29 +83,29 @@
         </div>
     </div>
     {% if players|length == 2 and players2|length == 1 %}
-		<button class="continu-button" hx-get="{% url 'game:gameChoice' %}" hx-target="#tmp" hx-swap="outerHTML"
-			style="cursor: pointer; z-index: 3;">
-			Continue
-		</button>
+        <button class="continu-button" hx-get="{% url 'game:gameChoice' %}" hx-target="#tmp" hx-swap="outerHTML"
+            style="cursor: pointer; z-index: 3;">
+            {% trans "Continue" %}
+        </button>
     {% elif players|length == 4 and players3|length == 1 %}
-		<button class="continu-button" hx-get="{% url 'game:gameChoice' %}" hx-target="#tmp" hx-swap="outerHTML"
-			style="cursor: pointer; z-index: 3;">
-			Continue
-		</button>
+        <button class="continu-button" hx-get="{% url 'game:gameChoice' %}" hx-target="#tmp" hx-swap="outerHTML"
+            style="cursor: pointer; z-index: 3;">
+            {% trans "Continue" %}
+        </button>
     {% elif players|length == 8 and players4|length == 1 %}
         <button class="continu-button" hx-get="{% url 'game:gameChoice' %}" hx-target="#tmp" hx-swap="outerHTML"
             style="cursor: pointer; z-index: 3;">
-            Continue
+            {% trans "Continue" %}
         </button>
     {% elif game == 'breakout' %}
         <button class="continu-button" hx-get="{% url 'game:breakoutCanvas' %}" hx-target="#tmp" hx-swap="outerHTML"
             hx-vals='{"players": "{{ players|escapejs }}", "game": "breakout"}' style="cursor: pointer; z-index: 3;">
-            Continue
+            {% trans "Continue" %}
         </button>
     {% elif game == 'pong' %}
         <button class="continu-button" hx-get="{% url 'game:pongCanvas' %}" hx-target="#tmp" hx-swap="outerHTML"
             hx-vals='{"players": "{{ players|escapejs }}", "game": "pong"}' style="cursor: pointer; z-index: 3;">
-            Continue
+            {% trans "Continue" %}
         </button>
     {% endif %}
 </div>
