@@ -112,37 +112,42 @@ def saveMatch(request):
 		
 		try:
 			if user.username == data['player1'] and data['score1'] > data['score2']:
-				print("user", user)
+				# print("user", user)
 				color = "victoire"
 				user.win += 1
 				user.bounce += data['bounce1']
 				user.bonus += data['bonus1']
+				user.score += data['score1']
 			elif user.username == data['player2'] and data['score2'] > data['score1']:
-				print("user", user)
+				# print("user", user)
 				color = "victoire"
 				user.win += 1
 				user.bounce += data['bounce2']
 				user.bonus += data['bonus2']
+				user.score += data['score2']
 			elif user.username == data['player1'] and data['score1'] < data['score2']:
-				print("user", user)
+				# print("user", user)
 				color = "defaite"
 				user.lose += 1
 				user.bounce += data['bounce1']
 				user.bonus += data['bonus1']
+				user.score += data['score1']
 			else:
-				print("user", user)
+				# print("user", user)
 				color = "defaite"
 				user.lose += 1
 				user.bounce += data['bounce2']
 				user.bonus += data['bonus2']
+				user.score += data['score2']
 			user.gamePlayed += 1
 			user.save()
 			newMatch = Match.objects.create(player1=data['player1'], score1=data['score1'], player2=data['player2'], score2=data['score2'], user=user, dateTime=data['dateTime'], color=color)
 			newMatch.save()
-			print("user match:", user.match_set.all())
+			# print("user match:", user.match_set.all())
 			for friend in friendList:
 				if friend.username == data['player1'] or friend.username == data['player2']:
-					newMatchFriend = Match.objects.create(player1=data['player1'], score1=data['score1'], player2=data['player2'], score2=data['score2'], user=friend, dateTime=data['dateTime'], color=color)
+					friendscolor = "defaite" if color == "victoire" else "victoire"
+					newMatchFriend = Match.objects.create(player1=data['player1'], score1=data['score1'], player2=data['player2'], score2=data['score2'], user=friend, dateTime=data['dateTime'], color=friendscolor)
 					newMatchFriend.save()
 		except KeyError as e:
 			return JsonResponse({'error': f'Missing field: {e}'}, status=400)
