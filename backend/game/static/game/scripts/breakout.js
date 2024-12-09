@@ -225,7 +225,6 @@ function displayBreakoutScore(scorePlayer1, scorePlayer2) {
 
 function drawBreakoutAera(player1, player2) {
     ctx.clearRect(0, 0, WIDTH, HEIGHT);
-    displayBreakoutScore(player1.score, player2.score);
 
     player1.drawBricks();
     player2.drawBricks();
@@ -245,7 +244,7 @@ function handleEndGame(player1, player2, players) {
     let bigWin = document.getElementById('bigWin');
     ctx.clearRect(0, 0, WIDTH, HEIGHT);
 
-    if (player1.bricks.length === 0) {
+    if (player1.bricks.length === 0 || player1.score === 3) {
         players[player1.index].win++;
         players[player2.index].loose++;
         players[player1.index].score[player1.round] = player1.score;
@@ -254,7 +253,7 @@ function handleEndGame(player1, player2, players) {
         players[player1.index].loose++;
         players[player2.index].score[player2.round] = player2.score;
     }
-    if (player1.score > player2.score) {
+    if (players[player1.index].win > players[player2.index].win) {
         bigWin.innerHTML = players[player1.index].name + ' ' + translations.win;
     } else {
         bigWin.innerHTML = players[player2.index].name + ' ' + translations.win;

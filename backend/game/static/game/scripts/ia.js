@@ -187,6 +187,7 @@ function IaControlePong(player, nb) {
     if (player.second === player.past){ 
         return;
     }
+    // console.log(player.second);
     let eventup = new KeyboardEvent('keyup', {
         key: player.lastInput,
     });
