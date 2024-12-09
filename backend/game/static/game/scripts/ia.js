@@ -48,7 +48,7 @@ function choiceIa(player, nb) {
     let halfP = player.paddles[0].height / 2;
     let mid = player.paddles[0].x + 50;
     let left = player.paddles[0].x;
-    let right = player.paddles[0].x + 100; //player.paddles[0].width; === 100
+    let right = player.paddles[0].x + 98; //player.paddles[0].width; === 100
     let ball = player.balls[0].x;
 
     //regarde si la balle est a droite si oui il se place au milieu
@@ -57,7 +57,7 @@ function choiceIa(player, nb) {
         // player.lastInput = null;
         return null;
     }
-    if (player.nextPose > mid){
+    if (player.nextPose > right){
         if (player.paddles[0].x >= (WIDTH / 2))
             player.lastInput = '3';
         else

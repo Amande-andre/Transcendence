@@ -273,6 +273,7 @@ body {
 	background-color: transparent;
 	font-family: 'Press Start 2P';
 	border-color: transparent;
+	margin-right: 0px;
 }
 
 .dropdown-toggle2:hover, .dropdown-toggle2:focus, .dropdown-toggle2:active {

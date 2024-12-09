@@ -122,6 +122,7 @@ function Collision(player, lWall, rWall, bonus) {
 
         player.paddles.forEach(paddle => {
             if (isCollidingWithPaddle(ball, paddle)) {
+                player.bounce++;
                 handlePaddleCollision(ball, paddle, player);
             }
         });
@@ -133,6 +134,7 @@ function Collision(player, lWall, rWall, bonus) {
             const brick = player.bricks[i];
             if (isCollidingWithBrick(ball, brick)) {
                 handleBrickCollision(player, ball, brick, i, bonus);
+                player.bounce++;
                 break; // Exit loop after first collision
             }
         }
@@ -198,7 +200,7 @@ function handleBrickCollision(player, ball, brick, brickIndex, bonus) {
         ball.speedY = -ball.speedY;
     }
     // Apply bonus if brick has one
-    if (brick.bonus !== -1 && bonus == true) {
+    if (brick.bonus !== -1 && isBonus == true) {
         // //consol.log('Brick bonus:', brick.bonus);
         bonus[brick.bonus](player, ball);
         player.bonusTaken++;
@@ -206,7 +208,6 @@ function handleBrickCollision(player, ball, brick, brickIndex, bonus) {
 
     // Remove the brick
     player.bricks.splice(brickIndex, 1);
-    player.bounce++;
 }
 
 function drawBreakoutBorder() {
