@@ -290,6 +290,7 @@ async function startBreakout(canvas, button) {
         checkGameEnd();
     });
     
+    console.log('game end');
     button.setAttribute('hx-vals', JSON.stringify({'players': JSON.stringify(players), 'game': 'breakout'}));
 	button.classList.remove('popito');
 }
