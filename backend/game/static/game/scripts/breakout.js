@@ -21,7 +21,7 @@ function updatePaddles(player1, player2) {
 }
 
 function fillbrick(bricks, x, y) {
-    for (let row = 0; row < 10; row++) {
+    for (let row = 0; row < 2; row++) {
         for (let col = 0; col < 12; col++) {
             bricks.push({
                 x: (x + col) * 32, // Position X de la brique
@@ -164,7 +164,7 @@ function handleBrickCollision(player, ball, brick, brickIndex, bonus) {
         ball.speedY = -ball.speedY;
     }
     // Apply bonus if brick has one
-    if (brick.bonus !== -1 && bonus) {
+    if (brick.bonus !== -1 && bonus == true) {
         // console.log('Brick bonus:', brick.bonus);
         bonus[brick.bonus](player, ball);
         player.bonusTaken++;
@@ -240,8 +240,6 @@ function updateBreakout(player1, player2, players, bonus) {
     Collision(player1, 0, WIDTH / 2 - 16, bonus);
     Collision(player2, WIDTH / 2 + 16, WIDTH, bonus);
     updatePaddles(player1, player2);
-    console.log("============================================");
-    console.log(player1.bricks.length, player2.bricks.length);
     if (game === false)
         return
     if (player1.bricks.length === 0 || player2.bricks.length === 0) {
@@ -265,6 +263,7 @@ async function startBreakout(canvas, button) {
             return resolve();
         let player1 = new Player(new Paddle(WIDTH / 4 - 80 / 2, HEIGHT - 8, 80, 8, players[index1].color), new Ball(WIDTH / 4, 3 * HEIGHT / 4, 0, 4, 5)
         , index1, players[index1].isIa);
+        player1.speedX
         player1.isIa = isIa(players[index1].isIa);
         let index2 = getPlayer(players);
         let player2 = new Player(new Paddle(3 * WIDTH / 4 - 80 / 2, HEIGHT - 8, 80, 8, players[index2].color), new Ball(3 * WIDTH / 4, 3 * HEIGHT / 4, 0, 4, 5)
