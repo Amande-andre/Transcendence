@@ -59,9 +59,11 @@
 	let color = Array.from(document.querySelectorAll('.form-control-color'));
     // Convertir les inputs en objets joueurs
 	listPlayer = Array.from(listPlayer).map((input, index) => {
-		fixInput(input);
+		input1 = input;
+		fixInput(input1);
 		return {
-			name: input.value || 'Player' + (index + 1),
+			name: input1.value || 'Player' + (index + 1),
+			username: input.value || 'Player' + (index + 1),
 			score: [0, 0, 0, 0],
 			round: 0,
 			win: 0,
@@ -76,6 +78,7 @@
 	if (listPlayer.length === 1) {
 		listPlayer.push({
 			name: '{% trans "IA1" %}    ',
+			username: '{% trans "IA1" %}    ',
 			score: [0, 0, 0, 0],
 			round: 0,
 			win: 0,
@@ -88,6 +91,7 @@
 		for (let i = listPlayer.length; i < targetLength; i++) {
 			listPlayer.push({
 				name: '{% trans "IA" %}' + (i - listPlayer.length + 1),
+				username: '{% trans "IA1" %}' + (i - listPlayer.length + 1),
 				score: [0, 0, 0, 0],
 				round: 0,
 				win: 0,
