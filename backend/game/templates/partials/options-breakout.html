@@ -6,7 +6,7 @@
         <button class="btn btn-map">Map 2</button>
         <button class="btn btn-map">Map 3</button>
     </div>
-    <button class="btn btn-success btn-lg" hx-get="{% url 'game:bracket' %}" hx-target="#gameOption" hx-vals="js:{'players': shufflePlayer(), 'game': 'breakout', 'map': selectedMap()}" hx-swap="outerHTML">
+    <button class="btn btn-success btn-lg" hx-get="{% url 'game:bracket' %}" hx-target="#gameOption" hx-vals="js:{'players': shufflePlayer(), 'game': 'breakout'}" hx-swap="outerHTML" onclick="selectedMap()">
         {% trans "Start" %}
     </button>
     <script>
@@ -22,9 +22,10 @@
             const maps = document.querySelectorAll('.btn-map');
             for (let i = 0; i < maps.length; i++) {
                 if (maps[i].classList.contains('selected')) {
-                   return i + 1;
+                    map = i + 1;
                 }
             }
+            map = map || 1;
         }
     </script>    
 {% endblock content %}

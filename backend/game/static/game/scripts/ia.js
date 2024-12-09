@@ -77,7 +77,6 @@ function IaControle(player, nb) {
     
     if (!player.isIa)
         return;
-
     let eventup = new KeyboardEvent('keyup', {
         key: player.lastInput,
     });
@@ -89,7 +88,6 @@ function IaControle(player, nb) {
     if (player.second === player.past){ 
         return;
     }
-    console.log('player.second =========== ', player.second);
     document.dispatchEvent(eventup); 
     player.past = player.second;
     let eventTab;
@@ -138,11 +136,9 @@ function choiceIaPong(player)  {
     let bot = player.paddles[0].y + player.paddles[0].height;
     //regarde si la balle est a droite si oui il se place au milieu
     let pos = calculePositions(player);
+
     if (player.paddles[0].x <= 50){
-        if (player.balls[0].speedX < 0){
-            console.log('pos == ', pos);
-            console.log('bot == ', bot);
-            console.log('top == ', top);        
+        if (player.balls[0].speedX < 0){       
             if (pos > bot){
                 player.distance = pos - bot;
                     player.lastInput = 's';
@@ -198,8 +194,6 @@ function IaControlePong(player, nb) {
     // 
     player.past = player.second;
     let eventTab = choiceIaPong(player, nb);
-    console.log('eventTab == ', eventTab);
-    console.log('====================');
     if (eventTab === null){
         return;
     }

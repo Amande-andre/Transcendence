@@ -1,6 +1,8 @@
 function generateNumber() {
     const random = Math.random(); // Génère un nombre aléatoire entre 0 et 1
   
+    if (isBonus === false)
+        return -1;
     if (random < 0.8) { // 10% de chance
       // Choisir aléatoirement entre 2, 3, et 4
       const randomChoice = Math.floor(Math.random() * 2); // Génère 2, 3 ou 4 before *10
@@ -21,16 +23,48 @@ function updatePaddles(player1, player2) {
 }
 
 function fillbrick(bricks, x, y) {
-    for (let row = 0; row < 2; row++) {
-        for (let col = 0; col < 12; col++) {
-            bricks.push({
-                x: (x + col) * 32, // Position X de la brique
-                y: (y + row) * 16, // Position Y de la brique
-                bonus: generateNumber()  // 10% de chance d'avoir un bonus
-            });
+    if (map === 1) {
+        for (let row = 0; row < 10; row++) {
+            for (let col = 0; col < 12; col++) {
+                bricks.push({
+                    x: (x + col) * 32, // Position X de la brique
+                    y: (y + row) * 16, // Position Y de la brique
+                    bonus: generateNumber()  // 10% de chance d'avoir un bonus
+                });
+            }
         }
+        bricks.sort((a, b) => b.y - a.y);
     }
-    bricks.sort((a, b) => b.y - a.y);
+    // push brick expet if the col is between 4 and 7 and the row is betweem 0 and 6
+    else if (map === 2){
+        for (let row = 0; row < 10; row++) {
+            for (let col = 0; col < 12; col++) {
+                if ((col >= 4 && col <= 7) && (row >= 0 && row <= 6))
+                    continue;
+                bricks.push({
+                    x: (x + col) * 32, // Position X de la brique
+                    y: (y + row) * 16, // Position Y de la brique
+                    bonus: generateNumber()  // 10% de chance d'avoir un bonus
+                });
+            }
+        }
+        bricks.sort((a, b) => b.y - a.y);
+    }
+    // push brick expet if the col is between 4 and 7 and the row is betweem 4 and 7
+    else {
+        for (let row = 0; row < 10; row++) {
+            for (let col = 0; col < 12; col++) {
+                if ((col >= 3 && col <= 7) && (row >= 4 && row <= 7))
+                    continue;
+                bricks.push({
+                    x: (x + col) * 32, // Position X de la brique
+                    y: (y + row) * 16, // Position Y de la brique
+                    bonus: generateNumber()  // 10% de chance d'avoir un bonus
+                });
+            }
+        }
+        bricks.sort((a, b) => b.y - a.y);
+    }
 }
 
 function ft_newBall(player, ball) {
@@ -280,7 +314,7 @@ async function startBreakout(canvas, button) {
         updateBreakout(player1, player2, players, bonus);
         
         const checkGameEnd = () => {
-            if (player1.score || player2.score === 0) {
+            if (player1.bricks.length === 0 || player2.bricks.length === 0) {
                 resolve();
             } else {
                 requestAnimationFrame(checkGameEnd);
