@@ -33,9 +33,6 @@
         </form>
 					<!-- Alternative Login Methods -->
 					<div class="d-flex justify-content-center form-group mb-3">
-						<p style="color:whitesmoke;">or</p>
-					</div>
-					<div class="d-flex justify-content-center form-group mb-3">
 						<form method="post" action="{% url 'users:oauth2_login' %}">
 							{% csrf_token %}
 							<button class="btn btn-primary" type="submit" style="background-color:black; border-color:black;">Login with 42</button>
