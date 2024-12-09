@@ -14,7 +14,7 @@ def pongCanvas(request):
 		return render(request, '403.html', status=403)
 	players_raw = request.GET.get('players')
 	game = request.GET.get('game')
-	print("game:", game)
+	#print("game:", game)
 	return render(request, 'partials/canvas.html', {'players': players_raw, 'game': game})
 
 def breakoutCanvas(request):
@@ -23,8 +23,8 @@ def breakoutCanvas(request):
 		return render(request, '403.html', status=403)
 	players_raw = request.GET.get('players')
 	game = request.GET.get('game')
-	print("game:", game)
-	print("map", request.GET.get('map'))
+	#print("game:", game)
+	#print("map", request.GET.get('map'))
 	return render(request, 'partials/canvas.html', {'players': players_raw, 'game': game})
 
 @login_required
@@ -35,7 +35,7 @@ def gameChoice(request):
 def optionsPong(request):
     user = request.user
     friendsList = user.friends.all()
-    print("yoyoyo")
+    #print("yoyoyo")
     if request.headers.get('HX-Request'):
         return render(request, 'partials/options-pong.html', {
 		'user': user, 
@@ -54,7 +54,7 @@ def optionsPong(request):
 def optionsBreakout(request):
     user = request.user
     friendsList = user.friends.all()
-    print("yoyoyo")
+    #print("yoyoyo")
     if request.headers.get('HX-Request'):
         return render(request, 'partials/options-breakout.html', {
 			'user': user, 
@@ -63,7 +63,7 @@ def optionsBreakout(request):
         })
     else:
         return render(request, 'optionsGameNotPartial.html', {
-            'game': 'pong',
+            'game': 'breakout',
             'user': request.user,
             'friendsList': request.user.friends.all(),
             'message': _('Select your options for Pong')
@@ -81,7 +81,7 @@ def bracket(request):
 		players4 = []
 		
 		game = request.GET.get('game')
-		print("map", map)
+		#print("map", map)
 		for players in players_raw:
 			if players['win'] >= 1:
 				if len(players_raw) == 2:
@@ -123,28 +123,28 @@ def saveMatch(request):
 		
 		try:
 			if user.username == data['player1'] and data['score1'] > data['score2']:
-				# print("user", user)
+				# #print("user", user)
 				color = "victoire"
 				user.win += 1
 				user.bounce += data['bounce1']
 				user.bonus += data['bonus1']
 				user.score += data['score1']
 			elif user.username == data['player2'] and data['score2'] > data['score1']:
-				# print("user", user)
+				# #print("user", user)
 				color = "victoire"
 				user.win += 1
 				user.bounce += data['bounce2']
 				user.bonus += data['bonus2']
 				user.score += data['score2']
 			elif user.username == data['player1'] and data['score1'] < data['score2']:
-				# print("user", user)
+				# #print("user", user)
 				color = "defaite"
 				user.lose += 1
 				user.bounce += data['bounce1']
 				user.bonus += data['bonus1']
 				user.score += data['score1']
 			else:
-				# print("user", user)
+				# #print("user", user)
 				color = "defaite"
 				user.lose += 1
 				user.bounce += data['bounce2']
@@ -154,7 +154,7 @@ def saveMatch(request):
 			user.save()
 			newMatch = Match.objects.create(player1=data['player1'], score1=data['score1'], player2=data['player2'], score2=data['score2'], user=user, dateTime=data['dateTime'], color=color)
 			newMatch.save()
-			# print("user match:", user.match_set.all())
+			# #print("user match:", user.match_set.all())
 			for friend in friendList:
 				if friend.username == data['player1'] or friend.username == data['player2']:
 					friendscolor = "defaite" if color == "victoire" else "victoire"

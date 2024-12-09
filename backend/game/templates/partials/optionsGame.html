@@ -59,7 +59,8 @@
 	let color = Array.from(document.querySelectorAll('.form-control-color'));
     // Convertir les inputs en objets joueurs
 	listPlayer = Array.from(listPlayer).map((input, index) => {
-		input1 = input;
+		//make a true copy of input
+		let input1 = input.cloneNode(true);
 		fixInput(input1);
 		return {
 			name: input1.value || 'Player' + (index + 1),
@@ -73,7 +74,7 @@
 		};
 	});
 
-	console.log('listPlayer = ', listPlayer);
+	//consol.log('listPlayer = ', listPlayer);
     // Ajouter des IA si le nombre nest pas une puissance de 2
 	if (listPlayer.length === 1) {
 		listPlayer.push({
@@ -148,8 +149,6 @@
 function fixInput(input) {
 	if (input.value.length > 7) {
 		input.value = input.value.slice(0, 7) + '.';
-	} else {
-		input.value = input.value.padEnd(7, ' ');
 	}
 	return input;
 }

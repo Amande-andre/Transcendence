@@ -199,7 +199,7 @@ function handleBrickCollision(player, ball, brick, brickIndex, bonus) {
     }
     // Apply bonus if brick has one
     if (brick.bonus !== -1 && bonus == true) {
-        // console.log('Brick bonus:', brick.bonus);
+        // //consol.log('Brick bonus:', brick.bonus);
         bonus[brick.bonus](player, ball);
         player.bonusTaken++;
     }
@@ -321,7 +321,7 @@ async function startBreakout(canvas, button) {
         checkGameEnd();
     });
     
-    console.log('game end');
+    //consol.log('game end');
     button.setAttribute('hx-vals', JSON.stringify({'players': JSON.stringify(players), 'game': 'breakout'}));
 	button.classList.remove('popito');
 }

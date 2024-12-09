@@ -44,7 +44,7 @@
 <body class="animated-bg" style="height: 100vh;">
 	<canvas id="star-canvas"></canvas>
     {% include 'partials/navbar.html' %}
-	{% if game == breakout %}
+	{% if game == "breakout" %}
 		{% include 'partials/options-breakout.html' %}
 	{% else %}
 		{% include 'partials/options-pong.html' %}

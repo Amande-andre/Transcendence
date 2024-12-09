@@ -40,7 +40,7 @@ function drawRec(x, y) {
 
 function drawBall(x, y) {
     ctx.fillStyle = 'white';
-    console.log(x, y);  
+    //consol.log(x, y);  
     ctx.beginPath();
     ctx.arc(x, y, ballRadius, 0, Math.PI * 2, false);
     ctx.lineTo(0, 400);
@@ -269,7 +269,7 @@ function getPlayersData(canvas) {
     // Récupère l'élément HTML qui contient les données JSON
     // Lit les données de l'attribut data et les parse en objet JavaScript
     const playersData = canvas.getAttribute('data-players');
-    console.log('players = ', playersData);
+    //consol.log('players = ', playersData);
     players = JSON.parse(playersData.replace(/'/g, '"'));
     return players;
 }
@@ -297,7 +297,7 @@ function getPlayer(players) {
 
 async function startPong(canvas, button) {
     let players = getPlayersData(canvas);
-    console.log('players', players);
+    //consol.log('players', players);
     await new Promise((resolve) => {
         game = true;
         mainBall = new Ball(WIDTH / 2, HEIGHT / 2, 5, 5, 8);

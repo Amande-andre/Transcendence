@@ -10,11 +10,11 @@ document.addEventListener('DOMContentLoaded', function() {
 window.addEventListener('popstate', function(event) {
     // Récupérer l'URL actuelle
     const currentPath = window.location.pathname;
+    window.location.reload();
     
     // Vérifier si l'URL correspond à /gameOption/
     if (currentPath.startsWith('/optionsPong/') || currentPath.startsWith('/optionsBreakout/')) {
         game = false;
-        window.location.reload();
     }
 });
 
@@ -87,10 +87,10 @@ function checkUsername() {
     let listPlayer = Array.from(document.querySelectorAll('.player'));
     // Filter out empty names
     let names = listPlayer.map(player => player.value).filter(name => name !== "");
-    //consol.log(names);
+    // console.log(names);
     let uniqueNames = new Set(names);
-    //consol.log(uniqueNames);
-    //consol.log(names.length !== uniqueNames.size); 
+    // console.log(uniqueNames);
+    // console.log(names.length !== uniqueNames.size); 
     if (names.length !== uniqueNames.size)
         return false;
     return true;

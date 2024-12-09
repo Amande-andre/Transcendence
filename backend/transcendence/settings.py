@@ -70,7 +70,7 @@ CORS_ALLOW_CREDENTIALS = True
 ROOT_URLCONF = 'transcendence.urls'
 
 import os
-print([os.path.join(BASE_DIR, 'transcendence', 'templates')])
+#print([os.path.join(BASE_DIR, 'transcendence', 'templates')])
 
 TEMPLATES = [
     {

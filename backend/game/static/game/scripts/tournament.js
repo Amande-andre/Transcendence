@@ -40,7 +40,7 @@ function postMatch(players, player1, player2, round) {
     })
         .then((response) => response.json())
         .then((data) => {
-            console.log('Success:', data);
+            //consol.log('Success:', data);
         })
         .catch((error) => {
             console.error('Error:', error);

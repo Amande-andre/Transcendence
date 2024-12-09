@@ -121,9 +121,9 @@ def profile(request):
 
 def updatePseudo(request):
 	if request.method == "POST":
-		print('avant')
+		#print('avant')
 		if not request.headers.get('HX-Request'):
-			print('apres')
+			#print('apres')
 			return render(request, '403.html', status=403)
 		new_Username = request.POST.get("pseudo", "").strip()
 		context = {"username": new_Username, "error": "", "success": False}
