@@ -221,7 +221,7 @@ function handleEndGame(player1, player2, players) {
         players[player1.index].loose++;
         players[player2.index].score[player2.round] = player2.score;
     }
-    if (player1.score > player2.score)
+    if (player1.win > player2.win)//player1.score > player2.score)
         bigWin.innerHTML = players[player1.index].name + ' win!';
     else
         bigWin.innerHTML = players[player2.index].name + ' win!';
