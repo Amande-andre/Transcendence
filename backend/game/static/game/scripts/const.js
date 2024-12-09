@@ -7,7 +7,7 @@ let game = true
 let ctx;
 let isBonus = false;
 keys = {};
-
+//415 820
 class Player {
     constructor(paddle, ball, i, isIa, bonus) {
         
@@ -26,12 +26,13 @@ class Player {
         this.input = null;
         this.second = 0;
         this.past = -1;
-        this.distance = 0;
+        this.distance = -1;
         this.lastInput = null;
         this.keyleft = null;
         this.keyright = null;
         this.bonus = false;
         this.color = null;
+        this.nextPose = null;
         this.bounce = 0;
         this.bonusTaken = 0;
     }
