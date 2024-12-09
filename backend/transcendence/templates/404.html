@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Erreur 404</title>
+    <title>{% trans "Error 404" %}</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'users/styles/404.css' %}">
 </head>
@@ -13,10 +13,10 @@
     <div class="glow"></div>
     <div class="container">
         <h1>404</h1>
-        <h2>Uh-Oh can't find this page</h2>
-        <a type="button" class="btn btn-primary" href="{% url 'home' %}"
-		>Back Home</a>
+        <h2>{% trans "Uh-Oh can't find this page" %}</h2>
+        <a type="button" class="btn btn-primary" href="{% url 'home' %}">
+            {% trans "Back Home" %}
+        </a>
     </div>
 </body>
 </html>
-

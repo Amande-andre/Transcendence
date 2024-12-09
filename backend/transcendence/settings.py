@@ -35,7 +35,7 @@ LOGIN_URL = '/login/'  # Page de connexion
 # Application definition
 
 INSTALLED_APPS = [
-    'django_createsuperuserwithpassword',
+    # 'django_createsuperuserwithpassword',
     'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',

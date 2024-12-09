@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-02 20:50+0100\n"
+"POT-Creation-Date: 2024-12-09 10:56+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,240 +19,287 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? "
 "1 : 2;\n"
 
-#: backend/game/templates/partials/bracket.html:69
-#: backend/game/templates/partials/breakoutCanvas.html:7
-#: backend/game/templates/partials/pongCanvas.html:8
+#: game/templates/partials/bracket.html:88
+#: game/templates/partials/bracket.html:93
+#: game/templates/partials/bracket.html:98
+#: game/templates/partials/bracket.html:103
+#: game/templates/partials/bracket.html:108
+#: game/templates/partials/canvas.html:8
 msgid "Continue"
 msgstr "Continuar"
 
-#: backend/game/templates/partials/dropdownFriend.html:9
-#: backend/users/templates/partials/friendsList.html:14
+#: game/templates/partials/dropdownFriend.html:9
+#: users/templates/partials/friendsList.html:14
 msgid "No friends"
 msgstr "Sin amigos"
 
-#: backend/game/templates/partials/gameChoice.html:9
+#: game/templates/partials/gameChoice.html:9
 msgid "Time to play!"
 msgstr "¡Hora de jugar!"
 
-#: backend/game/templates/partials/options-breakout.html:5
-#: backend/game/templates/partials/options-pong.html:5
+#: game/templates/partials/options-breakout.html:10
+#: game/templates/partials/options-pong.html:5
 msgid "Start"
 msgstr "Iniciar"
 
-#: backend/game/templates/partials/optionsGame.html:5
+#: game/templates/partials/optionsGame.html:6
 msgid "Options"
 msgstr "Opciones"
 
-#: backend/game/templates/partials/optionsGame.html:9
+#: game/templates/partials/optionsGame.html:10
 msgid "Players"
 msgstr "Jugadores"
 
-#: backend/game/templates/partials/optionsGame.html:13
+#: game/templates/partials/optionsGame.html:14
 msgid "Player 1"
 msgstr "Jugador 1"
 
-#: backend/game/templates/partials/optionsGame.html:15
+#: game/templates/partials/optionsGame.html:16
 msgid "Choose color"
 msgstr "Elige un color"
 
-#: backend/game/templates/partials/optionsGame.html:21
+#: game/templates/partials/optionsGame.html:22
 msgid "Add player"
 msgstr "Añadir jugador"
 
-#: backend/game/templates/partials/optionsGame.html:29
+#: game/templates/partials/optionsGame.html:30
 msgid "Add friend"
 msgstr "Añadir amigo"
 
-#: backend/game/templates/partials/optionsGame.html:36
+#: game/templates/partials/optionsGame.html:37
 msgid "Delete player"
 msgstr "Eliminar jugador"
 
-#: backend/game/templates/partials/optionsGame.html:44
+#: game/templates/partials/optionsGame.html:45
 msgid "Game options"
 msgstr "Opciones de juego"
 
-#: backend/game/templates/partials/optionsGame.html:47
+#: game/templates/partials/optionsGame.html:48
 msgid "Enable bonuses"
 msgstr "Habilitar bonificaciones"
 
-#: backend/game/templates/partials/optionsGame.html:70
+#: game/templates/partials/optionsGame.html:75
 msgid "IA1"
 msgstr "IA1"
 
-#: backend/game/templates/partials/optionsGame.html:80
+#: game/templates/partials/optionsGame.html:87
 msgid "IA"
 msgstr "IA"
 
-#: backend/game/views.py:29
+#: game/views.py:41 game/views.py:48 game/views.py:66
 msgid "Select your options for Pong"
 msgstr "Selecciona tus opciones para Pong"
 
-#: backend/game/views.py:38
+#: game/views.py:59
 msgid "Select your options for Breakout"
 msgstr "Selecciona tus opciones para Breakout"
 
-#: backend/game/views.py:59
+#: game/views.py:94
 msgid "Bracket View"
 msgstr "Vista de la tabla"
 
-#: backend/transcendence/templates/home.html:8
+#: transcendence/templates/403.html:8
+msgid "Error 403"
+msgstr "Error 403"
+
+#: transcendence/templates/403.html:16
+msgid "Uh-Oh Permission Denied"
+msgstr "Uy, permiso denegado"
+
+#: transcendence/templates/403.html:18 transcendence/templates/404.html:18
+#, fuzzy
+#| msgid "Home"
+msgid "Back Home"
+msgstr "Inicio"
+
+#: transcendence/templates/404.html:8
+msgid "Error 404"
+msgstr "Error 404"
+
+#: transcendence/templates/404.html:16
+msgid "Uh-Oh can't find this page"
+msgstr "Vaya, no se puede encontrar esta página"
+
+#: transcendence/templates/home.html:8
 msgid "Time to play"
 msgstr "Hora de jugar"
 
-#: backend/transcendence/templates/home.html:11
+#: transcendence/templates/home.html:11
 msgid "Transcendence"
 msgstr "Transcendencia"
 
-#: backend/transcendence/templates/partials/navbar.html:10
+#: transcendence/templates/partials/navbar.html:10
 msgid "Toggle navigation"
 msgstr "Cambiar navegación"
 
-#: backend/transcendence/templates/partials/navbar.html:20
-#: backend/transcendence/templates/partials/navbar.html:29
+#: transcendence/templates/partials/navbar.html:29
 msgid "English"
 msgstr "Inglés"
 
-#: backend/transcendence/templates/partials/navbar.html:21
-#: backend/transcendence/templates/partials/navbar.html:32
+#: transcendence/templates/partials/navbar.html:32
 msgid "French"
 msgstr "Francés"
 
-#: backend/transcendence/templates/partials/navbar.html:22
-#: backend/transcendence/templates/partials/navbar.html:35
+#: transcendence/templates/partials/navbar.html:35
 msgid "Spanish"
 msgstr "Español"
 
-#: backend/transcendence/templates/partials/navbar.html:44
+#: transcendence/templates/partials/navbar.html:44
 msgid "Profile"
 msgstr "Perfil"
 
-#: backend/transcendence/templates/partials/navbar.html:49
+#: transcendence/templates/partials/navbar.html:49
 msgid "Game"
 msgstr "Juego"
 
-#: backend/transcendence/templates/partials/navbar.html:54
-#: backend/transcendence/templates/partials/navbar.html:68
+#: transcendence/templates/partials/navbar.html:54
+#: transcendence/templates/partials/navbar.html:68
 msgid "Home"
 msgstr "Inicio"
 
-#: backend/transcendence/templates/partials/navbar.html:61
+#: transcendence/templates/partials/navbar.html:61
 msgid "Logout"
 msgstr "Cerrar sesión"
 
-#: backend/transcendence/templates/partials/navbar.html:73
-#: backend/users/templates/form.html:27
+#: transcendence/templates/partials/navbar.html:73 users/templates/form.html:27
 msgid "Login"
 msgstr "Iniciar sesión"
 
-#: backend/transcendence/templates/partials/navbar.html:78
-#: backend/users/templates/form.html:29
+#: transcendence/templates/partials/navbar.html:78 users/templates/form.html:29
 msgid "Register"
 msgstr "Registrarse"
 
-#: backend/users/form.py:15 backend/users/views.py:74
+#: users/form.py:15 users/views.py:89
 msgid "The username can only contain letters and numbers."
 msgstr "El nombre de usuario solo puede contener letras y números."
 
-#: backend/users/form.py:19 backend/users/form.py:55
+#: users/form.py:19 users/form.py:55
 msgid "Username"
 msgstr "Nombre de usuario"
 
-#: backend/users/form.py:31 backend/users/form.py:64
+#: users/form.py:31 users/form.py:64
 msgid "Password"
 msgstr "Contraseña"
 
-#: backend/users/form.py:40
+#: users/form.py:40
 msgid "Confirm Password"
 msgstr "Confirma tu contraseña"
 
-#: backend/users/templates/form.html:18
+#: users/templates/form.html:18
 msgid "The verification message will appear here."
 msgstr "El mensaje de verificación aparecerá aquí."
 
-#: backend/users/templates/profile.html:11 backend/users/views.py:164
+#: users/templates/profile.html:11 users/views.py:186
 msgid "Add a friend!"
 msgstr "¡Añade un amigo!"
 
-#: backend/users/templates/profile.html:37
+#: users/templates/profile.html:37
 msgid "Profile image"
 msgstr "Imagen de perfil"
 
-#: backend/users/templates/profile.html:54
+#: users/templates/profile.html:53
 msgid "Enter your username"
 msgstr "Introduce tu nombre de usuario"
 
-#: backend/users/templates/profile.html:71
+#: users/templates/profile.html:70
 msgid "My Friends"
 msgstr "Mis amigos"
 
-#: backend/users/templates/profile.html:81
+#: users/templates/profile.html:80
 msgid "Matches"
 msgstr "Partidos"
 
-#: backend/users/templates/profile.html:82
+#: users/templates/profile.html:81
 msgid "Wins"
 msgstr "Victorias"
 
-#: backend/users/templates/profile.html:83
+#: users/templates/profile.html:82
 msgid "Losses"
 msgstr "Derrotas"
 
-#: backend/users/templates/profile.html:89
+#: users/templates/profile.html:84
+msgid "View Graph"
+msgstr "Ver gráfico"
+
+#: users/templates/profile.html:93
+msgid "Player Statistics"
+msgstr "Estadísticas del jugador"
+
+#: users/templates/profile.html:114
+msgid "Key Metrics"
+msgstr "Métricas clave"
+
+#: users/templates/profile.html:117
+msgid "Number of rebounds"
+msgstr "Número de rebotes"
+
+#: users/templates/profile.html:121
+msgid "Number of bricks broken"
+msgstr "Número de ladrillos rotos"
+
+#: users/templates/profile.html:125
+msgid "Longest rally"
+msgstr "Intercambio más largo"
+
+#: users/templates/profile.html:136
 msgid "Match history"
 msgstr "Historial de partidos"
 
-#: backend/users/views.py:69
+#: users/views.py:85
 msgid "The username must be at least 5 characters long."
 msgstr "El nombre de usuario debe tener al menos 5 caracteres."
 
-#: backend/users/views.py:71
+#: users/views.py:87
 msgid "The username must not exceed 15 characters."
 msgstr "El nombre de usuario no debe exceder los 15 caracteres."
 
-#: backend/users/views.py:79
+#: users/views.py:94
 msgid "This username is already taken."
 msgstr "Este nombre de usuario ya está en uso."
 
-#: backend/users/views.py:84
+#: users/views.py:99
 msgid "This username is available."
 msgstr "Este nombre de usuario está disponible."
 
-#: backend/users/views.py:113
+#: users/views.py:131
+msgid "Can't change: 42_"
+msgstr "No se puede cambiar: 42_"
+
+#: users/views.py:133
 msgid "Required."
 msgstr "Requerido."
 
-#: backend/users/views.py:115
+#: users/views.py:135
 msgid "Invalid characters."
 msgstr "Caracteres inválidos."
 
-#: backend/users/views.py:117
+#: users/views.py:137
 msgid "Already taken."
 msgstr "Ya está en uso."
 
-#: backend/users/views.py:119
+#: users/views.py:139
 msgid "5-15 characters."
 msgstr "De 5 a 15 caracteres."
 
-#: backend/users/views.py:136
+#: users/views.py:157
 msgid "Image too large"
 msgstr "Imagen demasiado grande"
 
-#: backend/users/views.py:140
+#: users/views.py:161
 msgid "Unsupported file type"
 msgstr "Tipo de archivo no compatible"
 
-#: backend/users/views.py:158
-msgid "Please upload a valid image."
-msgstr "Por favor, sube una imagen válida."
-
-#: backend/users/views.py:168
+#: users/views.py:190
 msgid "added!"
 msgstr "¡añadido!"
 
-#: backend/users/views.py:170
+#: users/views.py:192
 msgid "User not found!"
 msgstr "¡Usuario no encontrado!"
 
-#: backend/users/views.py:176
+#: users/views.py:197
 msgid "Invalid status"
 msgstr "Estado inválido"
+
+#~ msgid "Please upload a valid image."
+#~ msgstr "Por favor, sube una imagen válida."

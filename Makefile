@@ -7,6 +7,9 @@ NETWORK_NAME = django_transcendence
 # Commandes Docker Compose
 DOCKER_COMPOSE = docker-compose
 
+# Filtre pour les volumes liés au projet
+VOLUME_FILTER = transcendence
+
 # Cible par défaut : build
 all: build
 
@@ -14,16 +17,18 @@ all: build
 build:
 	$(DOCKER_COMPOSE) up -d --build
 
-
 # Arrêter et supprimer les conteneurs
 stop:
 	$(DOCKER_COMPOSE) down
 
-# Nettoyer toutes les ressources Docker associées
+# Nettoyer les volumes Docker spécifiques au projet
 clean: stop
-	@if [ "$$(docker volume ls -q)" ]; then \
-		docker volume rm $$(docker volume ls -q | grep 'transcendence') || true; \
+	@if [ "$$(docker volume ls -q | grep '$(VOLUME_FILTER)')" ]; then \
+		docker volume rm $$(docker volume ls -q | grep '$(VOLUME_FILTER)') || true; \
+	else \
+		echo "Aucun volume correspondant à $(VOLUME_FILTER) trouvé."; \
 	fi
+
 # Nettoyer les images Docker inutilisées
 prune:
 	docker system prune -af
@@ -31,30 +36,13 @@ prune:
 # Nettoyer toutes les ressources Docker et les images inutilisées
 fclean: clean prune
 
-# Supprimer les conteneurs, les volumes et le réseau Dockeret tut relancer
-re : fclean	all
+# Supprimer les conteneurs, les volumes et le réseau Docker et tout relancer
+re: fclean all
 
 # Afficher les conteneurs en cours d'exécution
 status:
 	docker ps
 
-# Afficher les conteneurs stoppés
+# Afficher tous les conteneurs
 status-all:
 	docker ps -a
-
-
-# all : La cible par défaut, qui appelle build pour construire et démarrer les conteneurs.
-
-# build : Construit et démarre les conteneurs définis dans docker-compose.yml.
-
-# stop : Arrête et supprime les conteneurs sans supprimer les volumes et les réseaux.
-
-# clean : Arrête et supprime les conteneurs, puis supprime les volumes et le réseau associés. L'utilisation de || true évite les erreurs si les volumes ou le réseau n'existent pas.
-
-# prune : Supprime les images Docker inutilisées.
-
-# clean-all : Nettoie toutes les ressources Docker (conteneurs, volumes, réseaux) et les images inutilisées.
-
-# status : Affiche les conteneurs en cours d'exécution.
-
-# status-all : Affiche tous les conteneurs, qu'ils soient en cours d'exécution ou non.
