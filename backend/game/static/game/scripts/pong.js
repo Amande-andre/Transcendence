@@ -86,10 +86,22 @@ function collisionPong(player1, player2, playersi, bonus) {
 
 // Helper function to check paddle collision
 function isPaddleCollision(ball, paddle) {
-    return (ball.x + ball.radius > paddle.x &&
-            ball.x - ball.radius < paddle.x + paddle.width &&
-            ball.y > paddle.y &&
-            ball.y < paddle.y + paddle.height);
+    // return (ball.x + ball.radius > paddle.x &&
+    //         ball.x - ball.radius < paddle.x + paddle.width &&
+    //         ball.y > paddle.y &&
+    //         ball.y < paddle.y + paddle.height);
+        // Collision horizontale (côtés de la raquette)
+        const horizontalCollision = 
+        ball.x + ball.radius > paddle.x && 
+        ball.x - ball.radius < paddle.x + paddle.width;
+
+    // Collision verticale (hauteur de la raquette)
+    const verticalCollision = 
+        ball.y + ball.radius > paddle.y && 
+        ball.y - ball.radius < paddle.y + paddle.height;
+
+    // Les deux conditions doivent être vraies
+    return horizontalCollision && verticalCollision;
 }
 
 // Calculate new ball trajectory after paddle hit

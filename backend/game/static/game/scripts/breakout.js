@@ -21,7 +21,7 @@ function updatePaddles(player1, player2) {
 }
 
 function fillbrick(bricks, x, y) {
-    for (let row = 0; row < 10; row++) {
+    for (let row = 0; row < 2; row++) {
         for (let col = 0; col < 12; col++) {
             bricks.push({
                 x: (x + col) * 32, // Position X de la brique
