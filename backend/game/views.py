@@ -24,6 +24,7 @@ def breakoutCanvas(request):
 	players_raw = request.GET.get('players')
 	game = request.GET.get('game')
 	print("game:", game)
+	print("map", request.GET.get('map'))
 	return render(request, 'partials/canvas.html', {'players': players_raw, 'game': game})
 
 @login_required
@@ -80,6 +81,7 @@ def bracket(request):
 		players4 = []
 		
 		game = request.GET.get('game')
+		print("map", map)
 		for players in players_raw:
 			if players['win'] >= 1:
 				players2.append(players)

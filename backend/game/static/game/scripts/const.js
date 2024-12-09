@@ -2,6 +2,7 @@ const WIDTH = 800;
 const HEIGHT = 600;
 const paddleWidth = 100;
 const paddleHeight = 10;
+let map;
 let game = true
 let ctx;
 let isBonus = false;

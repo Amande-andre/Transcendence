@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     if (document.getElementById('gameOption')) {
-        console.log('gameOption');
+        //consol.log('gameOption');
         let body = document.querySelector('body');
         body.classList.add('bracket-body');
     }
@@ -19,7 +19,7 @@ window.addEventListener('popstate', function(event) {
 
 document.addEventListener('htmx:afterSwap', function(evt) {
     if (evt.target.id === 'nav') {
-        console.log('nav clicked');
+        //consol.log('nav clicked');
         let elementsToHide = document.querySelectorAll('.title');
         elementsToHide.forEach(function(element) {
             element.style.display = 'none';
@@ -32,8 +32,8 @@ document.addEventListener('htmx:afterSwap', function(evt) {
     if (evt.detail.target.id === 'tmp') {
         let gameCanvas = document.getElementById('pongCanvas');
         let button = document.getElementById('gameButton');
-        console.log('gameCanvas', gameCanvas);
-        console.log('button', button);
+        //consol.log('gameCanvas', gameCanvas);
+        //consol.log('button', button);
         if (gameCanvas) {
             ctx = gameCanvas.getContext('2d');
             startPong(gameCanvas, button);
@@ -61,12 +61,12 @@ game = false;
         });
     }
     // if (evt.detail.target.id === "gameOption") {
-        // console.log('checkUsername');
+        // //consol.log('checkUsername');
         // let listPlayer = Array.from(document.querySelectorAll('.player'));
         // if a player in the list has the same name return false
         // let names = listPlayer.map(player => player.placeholder);
         // let uniqueNames = new Set(names);
-        // console.log(names.length !== uniqueNames.size); 
+        // //consol.log(names.length !== uniqueNames.size); 
         // if (names.length !== uniqueNames.size)
             // return false;
         // return true;
@@ -86,10 +86,10 @@ function checkUsername() {
     let listPlayer = Array.from(document.querySelectorAll('.player'));
     // Filter out empty names
     let names = listPlayer.map(player => player.value).filter(name => name !== "");
-    console.log(names);
+    //consol.log(names);
     let uniqueNames = new Set(names);
-    console.log(uniqueNames);
-    console.log(names.length !== uniqueNames.size); 
+    //consol.log(uniqueNames);
+    //consol.log(names.length !== uniqueNames.size); 
     if (names.length !== uniqueNames.size)
         return false;
     return true;

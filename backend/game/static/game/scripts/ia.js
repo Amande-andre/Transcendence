@@ -27,9 +27,9 @@ function choiceIa(player, nb)  {
     let ball = player.balls[0].x;
     //regarde si la balle est a droite si oui il se place au milieu
     let pos = calculePositionsBr(player);
-    // console.log('pos == ', pos);
-    // console.log('left == ', left);
-    // console.log('right == ', right);
+    // //consol.log('pos == ', pos);
+    // //consol.log('left == ', left);
+    // //consol.log('right == ', right);
     if (player.balls[0].speedX > 0){
         if (pos > right){
             player.distance = pos - right;
@@ -67,7 +67,7 @@ function IaControle(player, nb) {
     if (player.second === player.past){ 
         return;
     }
-    // console.log('player.second == ', player.second);
+    // //consol.log('player.second == ', player.second);
     let eventup = new KeyboardEvent('keyup', {
         key: player.lastInput,
     });
@@ -87,11 +87,11 @@ function IaControle(player, nb) {
     //document.dispatchEvent(eventup);
     document.dispatchEvent(eventdown);
     setTimeout(() => {
-        // console.log('player.distance == ', player.distance);
+        // //consol.log('player.distance == ', player.distance);
         //0.3 j avance de 160
         document.dispatchEvent(eventup);
     }, player.distance);
-    // console.log('====================');
+    // //consol.log('====================');
 }
 
 // IA PONG
@@ -133,9 +133,9 @@ function choiceIaPong(player)  {
     //regarde si la balle est a droite si oui il se place au milieu
     let pos = calculePositions(player);
     if (player.balls[0].speedX < 0){
-        // console.log('pos == ', pos);
-        // console.log('bot == ', bot);
-        // console.log('top == ', top);        
+        // //consol.log('pos == ', pos);
+        // //consol.log('bot == ', bot);
+        // //consol.log('top == ', top);        
         if (pos > bot){
             player.distance = pos - bot;
             player.lastInput = 's';
@@ -183,7 +183,7 @@ function IaControlePong(player, nb) {
     // 
     player.past = player.second;
     let eventTab = choiceIaPong(player, nb);
-    // console.log('====================');
+    // //consol.log('====================');
     if (eventTab === null){
         
         return;
