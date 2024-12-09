@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
         let body = document.querySelector('body');
         body.classList.add('bracket-body');
     }
+});
 
 document.addEventListener('htmx:afterSwap', function(evt) {
     if (evt.target.id === 'nav') {
