@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-09 14:54+0100\n"
+"POT-Creation-Date: 2024-12-09 17:19+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,6 +26,10 @@ msgstr ""
 #: game/templates/partials/canvas.html:9
 msgid "Continue"
 msgstr "Continuer"
+
+#: game/templates/partials/canvas.html:13
+msgid "win!"
+msgstr "gagne!"
 
 #: game/templates/partials/dropdownFriend.html:9
 #: users/templates/partials/friendsList.html:14
@@ -77,27 +81,25 @@ msgstr "Options de jeu"
 msgid "Enable bonuses"
 msgstr "Activer les bonus"
 
-#: game/templates/partials/optionsGame.html:75
+#: game/templates/partials/optionsGame.html:81
+#: game/templates/partials/optionsGame.html:82
+#: game/templates/partials/optionsGame.html:95
 msgid "IA1"
 msgstr "IA1"
 
-#: game/templates/partials/optionsGame.html:87
+#: game/templates/partials/optionsGame.html:94
 msgid "IA"
 msgstr "IA"
 
-#: game/views.py:10
-msgid "win!"
-msgstr "gagne!"
-
-#: game/views.py:43 game/views.py:50 game/views.py:68
+#: game/views.py:43 game/views.py:50 game/views.py:69
 msgid "Select your options for Pong"
 msgstr "Sélectionnez vos options pour Pong"
 
-#: game/views.py:61
+#: game/views.py:62
 msgid "Select your options for Breakout"
 msgstr "Sélectionnez vos options pour Breakout"
 
-#: game/views.py:96
+#: game/views.py:105
 msgid "Bracket View"
 msgstr "Vue du tableau"
 
@@ -192,71 +194,67 @@ msgstr "Confirmez le mot de passe"
 msgid "The verification message will appear here."
 msgstr "Le message de vérification s'affichera ici."
 
-#: users/templates/profile.html:12 users/views.py:186
+#: users/templates/profile.html:11 users/views.py:186
 msgid "Add a friend!"
 msgstr "Ajouter un ami !"
 
-#: users/templates/profile.html:38
+#: users/templates/profile.html:37
 msgid "Profile image"
 msgstr "Image de profil"
 
-#: users/templates/profile.html:54
+#: users/templates/profile.html:53
 msgid "Enter your username"
 msgstr "Entrez votre pseudo"
 
-#: users/templates/profile.html:71
+#: users/templates/profile.html:70
 msgid "My Friends"
 msgstr "Mes amis"
 
-#: users/templates/profile.html:81
+#: users/templates/profile.html:80
 msgid "Matches"
 msgstr "Matchs"
 
-#: users/templates/profile.html:82 users/templates/profile.html:168
+#: users/templates/profile.html:81 users/templates/profile.html:167
 msgid "Wins"
 msgstr "Victoires"
 
-#: users/templates/profile.html:83 users/templates/profile.html:169
+#: users/templates/profile.html:82 users/templates/profile.html:168
 msgid "Losses"
 msgstr "Défaites"
 
-#: users/templates/profile.html:85
+#: users/templates/profile.html:84
 msgid "View Graph"
 msgstr "Voir le graphique"
 
-#: users/templates/profile.html:94
+#: users/templates/profile.html:93
 msgid "Player Statistics"
 msgstr "Statistiques du joueur"
 
-#: users/templates/profile.html:115
+#: users/templates/profile.html:114
 msgid "Key Metrics"
 msgstr "Indicateurs clés"
 
-#: users/templates/profile.html:118
+#: users/templates/profile.html:117
 msgid "Number of rebounds"
 msgstr "Nombre de rebonds"
 
-#: users/templates/profile.html:122
-msgid "Number of bricks broken"
-msgstr "Nombre de briques cassées"
+#: users/templates/profile.html:121 users/templates/profile.html:172
+msgid "Bonus"
+msgstr "Bonus"
 
-#: users/templates/profile.html:126
-msgid "Longest rally"
-msgstr "Échange le plus long"
+#: users/templates/profile.html:125
+msgid "score"
+msgstr "Score"
 
-#: users/templates/profile.html:137
+#: users/templates/profile.html:136
 msgid "Match history"
 msgstr "Historique des matchs"
 
-#: users/templates/profile.html:172
+#: users/templates/profile.html:171
 msgid "Rebounds"
 msgstr "Rebonds"
 
 #: users/templates/profile.html:173
-msgid "Bricks Broken"
-msgstr "Nombre de briques cassées"
-
-#: users/templates/profile.html:174
 msgid "Score"
 msgstr "Score"
 
@@ -315,6 +313,15 @@ msgstr "Utilisateur non trouvé !"
 #: users/views.py:197
 msgid "Invalid status"
 msgstr "Statut invalide"
+
+#~ msgid "Number of bricks broken"
+#~ msgstr "Nombre de briques cassées"
+
+#~ msgid "Longest rally"
+#~ msgstr "Échange le plus long"
+
+#~ msgid "Bricks Broken"
+#~ msgstr "Nombre de briques cassées"
 
 #~ msgid "Longest Rally"
 #~ msgstr "Échange le plus long"
