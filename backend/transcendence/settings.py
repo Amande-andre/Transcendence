@@ -26,9 +26,16 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+handler404 = 'monapp.views.custom_page_not_found_view'
+handler403 = 'monapp.views.custom_permission_denied_view'
+
+LOGIN_URL = '/login/'  # Page de connexion
+
+
 # Application definition
 
 INSTALLED_APPS = [
+    'django_createsuperuserwithpassword',
     'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -193,6 +200,18 @@ PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
 ]
 
+### OAUTH2
+OA_UID = os.environ.get("OA_UID")
+OA_SECRET = os.environ.get("OA_SECRET")
+OA_REDIR = os.environ.get("OA_REDIR")
 MEDIA_URL = '/media/'
 # MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+MEDIA_URL = '/media/'
+# MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+### OAUTH2
+OA_UID = os.environ.get("OA_UID")
+OA_SECRET = os.environ.get("OA_SECRET")
+OA_REDIR = os.environ.get("OA_REDIR")

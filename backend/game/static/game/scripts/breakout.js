@@ -56,12 +56,14 @@ function Collision(player, lWall, rWall, bonus) {
         if (ball.x + ball.radius > rWall || ball.x - ball.radius < lWall) {
             ball.x = Math.max(lWall + ball.radius, Math.min(rWall - ball.radius, ball.x));
             ball.speedX = -ball.speedX;
+            player.bounce++;
         }
 
         // Top wall collision
         if (ball.y - ball.radius < topWall) {
             ball.y = topWall + ball.radius;
             ball.speedY = -ball.speedY;
+            player.bounce++;
         }
 
         // Ball out of bounds (bottom)
@@ -86,7 +88,7 @@ function Collision(player, lWall, rWall, bonus) {
 
         player.paddles.forEach(paddle => {
             if (isCollidingWithPaddle(ball, paddle)) {
-                handlePaddleCollision(ball, paddle);
+                handlePaddleCollision(ball, paddle, player);
             }
         });
     });
@@ -118,7 +120,7 @@ function isCollidingWithPaddle(ball, paddle) {
 }
 
 // Helper function to handle paddle collision with advanced angle calculation
-function handlePaddleCollision(ball, paddle) {
+function handlePaddleCollision(ball, paddle, player) {
     // Reverse the vertical direction
     ball.speedY = -Math.abs(ball.speedY);  // Ensure the ball always bounces upward
     
@@ -136,6 +138,7 @@ function handlePaddleCollision(ball, paddle) {
     if (Math.abs(ball.speedX) < minSpeedX) {
         ball.speedX = ball.speedX > 0 ? minSpeedX : -minSpeedX;
     }
+    player.bounce++;
 }
 
 // Helper function to check brick collision
@@ -160,15 +163,16 @@ function handleBrickCollision(player, ball, brick, brickIndex, bonus) {
     } else {
         ball.speedY = -ball.speedY;
     }
-
     // Apply bonus if brick has one
     if (brick.bonus !== -1 && bonus == true) {
         // console.log('Brick bonus:', brick.bonus);
         bonus[brick.bonus](player, ball);
+        player.bonusTaken++;
     }
 
     // Remove the brick
     player.bricks.splice(brickIndex, 1);
+    player.bounce++;
 }
 
 function drawBreakoutBorder() {
@@ -206,14 +210,13 @@ function handleEndGame(player1, player2, players) {
     if (player1.bricks.length === 0) {
         players[player1.index].win++;
         players[player2.index].loose++;
-        player1.score += 1;
+
         players[player1.index].score[player1.round] = player1.score;
         //ici save la win or lose du players[1] ou [0]
     }
     else{
         players[player2.index].win++;
         players[player1.index].loose++;
-        player2.score += 1;
         players[player2.index].score[player2.round] = player2.score;
     }
     console.log(player1.score, player2.score);
@@ -236,6 +239,10 @@ function updateBreakout(player1, player2, players, bonus) {
     if (game === false)
         return
     if (player1.bricks.length === 0 || player2.bricks.length === 0) {
+		if (player1.bricks.length === 0)
+			player2.score += 1;
+		else
+			player1.score += 1;
         handleEndGame(player1, player2, players);
         return;
     }
@@ -279,5 +286,5 @@ async function startBreakout(canvas, button) {
     });
     
     button.setAttribute('hx-vals', JSON.stringify({'players': JSON.stringify(players), 'game': 'breakout'}));
-    button.style.display = 'block';
+	button.classList.remove('popito');
 }

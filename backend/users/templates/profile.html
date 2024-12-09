@@ -38,7 +38,6 @@
             </div>
             <!-- Input pour uploader une nouvelle image -->
             <input type="file" accept="image/*" id="uploadImage" name="image" style="display: none;" 
-                onchange="previewImage(event)" 
                 class="btn btn-primary mt-3" 
                 hx-post="{% url 'users:updateImage' %}"
                 hx-target="#profileImage"
@@ -65,7 +64,7 @@
 				<div class="btn-group" role="group">
 					<button 
 						type="button" 
-						class="btn btn-primary dropdown-toggle" 
+						class="btn btn-primary dropdown-toggle2" 
 						data-bs-toggle="dropdown" 
 						aria-expanded="false">
 						<i class="fas fa-users"></i> {% trans 'My Friends' %}
@@ -111,20 +110,20 @@
         
                         <!-- Statistiques supplémentaires -->
                         <hr>
-                        <div id="extra-stats" class="mt-3">
+                        <div id="extra-stats" class="mt-33">
                             <h6>{% trans "Key Metrics" %}</h6>
                             <ul class="list-group">
                                 <li class="list-group-item d-flex justify-content-between">
                                     <span>{% trans "Number of rebounds" %}</span>
-                                    <span id="rebounds">-</span>
+                                    <span id="rebounds">{{ user.bounce }}</span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between">
                                     <span>{% trans "Number of bricks broken" %}</span>
-                                    <span id="bricks-broken">-</span>
+                                    <span id="bricks-broken">{{ user.bonus }}</span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between">
                                     <span>{% trans "Longest rally" %}</span>
-                                    <span id="longest-rally">-</span>
+                                    <span id="longest-rally">{{ user.score }}</span>
                                 </li>
                             </ul>
                         </div>
@@ -141,4 +140,86 @@
         </div>
     </div>
 </div>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const statsModal = document.getElementById('statsModal');
+	
+	if (!statsModal)
+		return;
+    statsModal.addEventListener('shown.bs.modal', () => {
+        // Données pour les victoires/défaites
+        const matches = parseInt(document.getElementById('matchs').textContent);
+        const wins = parseInt(document.getElementById('win').textContent);
+        const losses = parseInt(document.getElementById('lose').textContent);
+        // Données pour les statistiques supplémentaires
+        const rebounds = {{ user.bounce }}; // Exemple dynamique ou API
+        const bricksBroken = {{ user.bonus }}; // Exemple dynamique ou API
+        const longestRally = {{ user.score }}; // Exemple dynamique ou API
+
+        // Mettre à jour les statistiques supplémentaires
+        document.getElementById('rebounds').textContent = rebounds;
+        document.getElementById('bricks-broken').textContent = bricksBroken;
+        document.getElementById('longest-rally').textContent = longestRally;
+
+        // Graphique des victoires/défaites
+        const ctxWins = document.getElementById('statsChartWins').getContext('2d');
+        new Chart(ctxWins, {
+            type: 'doughnut',
+            data: {
+                labels: ['Wins', 'Losses'],
+                datasets: [{
+                    data: [wins, losses],
+                    backgroundColor: ['rgba(75, 192, 192, 0.6)', 'rgba(255, 99, 132, 0.6)'],
+                    borderColor: ['rgba(75, 192, 192, 1)', 'rgba(255, 99, 132, 1)'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top'
+                    }
+                }
+            }
+        });
+
+        // Graphique des statistiques supplémentaires
+        const ctxStats = document.getElementById('statsChartStats').getContext('2d');
+        new Chart(ctxStats, {
+            type: 'bar',
+            data: {
+                labels: ['Rebounds', 'Bricks Broken', 'Longest Rally'],
+                datasets: [{
+                    data: [rebounds, bricksBroken, longestRally],
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 0.6)',
+                        'rgba(255, 206, 86, 0.6)',
+                        'rgba(75, 192, 192, 0.6)'
+                    ],
+                    borderColor: [
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    });
+});
+</script>
 {% endblock content %}

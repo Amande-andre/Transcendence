@@ -4,7 +4,18 @@
             {% for player in players %}
                 {% if forloop.counter0|divisibleby:2 %}
                     <!-- Si l'index est pair, crée une nouvelle balise 'match' -->
-                    <span class="inGame">{{player.score.3}}</span>
+                    <span class="inGame" style="font-family: 'Press Start 2P'; color: #fff;">
+                        {% if forloop.counter0 == 0 %}
+                            1
+                        {% elif forloop.counter0 == 2 %}
+                            2
+                        {% elif forloop.counter0 == 4 %}
+                            3
+                        {% elif forloop.counter0 == 6 %}
+                            4
+                        {% endif %}
+                    </span>
+
                     <div class="match-container match">
                         <!-- <div class="match"> -->
                 {% endif %}
@@ -24,6 +35,17 @@
         <div class="round">
             {% for player in players2 %}
                 {% if forloop.counter0|divisibleby:2 %}
+                    <span class="inGame" style="font-family: 'Press Start 2P'; color: #fff;">
+                        {% if forloop.counter0 == 0 %}
+                            1
+                        {% elif forloop.counter0 == 2 %}
+                            2
+                        {% elif forloop.counter0 == 4 %}
+                            3
+                        {% elif forloop.counter0 == 6 %}
+                            4
+                        {% endif %}
+                    </span>
                     <!-- Si l'index est pair, crée une nouvelle balise 'match' -->
                     <div class="match-container match">
                         <!-- <div class="match"> -->
@@ -46,6 +68,17 @@
         <div class="round">
             {% for player in players3 %}
                 {% if forloop.counter0|divisibleby:2 %}
+                    <span class="inGame" style="font-family: 'Press Start 2P'; color: #fff;">
+                        {% if forloop.counter0 == 0 %}
+                            1
+                        {% elif forloop.counter0 == 2 %}
+                            2
+                        {% elif forloop.counter0 == 4 %}
+                            3
+                        {% elif forloop.counter0 == 6 %}
+                            4
+                        {% endif %}
+                    </span>
                     <!-- Si l'index est pair, crée une nouvelle balise 'match' -->
                     <div class="match-container match">
                         <!-- <div class="match"> -->
@@ -65,7 +98,22 @@
             {% endif %}
         </div>
     </div>
-    {% if game == 'breakout' %}
+    {% if players|length == 2 and players2|length == 1 %}
+		<button class="continu-button" hx-get="{% url 'game:gameChoice' %}" hx-target="#tmp" hx-swap="outerHTML"
+			style="cursor: pointer; z-index: 3;">
+			Continue
+		</button>
+    {% elif players|length == 4 and players3|length == 1 %}
+		<button class="continu-button" hx-get="{% url 'game:gameChoice' %}" hx-target="#tmp" hx-swap="outerHTML"
+			style="cursor: pointer; z-index: 3;">
+			Continue
+		</button>
+    {% elif players|length == 8 and players4|length == 1 %}
+        <button class="continu-button" hx-get="{% url 'game:gameChoice' %}" hx-target="#tmp" hx-swap="outerHTML"
+            style="cursor: pointer; z-index: 3;">
+            Continue
+        </button>
+    {% elif game == 'breakout' %}
         <button class="continu-button" hx-get="{% url 'game:breakoutCanvas' %}" hx-target="#tmp" hx-swap="outerHTML"
             hx-vals='{"players": "{{ players|escapejs }}", "game": "breakout"}' style="cursor: pointer; z-index: 3;">
             Continue

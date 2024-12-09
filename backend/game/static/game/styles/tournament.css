@@ -1,4 +1,6 @@
-
+.popito {
+	display: none;
+}
 .bracket-body {
     margin: 0;
     height: 100;

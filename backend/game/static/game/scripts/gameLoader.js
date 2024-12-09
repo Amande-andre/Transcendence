@@ -22,6 +22,8 @@ document.addEventListener('htmx:afterSwap', function(evt) {
         }
         else {
             gameCanvas = document.getElementById('breakoutCanvas');
+			if (!gameCanvas)
+				return;
             ctx =  gameCanvas.getContext('2d');
             startBreakout(gameCanvas, button)
         }
@@ -40,4 +42,37 @@ game = false;
             }
         });
     }
+    // if (evt.detail.target.id === "gameOption") {
+        // console.log('checkUsername');
+        // let listPlayer = Array.from(document.querySelectorAll('.player'));
+        // if a player in the list has the same name return false
+        // let names = listPlayer.map(player => player.placeholder);
+        // let uniqueNames = new Set(names);
+        // console.log(names.length !== uniqueNames.size); 
+        // if (names.length !== uniqueNames.size)
+            // return false;
+        // return true;
+    // }
 })
+
+document.body.addEventListener('htmx:configRequest', function(event) {
+    // Vérifie si la cible est bien #gameOption
+    if (event.detail.elt.getAttribute('hx-target') === '#gameOption') {
+        if (!checkUsername()) {
+            event.preventDefault(); // Annule la requête HTMX
+        }
+    }
+});
+
+function checkUsername() {
+    let listPlayer = Array.from(document.querySelectorAll('.player'));
+    //if a player in the list has the same name return false
+    let names = listPlayer.map(player => player.value);
+    console.log(names);
+    let uniqueNames = new Set(names);
+    console.log(uniqueNames);
+    console.log(names.length !== uniqueNames.size); 
+    if (names.length !== uniqueNames.size)
+        return false;
+    return true;
+}

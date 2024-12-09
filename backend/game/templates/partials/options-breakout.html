@@ -1,7 +1,22 @@
 {% extends 'partials/optionsGame.html' %}
 {% load i18n %}
 {% block content %}
+    <div class="maps">
+        <button class="btn btn-map">Map 1</button>
+        <button class="btn btn-map">Map 2</button>
+        <button class="btn btn-map">Map 3</button>
+    </div>
     <button class="btn btn-success btn-lg" hx-get="{% url 'game:bracket' %}" hx-target="#gameOption" hx-vals="js:{'players': shufflePlayer(), 'game': 'breakout'}" hx-swap="outerHTML">
         {% trans "Start" %}
     </button>
+    <script>
+        const buttons = document.querySelectorAll('.btn-map');
+    
+        buttons.forEach(button => {
+            button.addEventListener('click', function() {
+                buttons.forEach(btn => btn.classList.remove('selected'));
+                this.classList.add('selected');
+            });
+        });
+    </script>    
 {% endblock content %}

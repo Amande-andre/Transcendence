@@ -20,14 +20,20 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth.signals import user_logged_in, user_logged_out
 from django.shortcuts import redirect
 from django.conf import settings
+import requests
 import logging
-
-
+from django.contrib.auth.decorators import permission_required
+from django.shortcuts import redirect
 
 class RegisterForm(CreateView):
     template_name = 'form.html'
     form_class = CustomCreationForm
     success_url = reverse_lazy('home')
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:  # Vérifie si l'utilisateur est connecté
+            return redirect('home')  # Redirige vers la page d'accueil
+        return super().dispatch(request, *args, **kwargs)
 
     def form_invalid(self, form):
         return super().form_invalid(form)
@@ -47,6 +53,11 @@ class LoginForm(FormView):
     form_class = CustomAuthenticationForm
     success_url = reverse_lazy('home')
 
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:  # Vérifie si l'utilisateur est connecté
+            return redirect('home')  # Redirige vers la page d'accueil
+        return super().dispatch(request, *args, **kwargs)
+
     def form_invalid(self, form):
         return super().form_invalid(form)
 
@@ -60,30 +71,34 @@ class LoginForm(FormView):
 
 
 def checkUsername(request):
-    username = request.POST.get('username', '').strip()
-    if not username:
-        return HttpResponse('<div id="username-check" class="form-text"></div>')
-    errors = []
+# check if reauest is htmx
+	# f request.headers.get('HX-Request'):
+	# 	return checkUsiername_htmx(request)
+	if not request.headers.get('HX-Request'):
+		return render(request, '403.html', status=403)
+	username = request.POST.get('username', '').strip()
+	if not username:
+		return HttpResponse('<div id="username-check" class="form-text"></div>')
+	errors = []
 
-    if len(username) < 5:
-        errors.append(_("The username must be at least 5 characters long."))
-    if len(username) > 15:
-        errors.append(_("The username must not exceed 15 characters."))
+	if len(username) < 5:
+		errors.append(_("The username must be at least 5 characters long."))
+	if len(username) > 15:
+		errors.append(_("The username must not exceed 15 characters."))
+	try:
+		RegexValidator(r'^[a-zA-Z0-9]+$', message=_("The username can only contain letters and numbers."))(username)
+	except ValidationError as e:
+		errors.extend(e.messages)
 
-    try:
-        RegexValidator(r'^[a-zA-Z0-9]+$', message=_("The username can only contain letters and numbers."))(username)
-    except ValidationError as e:
-        errors.extend(e.messages)
+	if User.objects.filter(username=username).exists():
+		errors.append(_("This username is already taken."))
 
-    if User.objects.filter(username=username).exists():
-        errors.append(_("This username is already taken."))
+	if errors:
+		return HttpResponse(f'<div id="username-check" class="form-text" style="color:red">{"<br>".join(errors)}</div>')
+	else:
+		return HttpResponse('<div id="username-check" class="form-text" style="color:green">' + _("This username is available.") + '</div>')
 
-    if errors:
-        return HttpResponse(f'<div id="username-check" class="form-text" style="color:red">{"<br>".join(errors)}</div>')
-    else:
-        return HttpResponse('<div id="username-check" class="form-text" style="color:green">' + _("This username is available.") + '</div>')
-
-
+@login_required
 def logout_view(request):
     request.user.isOnline = False
     request.user.save()
@@ -94,7 +109,7 @@ def logout_view(request):
 def Home(request):
     return render(request, 'home.html')
 
-
+@login_required
 def profile(request):
     User_matchs = request.user.match_set.all()
     friendsList = request.user.friends.all()
@@ -104,33 +119,38 @@ def profile(request):
         'user': request.user
     })
 
-
 def updatePseudo(request):
-    if request.method == "POST":
-        new_Username = request.POST.get("pseudo", "").strip()
-        context = {"username": new_Username, "error": "", "success": False}
+	if request.method == "POST":
+		print('avant')
+		if not request.headers.get('HX-Request'):
+			print('apres')
+			return render(request, '403.html', status=403)
+		new_Username = request.POST.get("pseudo", "").strip()
+		context = {"username": new_Username, "error": "", "success": False}
+		if request.user.username[:3] == '42_':
+			context["error"] = _("Can't change: 42_")
+		elif not new_Username:
+			context["error"] = _("Required.")
+		elif not new_Username.isalnum():
+			context["error"] = _("Invalid characters.")
+		elif User.objects.filter(username=new_Username).exists():
+			context["error"] = _("Already taken.")
+		elif len(new_Username) < 5 or len(new_Username) > 15:
+			context["error"] = _("5-15 characters.")
+		else:
+			request.user.username = new_Username
+			request.user.save()
+			context["success"] = True
+			context["username"] = new_Username
 
-        if not new_Username:
-            context["error"] = _("Required.")
-        elif not new_Username.isalnum():
-            context["error"] = _("Invalid characters.")
-        elif User.objects.filter(username=new_Username).exists():
-            context["error"] = _("Already taken.")
-        elif len(new_Username) < 5 or len(new_Username) > 15:
-            context["error"] = _("5-15 characters.")
-        else:
-            request.user.username = new_Username
-            request.user.save()
-            context["success"] = True
-            context["username"] = new_Username
+		return render(request, "update_pseudo_fragment.html", context)
+	else:
+		return render(request, '403.html', status=403)
 
-        return render(request, "update_pseudo_fragment.html", context)
-
-
-@login_required
-@csrf_exempt
 def updateImage(request):
     if request.method == "POST" and request.FILES.get("image"):
+        if not request.headers.get('HX-Request') and not request.method == "POST":
+            return render(request, '403.html', status=403)
         new_image = request.FILES["image"]
 
         if new_image.size > 5 * 1024 * 1024:
@@ -155,11 +175,12 @@ def updateImage(request):
                  src="{request.user.profilePhoto.url}" 
                  alt="{_("Profile image")}">
         ''', content_type='text/html')
-
-    return HttpResponse('<div class="form-text" style="color:red">' + _("Please upload a valid image.") + '</div>', status=400)
-
+    return render(request, '403.html', status=403)
+    # return HttpResponse('<div class="form-text" style="color:red">' + _("Please upload a valid image.") + '</div>', status=400)
 
 def addFriend(request):
+    if not request.headers.get('HX-Request'):
+        return render(request, '403.html', status=403)
     search = request.POST.get('friend')
     if search == '':
         return render(request, 'partials/addFriendState.html', {'message': _('Add a friend!')})
@@ -171,7 +192,6 @@ def addFriend(request):
         return render(request, 'partials/addFriendState.html', {'message': _('User not found!')})
 
 
-@login_required
 def update_online_status(request, status):
     if status not in ['true', 'false']:
         return JsonResponse({'error': _('Invalid status')}, status=400)
@@ -181,7 +201,12 @@ def update_online_status(request, status):
     request.user.save()
     return JsonResponse({'success': True, 'isOnline': isOnline})
 
-logger = logging.getLogger(__name__)
+
+
+#####################################################################
+
+# OAUTH2 login
+#logger = logging.getLogger(__name__)
 
 def oauth2_login(request):
     client_id = settings.OA_UID
@@ -192,7 +217,6 @@ def oauth2_login(request):
     return redirect(authorization_url)
 
 def oauth2_callback(request):
-    print('callback!!!')
     code = request.GET.get('code')
 
     client_id = settings.OA_UID
@@ -208,7 +232,7 @@ def oauth2_callback(request):
         'client_secret': client_secret,
     }
     
-    response = request.post(token_url, data=data)
+    response = requests.post(token_url, data=data)
     token_data = response.json()
 
     if response.status_code == 200 and 'access_token' in token_data:
@@ -217,11 +241,11 @@ def oauth2_callback(request):
         # Fetch user info from OAuth2 provider
         user_info_url = 'https://api.intra.42.fr/v2/me'
         headers = {'Authorization': f'Bearer {access_token}'}
-        user_info_response = request.get(user_info_url, headers=headers)
+        user_info_response = requests.get(user_info_url, headers=headers)
         user_info = user_info_response.json()
 
         # Check if user exists
-        username = '42' + user_info['login']
+        username = '42_' + user_info['login']
         email = user_info['email']
 
         try:
@@ -238,4 +262,5 @@ def oauth2_callback(request):
         return redirect('home')  # Change 'profile' to your desired URL name
     else:
         # Authentication failed
-        return redirect('users:login')
+        return redirect('home')
+# ##

@@ -32,6 +32,8 @@ class Player {
         this.bonus = false;
         this.color = null;
         this.nextPose = null;
+        this.bounce = 0;
+        this.bonusTaken = 0;
     }
     initControls(key1, key2) {
         const time = new Date();

@@ -13,6 +13,9 @@ class User(AbstractUser):
     win = models.IntegerField(default=0)
     lose = models.IntegerField(default=0)
     gamePlayed = models.IntegerField(default=0)
+    bounce = models.IntegerField(default=0)
+    bonus = models.IntegerField(default=0)
+    score = models.IntegerField(default=0)
 
     class Meta:
         pass
