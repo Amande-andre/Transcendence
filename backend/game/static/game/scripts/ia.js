@@ -69,15 +69,6 @@ function choiceIa(player, nb) {
         else
             player.lastInput = 'a';
     }
-    // else {
-    //     player.lastInput = null;
-    // }
-    
-    // console.log('ball == ', ball);
-    // console.log('left == ', left);ia
-    // console.log('right == ', right);
-    // console.log(' == ', pos);
-    // console.log('player.lastInput == ', player.lastInput);
     
     return player.lastInput;
 }
@@ -103,19 +94,10 @@ function IaControle(player, nb) {
     player.past = player.second;
     let eventTab;
     eventTab = choiceIa(player, nb);
-    console.log('nextPose == ', player.nextPose);
-    console.log('midl== ', player.paddles[0].midl);
-    console.log('====================');
-    // document.dispatchEvent(player.lastInput);
     let eventdown = new KeyboardEvent('keydown', {
         key: eventTab,
     });
-    //document.dispatchEvent(eventup);
-    // let time = 250;
     document.dispatchEvent(eventdown);
-    // setTimeout(() => {
-    //     document.dispatchEvent(eventup);
-    // }, time);
 }
 
 // IA PONG
@@ -128,7 +110,7 @@ function calculePositions(player) {
     let speedY = player.balls[0].speedY;
 
     if (speedX < 0){
-        for (i = x; x > 0; i-=5){
+        for (i = x; x > 0; i -= speedX){
             x += speedX;
             y += speedY;
             if (y >= HEIGHT || y <= 0){
@@ -137,7 +119,7 @@ function calculePositions(player) {
         }
     }
     else {
-        for (i = x; x < (WIDTH) - 20 ; i++){
+        for (i = x; x < (WIDTH); i += speedX){
             x += speedX;
             y += speedY;
             if (y >= HEIGHT || y <= 0){
@@ -156,26 +138,47 @@ function choiceIaPong(player)  {
     let bot = player.paddles[0].y + player.paddles[0].height;
     //regarde si la balle est a droite si oui il se place au milieu
     let pos = calculePositions(player);
-    if (player.balls[0].speedX < 0){
-        // console.log('pos == ', pos);
-        // console.log('bot == ', bot);
-        // console.log('top == ', top);        
-        if (pos > bot){
-            player.distance = pos - bot;
-            player.lastInput = 's';
+    if (player.paddles[0].x <= 50){
+        if (player.balls[0].speedX < 0){
+            console.log('pos == ', pos);
+            console.log('bot == ', bot);
+            console.log('top == ', top);        
+            if (pos > bot){
+                player.distance = pos - bot;
+                    player.lastInput = 's';
+            }
+            else if (pos < top){
+                player.distance = top - pos;
+                    player.lastInput = 'w';
+            }
+            else {
+                player.distance = 0;
+                player.lastInput = null;
+            }
+            player.distance = player.distance / 300 * 1000;
+            return player.lastInput;
         }
-        else if (pos < top){
-            player.distance = top - pos;
-            player.lastInput = 'w';
-        }
-        else {
-            player.distance = 0;
-            return null;
-        }
-
-        player.distance = player.distance / 300 * 1000;
-        return player.lastInput;
     }
+    else {
+
+        if (player.balls[0].speedX > 0){
+            if (pos > bot){
+                player.distance = pos - bot;
+                player.lastInput = '2';
+            }
+            else if (pos < top){
+                player.distance = top - pos;
+                player.lastInput = '5';
+            }
+            else {
+                player.distance = 0;
+                player.lastInput = null;
+            }
+            player.distance = player.distance / 300 * 1000;
+            return player.lastInput;
+        }
+    }
+    
     player.distance = 0;
     return null;
 }
@@ -195,12 +198,11 @@ function IaControlePong(player, nb) {
     // 
     player.past = player.second;
     let eventTab = choiceIaPong(player, nb);
-    // console.log('====================');
+    console.log('eventTab == ', eventTab);
+    console.log('====================');
     if (eventTab === null){
-        
         return;
     }
-    otherevent = eventTab === 'w' ? 's' : 'w';
     let eventdown = new KeyboardEvent('keydown', {
         key: eventTab,
     });
