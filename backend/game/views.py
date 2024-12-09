@@ -24,6 +24,7 @@ def breakoutCanvas(request):
 	players_raw = request.GET.get('players')
 	game = request.GET.get('game')
 	print("game:", game)
+	print("map", request.GET.get('map'))
 	return render(request, 'partials/canvas.html', {'players': players_raw, 'game': game})
 
 @login_required
@@ -34,6 +35,7 @@ def gameChoice(request):
 def optionsPong(request):
     user = request.user
     friendsList = user.friends.all()
+    print("yoyoyo")
     if request.headers.get('HX-Request'):
         return render(request, 'partials/options-pong.html', {
 		'user': user, 
@@ -52,6 +54,7 @@ def optionsPong(request):
 def optionsBreakout(request):
     user = request.user
     friendsList = user.friends.all()
+    print("yoyoyo")
     if request.headers.get('HX-Request'):
         return render(request, 'partials/options-breakout.html', {
 			'user': user, 
@@ -78,13 +81,21 @@ def bracket(request):
 		players4 = []
 		
 		game = request.GET.get('game')
+		print("map", map)
 		for players in players_raw:
 			if players['win'] >= 1:
+				if len(players_raw) == 2:
+					players['score'][1] = 'w'
 				players2.append(players)
 			if players['win'] >= 2:
+				if len(players_raw) == 4:
+					players['score'][2] = 'w'
 				players3.append(players)
 			if players['win'] >= 3:
+				if len(players_raw) == 8:
+					players['score'][3] = 'w'
 				players4.append(players)
+							
 		return render(request, 'partials/bracket.html', {
 			"players": players_raw, 
 			"players2": players2, 

@@ -1,6 +1,8 @@
 function generateNumber() {
     const random = Math.random(); // Génère un nombre aléatoire entre 0 et 1
   
+    if (isBonus === false)
+        return -1;
     if (random < 0.8) { // 10% de chance
       // Choisir aléatoirement entre 2, 3, et 4
       const randomChoice = Math.floor(Math.random() * 2); // Génère 2, 3 ou 4 before *10
@@ -21,16 +23,48 @@ function updatePaddles(player1, player2) {
 }
 
 function fillbrick(bricks, x, y) {
-    for (let row = 0; row < 10; row++) {
-        for (let col = 0; col < 12; col++) {
-            bricks.push({
-                x: (x + col) * 32, // Position X de la brique
-                y: (y + row) * 16, // Position Y de la brique
-                bonus: generateNumber()  // 10% de chance d'avoir un bonus
-            });
+    if (map === 1) {
+        for (let row = 0; row < 10; row++) {
+            for (let col = 0; col < 12; col++) {
+                bricks.push({
+                    x: (x + col) * 32, // Position X de la brique
+                    y: (y + row) * 16, // Position Y de la brique
+                    bonus: generateNumber()  // 10% de chance d'avoir un bonus
+                });
+            }
         }
+        bricks.sort((a, b) => b.y - a.y);
     }
-    bricks.sort((a, b) => b.y - a.y);
+    // push brick expet if the col is between 4 and 7 and the row is betweem 0 and 6
+    else if (map === 2){
+        for (let row = 0; row < 10; row++) {
+            for (let col = 0; col < 12; col++) {
+                if ((col >= 4 && col <= 7) && (row >= 0 && row <= 6))
+                    continue;
+                bricks.push({
+                    x: (x + col) * 32, // Position X de la brique
+                    y: (y + row) * 16, // Position Y de la brique
+                    bonus: generateNumber()  // 10% de chance d'avoir un bonus
+                });
+            }
+        }
+        bricks.sort((a, b) => b.y - a.y);
+    }
+    // push brick expet if the col is between 4 and 7 and the row is betweem 4 and 7
+    else {
+        for (let row = 0; row < 10; row++) {
+            for (let col = 0; col < 12; col++) {
+                if ((col >= 3 && col <= 7) && (row >= 4 && row <= 7))
+                    continue;
+                bricks.push({
+                    x: (x + col) * 32, // Position X de la brique
+                    y: (y + row) * 16, // Position Y de la brique
+                    bonus: generateNumber()  // 10% de chance d'avoir un bonus
+                });
+            }
+        }
+        bricks.sort((a, b) => b.y - a.y);
+    }
 }
 
 function ft_newBall(player, ball) {
@@ -164,7 +198,7 @@ function handleBrickCollision(player, ball, brick, brickIndex, bonus) {
         ball.speedY = -ball.speedY;
     }
     // Apply bonus if brick has one
-    if (brick.bonus !== -1 && bonus) {
+    if (brick.bonus !== -1 && bonus == true) {
         // console.log('Brick bonus:', brick.bonus);
         bonus[brick.bonus](player, ball);
         player.bonusTaken++;
@@ -219,13 +253,11 @@ function handleEndGame(player1, player2, players) {
         players[player1.index].loose++;
         players[player2.index].score[player2.round] = player2.score;
     }
-
     if (player1.score > player2.score) {
         bigWin.innerHTML = players[player1.index].name + ' ' + translations.win;
     } else {
         bigWin.innerHTML = players[player2.index].name + ' ' + translations.win;
     }
-
     let rd = players[player1.index].round - 1;
     players[player1.index].score[rd] = player1.score;
     players[player2.index].score[rd] = player2.score;
@@ -240,8 +272,6 @@ function updateBreakout(player1, player2, players, bonus) {
     Collision(player1, 0, WIDTH / 2 - 16, bonus);
     Collision(player2, WIDTH / 2 + 16, WIDTH, bonus);
     updatePaddles(player1, player2);
-    console.log("============================================");
-    console.log(player1.bricks.length, player2.bricks.length);
     if (game === false)
         return
     if (player1.bricks.length === 0 || player2.bricks.length === 0) {
@@ -265,6 +295,7 @@ async function startBreakout(canvas, button) {
             return resolve();
         let player1 = new Player(new Paddle(WIDTH / 4 - 80 / 2, HEIGHT - 8, 80, 8, players[index1].color), new Ball(WIDTH / 4, 3 * HEIGHT / 4, 0, 4, 5)
         , index1, players[index1].isIa);
+        player1.speedX
         player1.isIa = isIa(players[index1].isIa);
         let index2 = getPlayer(players);
         let player2 = new Player(new Paddle(3 * WIDTH / 4 - 80 / 2, HEIGHT - 8, 80, 8, players[index2].color), new Ball(3 * WIDTH / 4, 3 * HEIGHT / 4, 0, 4, 5)
@@ -281,7 +312,7 @@ async function startBreakout(canvas, button) {
         updateBreakout(player1, player2, players, bonus);
         
         const checkGameEnd = () => {
-            if (player1.score || player2.score === 0) {
+            if (player1.bricks.length === 0 || player2.bricks.length === 0) {
                 resolve();
             } else {
                 requestAnimationFrame(checkGameEnd);
@@ -290,6 +321,7 @@ async function startBreakout(canvas, button) {
         checkGameEnd();
     });
     
+    console.log('game end');
     button.setAttribute('hx-vals', JSON.stringify({'players': JSON.stringify(players), 'game': 'breakout'}));
 	button.classList.remove('popito');
 }

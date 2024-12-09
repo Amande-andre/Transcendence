@@ -58,21 +58,27 @@
     let listPlayer = Array.from(document.querySelectorAll('.player'));
 	let color = Array.from(document.querySelectorAll('.form-control-color'));
     // Convertir les inputs en objets joueurs
-    listPlayer = Array.from(listPlayer).map((input, index) => ({
-        name: input.value || 'Player' + (index + 1),
-        score: [0, 0, 0, 0],
-        round: 0,
-		win : 0,
-		loose : 0,
-		isIa: 0,
-		color: color[index].value
-    }));
+	listPlayer = Array.from(listPlayer).map((input, index) => {
+		input1 = input;
+		fixInput(input1);
+		return {
+			name: input1.value || 'Player' + (index + 1),
+			username: input.value || 'Player' + (index + 1),
+			score: [0, 0, 0, 0],
+			round: 0,
+			win: 0,
+			loose: 0,
+			isIa: 0,
+			color: color[index].value
+		};
+	});
 
 	console.log('listPlayer = ', listPlayer);
     // Ajouter des IA si le nombre nest pas une puissance de 2
 	if (listPlayer.length === 1) {
 		listPlayer.push({
-			name: '{% trans "IA1" %}',
+			name: '{% trans "IA1" %}    ',
+			username: '{% trans "IA1" %}    ',
 			score: [0, 0, 0, 0],
 			round: 0,
 			win: 0,
@@ -85,6 +91,7 @@
 		for (let i = listPlayer.length; i < targetLength; i++) {
 			listPlayer.push({
 				name: '{% trans "IA" %}' + (i - listPlayer.length + 1),
+				username: '{% trans "IA1" %}' + (i - listPlayer.length + 1),
 				score: [0, 0, 0, 0],
 				round: 0,
 				win: 0,
@@ -105,4 +112,46 @@
 		isBonus = true;
     return JSON.stringify(listPlayer);
 }
+
+
+		    window.addEventListener('popstate', function(event) {
+        // Récupérer l'URL actuelle
+        const currentPath = window.location.pathname;
+        
+        // Vérifier si l'URL correspond à /gameOption/
+        if (currentPath.startsWith('/gameOption/')) {
+            // Effectuer un GET vers la vue gameOption
+            htmx.ajax('GET', currentPath, '#content');
+        }
+    });
+	    window.addEventListener('popstate', function(event) {
+        // Récupérer l'URL actuelle
+        const currentPath = window.location.pathname;
+        
+        // Vérifier si l'URL correspond à /gameOption/
+        if (currentPath.startsWith('/gameOption/')) {
+            // Effectuer un GET vers la vue gameOption
+            htmx.ajax('GET', currentPath, '#content');
+        }
+    })
+	    window.addEventListener('popstate', function(event) {
+        // Récupérer l'URL actuelle
+        const currentPath = window.location.pathname;
+        
+        // Vérifier si l'URL correspond à /gameOption/
+        if (currentPath.startsWith('/gameOption/')) {
+            // Effectuer un GET vers la vue gameOption
+            htmx.ajax('GET', currentPath, '#content');
+        }
+    });
+// trunc the name if up to 7 characters and add '.' if its to long or add space up to 7 characters if its to short
+function fixInput(input) {
+	if (input.value.length > 7) {
+		input.value = input.value.slice(0, 7) + '.';
+	} else {
+		input.value = input.value.padEnd(7, ' ');
+	}
+	return input;
+}
+
 </script>
