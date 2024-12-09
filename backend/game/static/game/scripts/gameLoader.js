@@ -1,8 +1,21 @@
 document.addEventListener('DOMContentLoaded', function() {
     if (document.getElementById('gameOption')) {
+        console.log('gameOption');
         let body = document.querySelector('body');
         body.classList.add('bracket-body');
     }
+});
+
+window.addEventListener('popstate', function(event) {
+    // Récupérer l'URL actuelle
+    const currentPath = window.location.pathname;
+    
+    // Vérifier si l'URL correspond à /gameOption/
+    if (currentPath.startsWith('/optionsPong/') || currentPath.startsWith('/optionsBreakout/')) {
+        game = false;
+        window.location.reload();
+    }
+});
 
 document.addEventListener('htmx:afterSwap', function(evt) {
     if (evt.target.id === 'nav') {
@@ -71,8 +84,8 @@ document.body.addEventListener('htmx:configRequest', function(event) {
 
 function checkUsername() {
     let listPlayer = Array.from(document.querySelectorAll('.player'));
-    //if a player in the list has the same name return false
-    let names = listPlayer.map(player => player.value);
+    // Filter out empty names
+    let names = listPlayer.map(player => player.value).filter(name => name !== "");
     console.log(names);
     let uniqueNames = new Set(names);
     console.log(uniqueNames);

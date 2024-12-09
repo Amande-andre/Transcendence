@@ -34,6 +34,7 @@ def gameChoice(request):
 def optionsPong(request):
     user = request.user
     friendsList = user.friends.all()
+    print("yoyoyo")
     if request.headers.get('HX-Request'):
         return render(request, 'partials/options-pong.html', {
 		'user': user, 
@@ -52,6 +53,7 @@ def optionsPong(request):
 def optionsBreakout(request):
     user = request.user
     friendsList = user.friends.all()
+    print("yoyoyo")
     if request.headers.get('HX-Request'):
         return render(request, 'partials/options-breakout.html', {
 			'user': user, 
