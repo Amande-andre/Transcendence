@@ -207,6 +207,8 @@ function drawBreakoutAera(player1, player2) {
 }
 
 function handleEndGame(player1, player2, players) {
+    let bigWin = document.getElementById('bigWin');
+    ctx.clearRect(0, 0, WIDTH, HEIGHT);
     if (player1.bricks.length === 0) {
         players[player1.index].win++;
         players[player2.index].loose++;
@@ -219,14 +221,16 @@ function handleEndGame(player1, player2, players) {
         players[player1.index].loose++;
         players[player2.index].score[player2.round] = player2.score;
     }
+    if (player1.score > player2.score)
+        bigWin.innerHTML = players[player1.index].name + ' win!';
+    else
+        bigWin.innerHTML = players[player2.index].name + ' win!';
     console.log(player1.score, player2.score);
     let rd = players[player1.index].round - 1;
     players[player1.index].score[rd] = player1.score;
     players[player2.index].score[rd] = player2.score;
     postMatch(players, player1, player2, rd);
-    ctx.clearRect(0, 0, WIDTH, HEIGHT);
-    ctx.strokeStyle = 'white';
-    ctx.strokeRect(0, 0, WIDTH, HEIGHT);
+    bigWin.classList.remove('popito');
 }
 
 function updateBreakout(player1, player2, players, bonus) {

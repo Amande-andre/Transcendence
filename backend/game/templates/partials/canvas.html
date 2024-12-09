@@ -5,6 +5,7 @@
     <canvas id="{{ game }}Canvas" width="800" height="600" data-players="{{ players }}"></canvas>
     <button class="continu-button popito" id="gameButton" hx-get="{% url 'game:bracket' %}" hx-target="#containerCanvas" hx-swap="outerHTML" hx-vals=""
     style="cursor: pointer; position: relative; z-index: 3;">
+        <div id="bigWin"></div>
         {% trans "Continue" %}
     </button>
 </div>
