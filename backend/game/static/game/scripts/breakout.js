@@ -243,23 +243,21 @@ function drawBreakoutAera(player1, player2) {
 function handleEndGame(player1, player2, players) {
     let bigWin = document.getElementById('bigWin');
     ctx.clearRect(0, 0, WIDTH, HEIGHT);
+
     if (player1.bricks.length === 0) {
         players[player1.index].win++;
         players[player2.index].loose++;
-
         players[player1.index].score[player1.round] = player1.score;
-        //ici save la win or lose du players[1] ou [0]
-    }
-    else{
+    } else {
         players[player2.index].win++;
         players[player1.index].loose++;
         players[player2.index].score[player2.round] = player2.score;
     }
-    if (player1.win > player2.win)//player1.score > player2.score)
-        bigWin.innerHTML = players[player1.index].name + ' win!';
-    else
-        bigWin.innerHTML = players[player2.index].name + ' win!';
-    console.log(player1.score, player2.score);
+    if (player1.score > player2.score) {
+        bigWin.innerHTML = players[player1.index].name + ' ' + translations.win;
+    } else {
+        bigWin.innerHTML = players[player2.index].name + ' ' + translations.win;
+    }
     let rd = players[player1.index].round - 1;
     players[player1.index].score[rd] = player1.score;
     players[player2.index].score[rd] = player2.score;

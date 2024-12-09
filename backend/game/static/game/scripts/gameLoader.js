@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+
 window.addEventListener('popstate', function(event) {
     // Récupérer l'URL actuelle
     const currentPath = window.location.pathname;

@@ -17,7 +17,6 @@ function postMatch(players, player1, player2, round) {
     bonusTaken2 = player2.bonusTaken;
     name1 = players[player1.index].username;
     name2 = players[player2.index].username;
-    console.log(name1, name2, score1, score2, bounce1, bounce2, bonusTaken1, bonusTaken2);
     const date = new Date();
     const dateTime = `${date.getHours()}:${date.getMinutes()} ${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
     fetch('/saveMatch/', {

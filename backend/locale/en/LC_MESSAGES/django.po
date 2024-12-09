@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-09 13:22+0100\n"
+"POT-Creation-Date: 2024-12-09 14:55+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,7 +23,7 @@ msgstr ""
 #: game/templates/partials/bracket.html:98
 #: game/templates/partials/bracket.html:103
 #: game/templates/partials/bracket.html:108
-#: game/templates/partials/canvas.html:8
+#: game/templates/partials/canvas.html:9
 msgid "Continue"
 msgstr ""
 
@@ -85,15 +85,19 @@ msgstr ""
 msgid "IA"
 msgstr ""
 
-#: game/views.py:41 game/views.py:48 game/views.py:66
+#: game/views.py:10
+msgid "win!"
+msgstr ""
+
+#: game/views.py:43 game/views.py:50 game/views.py:68
 msgid "Select your options for Pong"
 msgstr ""
 
-#: game/views.py:59
+#: game/views.py:61
 msgid "Select your options for Breakout"
 msgstr ""
 
-#: game/views.py:94
+#: game/views.py:96
 msgid "Bracket View"
 msgstr ""
 
@@ -186,76 +190,72 @@ msgstr ""
 msgid "The verification message will appear here."
 msgstr ""
 
-#: users/templates/profile.html:11 users/views.py:186
+#: users/templates/profile.html:12 users/views.py:186
 msgid "Add a friend!"
 msgstr ""
 
-#: users/templates/profile.html:37
+#: users/templates/profile.html:38
 msgid "Profile image"
 msgstr ""
 
-#: users/templates/profile.html:53
+#: users/templates/profile.html:54
 msgid "Enter your username"
 msgstr ""
 
-#: users/templates/profile.html:70
+#: users/templates/profile.html:71
 msgid "My Friends"
 msgstr ""
 
-#: users/templates/profile.html:80
+#: users/templates/profile.html:81
 msgid "Matches"
 msgstr ""
 
-#: users/templates/profile.html:81 users/templates/profile.html:152
+#: users/templates/profile.html:82 users/templates/profile.html:168
 msgid "Wins"
 msgstr ""
 
-#: users/templates/profile.html:82 users/templates/profile.html:153
+#: users/templates/profile.html:83 users/templates/profile.html:169
 msgid "Losses"
 msgstr ""
 
-#: users/templates/profile.html:84
+#: users/templates/profile.html:85
 msgid "View Graph"
 msgstr ""
 
-#: users/templates/profile.html:93
+#: users/templates/profile.html:94
 msgid "Player Statistics"
 msgstr ""
 
-#: users/templates/profile.html:114 users/templates/profile.html:158
+#: users/templates/profile.html:115
 msgid "Key Metrics"
 msgstr ""
 
-#: users/templates/profile.html:117
+#: users/templates/profile.html:118
 msgid "Number of rebounds"
 msgstr ""
 
-#: users/templates/profile.html:121
+#: users/templates/profile.html:122
 msgid "Number of bricks broken"
 msgstr ""
 
-#: users/templates/profile.html:125
+#: users/templates/profile.html:126
 msgid "Longest rally"
 msgstr ""
 
-#: users/templates/profile.html:136
+#: users/templates/profile.html:137
 msgid "Match history"
 msgstr ""
 
-#: users/templates/profile.html:154
+#: users/templates/profile.html:172
 msgid "Rebounds"
 msgstr ""
 
-#: users/templates/profile.html:155
+#: users/templates/profile.html:173
 msgid "Bricks Broken"
 msgstr ""
 
-#: users/templates/profile.html:156
-msgid "Longest Rally"
-msgstr ""
-
-#: users/templates/profile.html:157
-msgid "Statistics"
+#: users/templates/profile.html:174
+msgid "Score"
 msgstr ""
 
 #: users/views.py:85
